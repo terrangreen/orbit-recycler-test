@@ -1,0 +1,63 @@
+#inventory-module {
+    padding: 1rem;
+}
+
+#inventory-module h3 {
+    display: flex;
+    align-items: center; /* Align icon and text on the same line */
+    gap: 0.5rem; /* Space between icon and text */
+    font-size: 1.2em;
+    text-transform: uppercase;
+    font-weight: 900;
+    border-bottom: 1px solid var(--text-color);
+    padding-bottom: 0.5rem;
+}
+
+#inventory-module h3 .lucide {
+    width: 1.5em; /* Size of the icon */
+    height: 1.5em;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+/* Table styling */
+#inventory-module table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#inventory-module table th, #inventory-module table td {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--text-color);
+}
+
+#inventory-module table th {
+    text-align: left;
+    font-weight: 900;
+}
+
+#inventory-module table td {
+    text-align: left;
+}
+
+.inventory {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.2em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon {
+    margin-right: 5px;
+}
+
+.left-content {
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.right-content {
+    text-align: right;
+    flex-grow: 1;
+}

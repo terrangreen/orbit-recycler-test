@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbit Recycler</title>
+  <link rel="stylesheet" href="stylesheets/core.css">
+  <script type="module" src="javascript/script.js"></script>
+</head>
+<body>
+  <!-- Refer to game -->
+  <div id="game_start_screen">
+    <div class="splash_screen">
+    </div>
+  </div>
+
+  <!-- Refer to frame.css-->
+  <!-- I want to have a central column that's 3fr with two side columns that are 1fr -->
+  <!-- The central column will have the space station layout -->
+  <!-- The flow is: collect space junk > process > separate > store > craft > attach modules to station or sell them -->
+  <!-- Buying/selling: buying can be purchasing deliveries from earth, selling would be only to other interested parties in space  -->
+  <!-- Hmmm or maybe add some feature to craft a station to sell it to someone else? Interesting. Think more on this -->
+  <div id="game_screen" class="hidden">
+    <header>
+      <div class="logo">
+        <i data-lucide="orbit" class="icon white"></i>
+        <h1>Orbit Recycler</h1>
+      </div>
+      <div class="time-module">
+        <div class="time-display">
+          <div class="day-night-indicator"></div>
+          <span id="time">Day 1, Hour 1</span>
+        </div>
+        <div class="button-container">
+          <button id="pause-game"><i data-lucide="pause" class="icon"></i></button>
+          <button id="reset-game"><i data-lucide="rotate-ccw" class="icon"></i></button>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Refer to resources.css -->
+    <section id="resources-module">
+      <div id="resources-content">
+        <!-- Resources will appear here -->
+      </div> 
+    </section>
+
+
+    <!-- Will use actions.css to define how the action buttons will look -->
+
+    <div id="game-modules">
+      <div id="secondary-modules">
+        <section id="spaceJunk-module">
+          <button id="collectSpaceJunkBtn">Collect Space Junk</button>
+        </section>
+        <section id="process-module">
+          <button id="processSpaceJunkBtn">Process Junk</button>
+        </section>
+        <!-- Inventory Tables -->
+        <section id="inventory-module">
+          <h3 class="collapsible"><i data-lucide="boxes" class="icon white"></i> Inventory <i data-lucide="chevron-up"
+            class="toggle-icon"></i></h3>
+          <div class="module-content">
+            <div id="inventory-content"></div>
+          </div>
+        </section>
+        <section id="crafting-module">
+          <h3 class="collapsible"><i data-lucide="pencil-ruler" class="icon white"></i> Fabrication <i data-lucide="chevron-up"
+            class="toggle-icon"></i></h3>
+          <div class="module-content">
+            <div id="crafting-content"></div>
+          </div>
+        </section>
+      </div>
+
+      <div id="main-modules">
+        <section id="station-module">
+          <img src="private-space-station-1.jpg">
+        </section>
+        <section id="life-support-module">
+          <h3>Life Support</h3>
+          <div id="life-support-content"></div>
+        </section>
+      </div>
+
+      <div id="tertiary-modules">
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

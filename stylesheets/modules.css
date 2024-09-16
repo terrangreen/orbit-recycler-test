@@ -1,0 +1,116 @@
+#game-modules {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  #secondary-modules, #tertiary-modules {
+    flex: 1;
+  }
+  
+  #main-modules {
+    flex: 3;
+  }
+  
+  #main-modules, #secondary-modules, #tertiary-modules {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #main-modules>section,
+  #secondary-modules>section,
+  #tertiary-modules>section {
+    /* break-inside: avoid; */
+    margin-bottom: 1rem;
+    border: var(--border-thickness) solid var(--text-color);
+    border-radius: var(--border-radius);
+  }
+  
+  .module-content {
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 1000px;
+    /* Adjust this value based on your content */
+  }
+  
+  .module-content.collapsed {
+    max-height: 0;
+    display: none;
+  }
+  
+  #game-modules h3 {
+    background-color: white;
+    color: black;
+    text-transform: uppercase;
+    font-weight: 900;
+    padding: 0.2em 0.5em;
+    font-size: 0.8em;
+    border-bottom: var(--border-thickness) solid var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  
+  #game-modules h3 .lucide {
+    width: 1.2em;
+    height: 1.2em;
+  }
+  
+  #game-modules h3.collapsible {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #game-modules h3.collapsible .toggle-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  #game-modules h3.collapsible.collapsed .toggle-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* .mystery {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    border: var(--border-thickness) solid var(--text-color);
+  }
+  
+  .mystery .lucide {
+    width: 4em;
+    height: 4em;
+  }
+  
+  .mystery .title {
+    margin-top: 0.5em;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.2em;
+  }
+  
+  .mystery .description {
+    font-size: 0.8em;
+  } */
+
+  @media (min-width: 100ch) {
+    #game-modules {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  
+    #main-modules {
+      flex: 1;
+      grid-template-columns: 1fr;
+    }
+  
+    #secondary-modules {
+      flex: 2;
+      column-count: 2;
+    }
+  }

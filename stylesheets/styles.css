@@ -1,0 +1,49 @@
+body {
+  font-family: "Lucida Console", sans-serif;
+  text-align: center;
+  color: white;
+  margin: 20px;
+  background-color: #262626;
+}
+
+h1 {
+  color: snow;
+}
+
+.status {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #5872c1;
+  color: white;
+  border: none;
+  margin: 10px;
+}
+
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 600px;
+}
+
+th, td {
+  border: 1px solid #333;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  /* background-color: #007BFF; */
+  color: white;
+}
