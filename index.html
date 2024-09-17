@@ -50,25 +50,52 @@
 
     <div id="game-modules">
       <div id="secondary-modules">
-        <section id="spaceJunk-module">
-          <button id="collectSpaceJunkBtn">Collect Space Junk</button>
+        <div id="actions-container">
+          <section id="spaceJunk-module">
+            <button id="collectSpaceJunkBtn">Collect Space Junk</button>
+          </section>
+          <section id="chevron-flow">
+            <i data-lucide="chevron-down" class="icon white"></i>
+          </section>
+          <section id="examine-action">
+            <button id="examineSpaceJunkBtn">Examine</button>
+          </section>
+          <section id="chevron-flow">
+            <i data-lucide="chevron-down" class="icon white"></i>
+          </section>
+        </div>
+        <!-- Inventory Tables -->
+        <section id="inventory-module">
+          <h3 class="collapsible"><i data-lucide="boxes" class="icon white"></i> Space Junk <i data-lucide="chevron-up"
+            class="toggle-icon"></i></h3>
+          <div class="module-content">
+            <div id="inventory-content">
+              <!-- Inventory will appear here -->
+            </div>
+          </div>
+        </section>
+        <section id="chevron-flow">
+          <i data-lucide="chevron-down" class="icon white"></i>
         </section>
         <section id="process-module">
           <button id="processSpaceJunkBtn">Process Junk</button>
         </section>
-        <!-- Inventory Tables -->
-        <section id="inventory-module">
-          <h3 class="collapsible"><i data-lucide="boxes" class="icon white"></i> Inventory <i data-lucide="chevron-up"
-            class="toggle-icon"></i></h3>
-          <div class="module-content">
-            <div id="inventory-content"></div>
-          </div>
+        <section id="chevron-flow">
+          <i data-lucide="chevron-down" class="icon white"></i>
+        </section>
+        <section id="process-module">
+          <button id="partsBtn">Inventory</button>
+        </section>
+        <section id="chevron-flow">
+          <i data-lucide="chevron-down" class="icon white"></i>
         </section>
         <section id="crafting-module">
           <h3 class="collapsible"><i data-lucide="pencil-ruler" class="icon white"></i> Fabrication <i data-lucide="chevron-up"
             class="toggle-icon"></i></h3>
           <div class="module-content">
-            <div id="crafting-content"></div>
+            <div id="crafting-content">
+              <!-- Crafting will appear here -->
+            </div>
           </div>
         </section>
       </div>
@@ -79,7 +106,9 @@
         </section>
         <section id="life-support-module">
           <h3>Life Support</h3>
-          <div id="life-support-content"></div>
+          <div id="life-support-content">
+            <!-- Life Support Resources will appear here -->
+          </div>
         </section>
       </div>
 
