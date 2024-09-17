@@ -9,9 +9,6 @@ import { loadLifeSupportModule } from './lifesupport.js';
 
 document.addEventListener('DOMContentLoaded', function() {
 
-
-  // For some reason the resources aren't aligning properly anymore. Fix this next time.
-
   // Load content
   enableCollapsibleSections();
   loadCraftingContent();
@@ -51,8 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
   ];
 
   // Adding new resources dynamically
-  addResource('trash-2', 'white', 'rawSpaceJunkValue', `${rawJunkStorage} / ${rawJunkLimit}`);
-  addResource('banknote', 'green', 'spcValue', `SPC ${spaceCoin}`);
+  addResource('trash-2', 'white', 'rawSpaceJunkValue', `${rawJunkStorage} / ${rawJunkLimit}`, 'resources-content');
+  addResource('banknote', 'green', 'spcValue', `SPC ${spaceCoin}`, 'resources-content');
+
 
   // DOM Elements
   const spcDisplayValue = document.getElementById('spcValue');
@@ -73,12 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // This code adds the resources dynamically
-  function addResource(iconType, color, valueId, valueText) {
+  function addResource(iconType, color, valueId, valueText, targetModule) {
     if (document.getElementById(valueId)) {
       return;
     }
 
-    const resourcesModule = document.getElementById('resources-content');
+    const moduleContainer = document.getElementById(targetModule);
     
     const newResource = document.createElement('div');
     newResource.classList.add('resource');
@@ -94,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     newResource.appendChild(icon);
     newResource.appendChild(span);
     
-    resourcesModule.appendChild(newResource);
+    moduleContainer.appendChild(newResource);
 
     lucide.createIcons();
   }
@@ -103,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateDisplay() {
     spcDisplayValue.textContent = `${spaceCoin}`;
     rawSpaceJunkDisplay.textContent = `${rawJunkStorage} / ${rawJunkLimit}`;
-    craftedBagsDisplay.textContent = `Bags Crafted: ${craftedBags}`;
+    // craftedBagsDisplay.textContent = `Bags Crafted: ${craftedBags}`;
 
     wholteItemsDisplayValue.textContent = `${wholeItems.length} / ${wholeItemsLimit}`;
 
@@ -117,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <tr>
           <td>${item.type}</td>
           <td>${item.owner}</td>
-          <td>${item.value} SPC</td>
+          <td>${item.value}</td>
         </tr>
       `;
     });
@@ -146,14 +144,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to add fragments
   function addFragments(newFragments) {
+    let totalFragments = Object.values(fragments).reduce((sum, fragment) => sum + fragment.quantity, 0);
+
     newFragments.forEach(fragment => {
-      if (fragments[fragment.type]) {
-        fragments[fragment.type].quantity += fragment.quantity;
-      } else {
-        fragments[fragment.type] = { quantity: fragment.quantity, material: fragment.material };
-      }
+        const remainingCapacity = fragmentsLimit - totalFragments;
+        if (remainingCapacity > 0) {
+            const quantityToAdd = Math.min(fragment.quantity, remainingCapacity); // Only add up to remaining capacity
+            if (fragments[fragment.type]) {
+                fragments[fragment.type].quantity += quantityToAdd;
+            } else {
+                fragments[fragment.type] = { quantity: quantityToAdd, material: fragment.material };
+            }
+            totalFragments += quantityToAdd; // Update the total count
+            console.log(`Added ${quantityToAdd} ${fragment.type}`);
+        } else {
+            console.log("No fragment capacity left.");
+        }
     });
   }
+
+  // function addFragments(newFragments) {
+  //   newFragments.forEach(fragment => {
+  //     if (fragments[fragment.type]) {
+  //       fragments[fragment.type].quantity += fragment.quantity;
+  //     } else {
+  //       fragments[fragment.type] = { quantity: fragment.quantity, material: fragment.material };
+  //     }
+  //   });
+  // }
 
   // Collect Space Junk
   collectButton.addEventListener('click', () => {
@@ -189,41 +207,78 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Process Junk
+  // Process Junk
   processButton.addEventListener('click', () => {
     if (rawJunkStorage > 0) {
-      rawJunkStorage -= 1;
-      collectButton.disabled = false;
+        rawJunkStorage -= 1;
+        collectButton.disabled = false;
 
-      if (Math.random() < chanceForWholeItemOnProcess) {
-        // Attempt to add a whole item
-        if (wholeItems.length < wholeItemsLimit) {
-          const newItem = {
-            type: getRandomWholeItemType(),
-            owner: getRandomOwner(),
-            value: getRandomWholeItemValue()
-          };
-          wholeItems.push(newItem);
-          spaceCoin += newItem.value; // Earn SPC upon processing
-        } else {
-          // If no space, try to convert to fragments instead
-          let totalFragments = Object.values(fragments).reduce((sum, fragment) => sum + fragment.quantity, 0);
-          if (totalFragments < fragmentsLimit) {
-            const fragmentsGenerated = generateRandomFragments();
+        // Determine outcome based on random chance
+        const outcome = Math.random();
+        
+        if (outcome < 0.2) {
+            // 20% chance for whole item
+            if (wholeItems.length < wholeItemsLimit) {
+                const newItem = {
+                    type: getRandomWholeItemType(),
+                    owner: getRandomOwner(),
+                    value: getRandomWholeItemValue()
+                };
+                wholeItems.push(newItem);
+                spaceCoin += newItem.value; // Earn SPC
+                console.log("Whole item created:", newItem);
+            }
+        } else if (outcome < 0.7) {
+            // 50% chance for a single fragment type
+            const fragmentsGenerated = generateRandomFragments(1);  // Generate 1 type of fragment
             addFragments(fragmentsGenerated);
-          }
+            console.log("Single fragment created:", fragmentsGenerated);
+        } else {
+            // 30% chance for two types of fragments
+            const fragmentsGenerated = generateRandomFragments(2);  // Generate 2 types of fragments
+            addFragments(fragmentsGenerated);
+            console.log("Two fragments created:", fragmentsGenerated);
         }
-      }
-    } else {
-      // Generate Fragments
-      let totalFragments = Object.values(fragments).reduce((sum, fragment) => sum + fragment.quantity, 0);
-      if (totalFragments < fragmentsLimit) {
-        const fragmentsGenerated = generateRandomFragments();
-        addFragments(fragmentsGenerated);
-      }
     }
 
     updateDisplay();
   });
+
+  // processButton.addEventListener('click', () => {
+  //   if (rawJunkStorage > 0) {
+  //     rawJunkStorage -= 1;
+  //     collectButton.disabled = false;
+
+  //     if (Math.random() < chanceForWholeItemOnProcess) {
+  //       // Attempt to add a whole item
+  //       if (wholeItems.length < wholeItemsLimit) {
+  //         const newItem = {
+  //           type: getRandomWholeItemType(),
+  //           owner: getRandomOwner(),
+  //           value: getRandomWholeItemValue()
+  //         };
+  //         wholeItems.push(newItem);
+  //         spaceCoin += newItem.value; // Earn SPC upon processing
+  //       } else {
+  //         // If no space, try to convert to fragments instead
+  //         let totalFragments = Object.values(fragments).reduce((sum, fragment) => sum + fragment.quantity, 0);
+  //         if (totalFragments < fragmentsLimit) {
+  //           const fragmentsGenerated = generateRandomFragments();
+  //           addFragments(fragmentsGenerated);
+  //         }
+  //       }
+  //     }
+  //   } else {
+  //     // Generate Fragments
+  //     let totalFragments = Object.values(fragments).reduce((sum, fragment) => sum + fragment.quantity, 0);
+  //     if (totalFragments < fragmentsLimit) {
+  //       const fragmentsGenerated = generateRandomFragments();
+  //       addFragments(fragmentsGenerated);
+  //     }
+  //   }
+
+  //   updateDisplay();
+  // });
 
   // Craft Bag
   craftButton.addEventListener('click', () => {
@@ -269,22 +324,39 @@ document.addEventListener('DOMContentLoaded', function() {
     return Math.floor(Math.random() * 5000) + 10000;
   }
 
-  function generateRandomFragments() {
-    const numberOfFragments = Math.floor(Math.random() * 3) + 1; // 1 to 3 fragment types
+  function generateRandomFragments(fragmentCount = 1) {
     const collectedFragments = [];
-
-    for (let i = 0; i < numberOfFragments; i++) {
-      const fragment = possibleFragments[Math.floor(Math.random() * possibleFragments.length)];
-      const quantity = Math.floor(Math.random() * 5) + 1; // 1 to 5 units
-      collectedFragments.push({
-        type: fragment.type,
-        quantity: quantity,
-        material: fragment.material
-      });
+    
+    for (let i = 0; i < fragmentCount; i++) {
+        const fragment = possibleFragments[Math.floor(Math.random() * possibleFragments.length)];
+        const quantity = Math.floor(Math.random() * 5) + 1; // 1 to 5 units
+        collectedFragments.push({
+            type: fragment.type,
+            quantity: quantity,
+            material: fragment.material
+        });
     }
 
     return collectedFragments;
   }
+
+
+  // function generateRandomFragments() {
+  //   const numberOfFragments = Math.floor(Math.random() * 3) + 1; // 1 to 3 fragment types
+  //   const collectedFragments = [];
+
+  //   for (let i = 0; i < numberOfFragments; i++) {
+  //     const fragment = possibleFragments[Math.floor(Math.random() * possibleFragments.length)];
+  //     const quantity = Math.floor(Math.random() * 5) + 1; // 1 to 5 units
+  //     collectedFragments.push({
+  //       type: fragment.type,
+  //       quantity: quantity,
+  //       material: fragment.material
+  //     });
+  //   }
+
+  //   return collectedFragments;
+  // }
 
   // Initial Display Update
   updateDisplay();

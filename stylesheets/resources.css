@@ -77,6 +77,29 @@
     color: var(--background-color);
 }
 
+.life-support-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rate.positive {
+    color: green;
+}
+
+.rate.negative {
+    color: red;
+}
+
+.rate.neutral {
+    color: gray;
+}
+
+.capacity {
+    font-weight: bold;
+}
+
+
 @media (max-width: 100ch) {
     #resources-module {
         flex-direction: column;

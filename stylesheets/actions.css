@@ -1,9 +1,18 @@
-#actions-module {
+#actions-container {
     display: flex;
-    gap: 0;
-    border: var(--border-thickness) solid var(--text-color);
-    border-top: 0;
-    margin-bottom: 1em;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #chevron-flow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  #chevron-flow .icon {
+    font-size: 2rem; /* Adjust size if necessary */
   }
   
   .action-button {
