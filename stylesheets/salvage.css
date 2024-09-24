@@ -1,0 +1,42 @@
+/* salvage.css */
+
+.salvageInventoryContainer {
+    display: flex; 
+    flex-direction: column; /* Ensure the header and display area are stacked vertically */
+}
+
+.salvage-header {
+    margin-bottom: 10px;
+}
+
+.salvage-display-area {
+    display: flex; /* Use flex to align drop area, divider, and grid horizontally */
+    align-items: center; /* Center items vertically */
+}
+
+#salvage-drop-area {
+    width: 60px; /* Same as inventory squares */
+    height: 60px; /* Same as inventory squares */
+    margin-right: 10px; /* Space between the drop area and the separator */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #fff; /* Style as needed */
+    background-color: #2c2c2c; /* Same as inventory squares */
+}
+
+.salvage-divider {
+    display: flex;
+    align-items: center; /* Center the separator vertically */
+    font-size: 24px;
+    margin: 0 10px; /* Space around the separator */
+}
+
+#salvage-inventory-grid {
+    display: grid; /* Keep this as grid for the inventory squares */
+    grid-template-columns: repeat(5, 60px); /* Five columns of 60px each */
+    gap: 0; /* Space between inventory squares */
+    margin: 0; /* Remove any margins */
+    padding: 0; /* Remove any paddings */
+    justify-content: left; /* Align grid items to the left */
+}

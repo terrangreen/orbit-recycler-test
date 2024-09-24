@@ -8,7 +8,7 @@
   <script type="module" src="javascript/script.js"></script>
 </head>
 <body>
-  <!-- Refer to game -->
+  <!-- Refer to gamestart.css -->
   <div id="game_start_screen">
     <div class="splash_screen">
     </div>
@@ -50,6 +50,7 @@
 
     <div id="game-modules">
       <div id="secondary-modules">
+        
         <div id="actions-container">
           <section id="spaceJunk-module">
             <button id="collectSpaceJunkBtn">Collect Space Junk</button>
@@ -57,34 +58,41 @@
           <section id="chevron-flow">
             <i data-lucide="chevron-down" class="icon white"></i>
           </section>
-          <section id="examine-action">
-            <button id="examineSpaceJunkBtn">Examine</button>
-          </section>
-          <section id="chevron-flow">
-            <i data-lucide="chevron-down" class="icon white"></i>
-          </section>
         </div>
-        <!-- Inventory Tables -->
-        <section id="inventory-module">
+
+        <!-- Inventory Table -->
+        <section id="spacejunk-inventory-module">
           <h3 class="collapsible"><i data-lucide="boxes" class="icon white"></i> Space Junk <i data-lucide="chevron-up"
             class="toggle-icon"></i></h3>
           <div class="module-content">
-            <div id="inventory-content">
+            <div id="spacejunk-inventory-content">
               <!-- Inventory will appear here -->
+            </div>
+          </div>
+        </section>
+
+        <section id="chevron-flow">
+          <i data-lucide="chevron-down" class="icon white"></i>
+        </section>
+
+        <section id="salvage-module">
+          <h3 class="collapsible"><i data-lucide="boxes" class="icon white"></i> Salvage Area <i data-lucide="chevron-up"
+            class="toggle-icon"></i></h3>
+          <div class="module-content">
+            <div id="salvage-area-content">
+              <!-- Drag items into this area to salvage-->
             </div>
           </div>
         </section>
         <section id="chevron-flow">
           <i data-lucide="chevron-down" class="icon white"></i>
         </section>
-        <section id="process-module">
-          <button id="processSpaceJunkBtn">Process Junk</button>
-        </section>
-        <section id="chevron-flow">
-          <i data-lucide="chevron-down" class="icon white"></i>
-        </section>
-        <section id="process-module">
-          <button id="partsBtn">Inventory</button>
+        <section id="station-inventory-module">
+          <h3 class="collapsible"><i data-lucide="boxes" class="icon white"></i> Station Inventory <i data-lucide="chevron-up"
+            class="toggle-icon"></i></h3>
+            <div class="module-content">
+              <div id="station-inventory-content"></div>
+            </div>
         </section>
         <section id="chevron-flow">
           <i data-lucide="chevron-down" class="icon white"></i>
@@ -112,8 +120,8 @@
         </section>
       </div>
 
-      <div id="tertiary-modules">
-      </div>
+      <!-- <div id="tertiary-modules">
+      </div> -->
     </div>
   </div>
   
