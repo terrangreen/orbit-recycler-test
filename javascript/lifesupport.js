@@ -1,4 +1,4 @@
-import { lifeSupportData } from './lifesupportresourcesdata.js'; // Import lifeSupportData
+import { lifeSupportData } from './lifesupportResourcesData.js'; // Import lifeSupportData
 
 export function loadLifeSupportModule() {
     const lifeSupportContent = document.getElementById('life-support-content');

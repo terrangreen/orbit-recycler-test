@@ -1,4 +1,4 @@
-import { resourcesData } from './stationresourcesdata'; // Import resourcesData
+import { resourcesData } from './stationResourcesData'; // Import resourcesData
 
 export function addStationResource(resourcesData) {
     resourcesData.forEach(resource => {
