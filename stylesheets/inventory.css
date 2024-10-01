@@ -1,10 +1,10 @@
 /* inventory.css */
 
-#spacejunk-inventory-module, #salvage-module {
+#spacejunk-inventory-module, #salvage-module, #station-inventory-module {
     padding: 1rem;
 }
 
-#spacejunk-inventory-module h3, #salvage-module h3 {
+#spacejunk-inventory-module h3, #salvage-module h3, #station-inventory-module h3 {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -15,13 +15,13 @@
     padding-bottom: 0.5rem;
 }
 
-#spacejunk-inventory-module h3 i, #salvage-module h3 i {
+#spacejunk-inventory-module h3 i, #salvage-module h3 i, #station-inventory-module h3 i {
     width: 1.5em;
     height: 1.5em;
     flex-shrink: 0;
 }
 
-#spacejunk-inventory-module h3 .lucide, #salvage-module h3 .lucide {
+#spacejunk-inventory-module h3 .lucide, #salvage-module h3 .lucide, #station-inventory-module h3 .lucide {
     width: 1.5em;
     height: 1.5em;
     flex-shrink: 0;
@@ -49,14 +49,14 @@
   flex-grow: 1;
 }
 
-#inventory-grid {
+#spacejunk-inventory-grid, #station-inventory-grid {
     display: grid;
     grid-template-columns: repeat(5, 60px); /* Adjust based on the number of columns */
     gap: 0;
     margin: 0;
     padding: 0;
     justify-content: left;
-  }
+}
 
   
   .inventory-square {
@@ -74,7 +74,7 @@
     font-size: 24px;
   }
   
-  #item-details {
+  #spacejunk-item-details, #station-item-details {
     margin-top: 20px;
   }
   
@@ -86,3 +86,7 @@
   .salvage-icons i {
     font-size: 20px;
   }  
+
+  .on-hold {
+    opacity: 0.5;
+  }

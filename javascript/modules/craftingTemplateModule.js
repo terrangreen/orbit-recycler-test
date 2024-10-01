@@ -1,4 +1,7 @@
-export function loadCraftingContent() {
+// craftingModule.js
+// Currently unused
+
+export function initializeCraftingTemplate() {
     const craftingContent = document.getElementById('crafting-content');
   
     const craftingHTML = `

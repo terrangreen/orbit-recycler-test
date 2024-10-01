@@ -1,7 +1,7 @@
 // stationinventory.js
 
 
-export function loadStationInventoryContent() {
+export function initializeStationInventoryTemplate() {
     const inventoryContent = document.getElementById('station-inventory-content');
   
     const inventoryHTML = `
@@ -10,12 +10,15 @@ export function loadStationInventoryContent() {
                 <div class="left-panel">
                     <div class="header">
                         <div class="left-content"><i data-lucide="settings" class="icon white"></i>Station Inventory</div>
-                        <div class="right-content"><span id="recoveredPartsValue">0 / 0</span></div>
+                        <div class="right-content"><span id="stationInventoryDisplay">0 / 0</span></div>
                     </div>
-                    <div class="right-panel">
-                        <div id="station-inventory-grid">
-                            <!-- Inventory squares will be added dynamically -->
-                        </div>
+                    <div id="station-inventory-grid">
+                        <!-- Inventory squares will be added dynamically -->
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div id="station-item-details">
+                        <!-- Selected item details will appear here -->
                     </div>
                 </div>
             </div>
@@ -24,4 +27,4 @@ export function loadStationInventoryContent() {
   
     inventoryContent.innerHTML = inventoryHTML;
     lucide.createIcons();  // Initialize icons after content is inserted
-  }  
+  }

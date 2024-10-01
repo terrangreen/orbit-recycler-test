@@ -1,6 +1,8 @@
-import { lifeSupportData } from './lifesupportResourcesData.js'; // Import lifeSupportData
+// lifeSupportModuleTemplate.js
 
-export function loadLifeSupportModule() {
+import { lifeSupportData } from '../resources/lifesupportResourcesData.js'; // Import lifeSupportData
+
+export function loadLifeSupportContent() {
     const lifeSupportContent = document.getElementById('life-support-content');
 
     let lifeSupportHTML = '';

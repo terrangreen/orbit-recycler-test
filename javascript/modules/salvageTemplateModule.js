@@ -1,10 +1,10 @@
-// salvagedroparea.js
+// salvageTemplateModule.js
 
-export function loadSalvageDropAreaContent() {
+export function initializeSalvageAreaTemplate() {
     const inventoryContent = document.getElementById('salvage-area-content');
   
     const inventoryHTML = `
-      <section class="salvageInventoryContainer">
+      <section class="salvageInventory">
         <div class="salvage-inventory">
             <div class="salvage-header">
                 <div class="left-content"><i data-lucide="settings" class="icon white"></i>Process Salvage</div>
