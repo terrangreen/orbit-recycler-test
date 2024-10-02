@@ -12,13 +12,21 @@ export function updateStaticInventoryGrid(gridElement, items, displayFunction, l
         const square = document.createElement('div');
         square.classList.add('inventory-square');
 
-        if (items[i]) {
+        const item = items[i];
+        const squareId = item ? `inventory-square-${item.id}` : `inventory-square-empty-${i}`;
+        square.id = squareId; // Assign the id to the square div
+    
+        if (item) {
             // If there's an item at this index, populate the square
-            const item = items[i];
             square.innerHTML = `<i data-lucide="${item.iconType || defaultIcon}" class="icon white"></i>`;
             square.title = `Type: ${item.type}\nOwner: ${item.owner}\nValue: ${item.value}`;
             square.setAttribute('draggable', true);
             square.addEventListener('dragstart', (e) => handleDragStart(e, item, i));
+
+            if (item.onHold) {
+                console.log('inventoryManager.js: updateStaticInventoryGrid item.onHold:', item.onHold);
+                square.classList.add('on-hold');
+            }
 
             // Add click event to show item details when clicked
             square.addEventListener('click', () => {
@@ -37,6 +45,7 @@ export function updateStaticInventoryGrid(gridElement, items, displayFunction, l
 
 export function updateDynamicInventoryGrid(gridElement, items, displayFunction) {
     gridElement.innerHTML = '';
+    console.log('updateDynamicInventoryGrid called');
     console.log("items:", items)
 
     items.forEach(part => {
@@ -67,7 +76,6 @@ export function displayItemDetails(targetDiv, item, extraFields = {}) {
             <h3>Details</h3>
             <p><strong>Type:</strong> ${item.type}</p>
             <p><strong>Value:</strong> ${item.value}</p>
-            <p><strong>Quantity:</strong> ${item.quantity}</p>
             ${extraContent}
         `;
         

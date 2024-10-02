@@ -1,8 +1,8 @@
 // spacejunkCollectorModule.js
 
-import { getState, incrementState } from '../app/gameState.js';
-import { getRandomSalvageParts, getRandomSpacejunkItemOwner, getRandomSpacejunkItemType, getRandomSpacejunkItemValue } from '../app/randomGenerator.js';
+import { getState, incrementState, setState } from '../app/gameState.js';
 import { updateSpacejunkInventory } from '../managers/updateInventory.js';
+import { possibleSpacejunk } from '../resources/spacejunkResourcesData.js';
 
 export function loadSpacejunkCollector() {
     const collectButton = document.getElementById('collectSpacejunkBtn');
@@ -13,22 +13,22 @@ export function loadSpacejunkCollector() {
 
 export function collectSpacejunk() {
     const rawJunkLimit =  getState('rawJunkLimit');
-    const spacejunkItems =  getState('spacejunkItems');
-
+ 
     const collectButton = document.getElementById('collectSpacejunkBtn');
  
     collectButton.addEventListener('click', () => {
+        let spacejunkItems = getState('spacejunkItems');
+        console.log('collectSpacejunk, spacejunkItems.length (before):', spacejunkItems.length);
+
         if (spacejunkItems.length < rawJunkLimit) {
-            const newItem = {
-                type: getRandomSpacejunkItemType(),
-                iconType: 'satellite',
-                owner: getRandomSpacejunkItemOwner(),
-                value: getRandomSpacejunkItemValue(),
-                parts: getRandomSalvageParts()
-            };
+            const newItem = possibleSpacejunk();
             
-            spacejunkItems.push(newItem);
-            console.log('spacejunkItems.length:',spacejunkItems.length);
+            console.log('collectSpacejunk, spacejunkItems.length (before, 2):',spacejunkItems.length);
+            const updatedSpacejunkItems = [...spacejunkItems, newItem];
+            setState('spacejunkItems', updatedSpacejunkItems);
+
+            spacejunkItems = getState('spacejunkItems');
+            console.log('collectSpacejunk, spacejunkItems.length (after):',spacejunkItems.length);
             incrementState('money',newItem.value);
             
             updateSpacejunkInventory();
