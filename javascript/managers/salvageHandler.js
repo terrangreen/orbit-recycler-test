@@ -9,6 +9,11 @@ export function handleSalvageArea() {
     handleDroppable(salvageDropArea, moveToSalvage);
 }
 
+export function handleSalveToStation() {
+    const stationInventoryGrid = document.getElementById('station-inventory-grid');
+    handleDroppable(stationInventoryGrid, moveSalvagePartToStation);
+}
+
 export function moveToSalvage(target, item) {
     const defaultIcon = getState('defaultIcon');
     const spacejunkItems = getState('spacejunkItems');
@@ -68,7 +73,59 @@ export function returnFromSalvageHold(item) {
     updateSalvageInventory();
 }
 
-// Everything below doesn't matter bc the movetosalvage isn't working correctly!
+export function getAvailableSpace(part) {
+    const maxStationCapacity = getState('stationItemsLimit');  // Maximum capacity of the station
+    const stationItems = getState('stationItems');
+    const currentItemCount = stationItems.reduce((count, item) => count + item.quantity, 0);  // Total items in station
+    const availableSpace = maxStationCapacity - currentItemCount;
+
+    // Return the number of parts that can be moved, which is the minimum between available space and part quantity
+    return Math.min(part.quantity, availableSpace);
+}
+
+export function moveSalvagePartToStation(target, part) {
+    let salvageItems = getState('salvageItems');
+    let stationItems = getState('stationItems') || [];
+
+    // Get available space in the station inventory
+    const availableSpace = getAvailableSpace(part);
+
+    if (availableSpace > 0) {
+        const moveQuantity = Math.min(part.quantity, availableSpace);
+        // If space is available, reduce the part quantity in salvage and add to station
+
+        // Update the quantity in the salvage inventory
+        salvageItems = salvageItems.map(salvagePart => {
+            if (salvagePart.id === part.id) {
+                salvagePart.quantity -= moveQuantity;  // Reduce the quantity
+                if (salvagePart.quantity <= 0) {
+                    return null;  // Remove part if quantity is 0
+                }
+            }
+            return salvagePart;
+        }).filter(salvagePart => salvagePart !== null);  // Remove parts with 0 quantity
+
+        // Add the part (or increase the quantity) in the station inventory
+        const existingStationPart = stationItems.find(item => item.id === part.id);
+        if (existingStationPart) {
+            existingStationPart.quantity += moveQuantity;
+        } else {
+            // If it's a new part for the station, add it
+            stationItems.push({ ...part, quantity: moveQuantity });
+        }
+
+        // Update both salvage and station inventories in the state
+        setState('salvageItems', salvageItems);
+        setState('stationItems', stationItems);
+
+        // Re-render the inventory grids
+        updateSalvageInventory();
+        updateStationInventory();
+    } else {
+        alert('Inventory full');
+    }
+}
+
 
 // export function lootAllSalvageParts() {
 //     const salvageItems = getState('salvageItems');
@@ -85,41 +142,7 @@ export function returnFromSalvageHold(item) {
 
 //     // Remove the space junk item if all parts have been looted
 //     finalizeSalvageItem();
-// }
-
-// // Function to render the "Return from Hold" button
-// export function renderReturnFromHoldButton(item) {
-//     const spacejunkItems = getState('spacejunkItems');
-//     const itemIndex = spacejunkItems.indexOf(item);
-
-//     if (itemIndex > -1) {
-//         const itemElement = document.querySelector(`#spacejunk-inventory-grid .inventory-square:nth-child(${itemIndex + 1})`);
-//         if (itemElement) {
-//             const returnButton = document.createElement('button');
-//             returnButton.textContent = 'Return';
-//             returnButton.classList.add('return-button');
-
-//             // Add event listener to return the item from hold
-//             returnButton.addEventListener('click', () => {
-//                 returnFromHold(item);
-//             });
-
-//             // Append the button to the item element
-//             itemElement.appendChild(returnButton);
-//         }
-//     }
-// }
-
-// // Call this function when rendering the spacejunk inventory
-// // Render a button only for items that are on hold
-// function renderSpacejunkInventoryGrid() {
-//     const spacejunkItems = getState('spacejunkItems');
-//     spacejunkItems.forEach(item => {
-//         if (holdItems.includes(item)) {
-//             renderReturnFromHoldButton(item);  // Add return button if the item is on hold
-//         }
-//     });
-// }
+//
 
 // export function finalizeSalvageItem() {
 //     const spacejunkItems = getState('spacejunkItems');

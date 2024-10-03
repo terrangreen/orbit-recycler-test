@@ -2,8 +2,10 @@
 
 import { getState } from "../app/gameState.js";
 import { loadStationResources } from "../modules/stationResourcesModule.js";
-import { updateDisplays } from "./displayManager.js";
+import { updateSpacejunkDisplay, updateStationDisplay } from "./displayManager.js";
+// import { handleDragStart, handleDroppable } from "./dragHandler.js";
 import { updateStaticInventoryGrid, updateDynamicInventoryGrid, displayItemDetails } from "./inventoryManager.js";
+import { handleSalveToStation, moveSalvagePartToStation } from "./salvageHandler.js";
 
 export function updateSpacejunkInventory() {
     const spacejunkInventoryGrid = document.getElementById('spacejunk-inventory-grid');
@@ -11,11 +13,26 @@ export function updateSpacejunkInventory() {
     const spacejunkItems =  getState('spacejunkItems');
     const rawJunkLimit =  getState('rawJunkLimit');
 
+    updateSpacejunkDisplay();
+
     // Updated to check if an item is in the holdItems array and apply the 'on-hold' class
     updateStaticInventoryGrid(spacejunkInventoryGrid, spacejunkItems, (item) => {
         displayItemDetails(spacejunkItemDetails, item, { 'Owner': item.owner });
-    }, rawJunkLimit);
+    }, rawJunkLimit, true);
     loadStationResources();
+}
+
+// Update Salvage Inventory Display
+export function updateSalvageInventory() {
+    const salvageItems = getState('salvageItems');
+
+    const salvageInventoryGrid = document.getElementById('salvage-inventory-grid');
+    const salvageItemDetails = document.getElementById('salvage-item-details');
+    const stationInventoryGrid = document.getElementById('station-inventory-grid');
+
+    updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, (part) => displayItemDetails(salvageItemDetails, part, { 'Quantity': part.quantity }), true);
+    
+    handleSalveToStation();
 }
 
 // Update Station Inventory Display
@@ -26,15 +43,8 @@ export function updateStationInventory() {
     const stationItemDetails = document.getElementById('station-item-details');
     const stationItemsLimit = getState('stationItemsLimit');
 
-    updateStaticInventoryGrid(stationInventoryGrid, stationItems, (item) => displayItemDetails(stationItemDetails, item), stationItemsLimit);
-}
+    updateStationDisplay();
 
-// Update Salvage Inventory Display
-export function updateSalvageInventory() {
-    const salvageItems = getState('salvageItems');
-
-    const salvageInventoryGrid = document.getElementById('salvage-inventory-grid');
-    const salvageItemDetails = document.getElementById('salvage-item-details');
-
-    updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, (part) => displayItemDetails(salvageItemDetails, part, { 'Quantity': part.quantity }));
+    updateStaticInventoryGrid(stationInventoryGrid, stationItems, (item) => displayItemDetails(stationItemDetails, item, { 'Quantity': item.quantity }), stationItemsLimit, true);
+    
 }

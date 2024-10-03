@@ -11,5 +11,4 @@ export function initializeModules() {
   initializeSalvageAreaTemplate();
   // initializeStationInventoryTemplate();
   // initializeCraftingTemplate();
-
 }

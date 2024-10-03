@@ -3,7 +3,7 @@
 import { getState } from '../app/gameState.js';
 import { handleDragStart } from './dragHandler.js';
 
-export function updateStaticInventoryGrid(gridElement, items, displayFunction, limit) {
+export function updateStaticInventoryGrid(gridElement, items, displayFunction, limit, canDragAndDrop = false) {
     const defaultIcon = getState('defaultIcon');
 
     gridElement.innerHTML = ''; // Clear current grid
@@ -20,11 +20,13 @@ export function updateStaticInventoryGrid(gridElement, items, displayFunction, l
             // If there's an item at this index, populate the square
             square.innerHTML = `<i data-lucide="${item.iconType || defaultIcon}" class="icon white"></i>`;
             square.title = `Type: ${item.type}\nOwner: ${item.owner}\nValue: ${item.value}`;
-            square.setAttribute('draggable', true);
-            square.addEventListener('dragstart', (e) => handleDragStart(e, item, i));
+            
+            if (canDragAndDrop) {
+                square.setAttribute('draggable', true);
+                square.addEventListener('dragstart', (e) => handleDragStart(e, item));
+            }
 
             if (item.onHold) {
-                console.log('inventoryManager.js: updateStaticInventoryGrid item.onHold:', item.onHold);
                 square.classList.add('on-hold');
             }
 
@@ -43,10 +45,8 @@ export function updateStaticInventoryGrid(gridElement, items, displayFunction, l
     lucide.createIcons();  // Re-create icons after updating the grid
 }
 
-export function updateDynamicInventoryGrid(gridElement, items, displayFunction) {
+export function updateDynamicInventoryGrid(gridElement, items, displayFunction, canDragAndDrop = false) {
     gridElement.innerHTML = '';
-    console.log('updateDynamicInventoryGrid called');
-    console.log("items:", items)
 
     items.forEach(part => {
         const square = document.createElement('div');
@@ -54,8 +54,12 @@ export function updateDynamicInventoryGrid(gridElement, items, displayFunction) 
         square.innerHTML = `<i data-lucide="${part.iconType || defaultIcon}" class="icon white"></i>`;
         square.title = `Type: ${part.type}`; // Assuming part has a type property
 
+        if (canDragAndDrop) {
+            square.setAttribute('draggable', true);
+            square.addEventListener('dragstart', (e) => handleDragStart(e, part));
+        }
+
         square.addEventListener('click', () => {
-            console.log('part:', part);
             displayFunction(part);
         });
 

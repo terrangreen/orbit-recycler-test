@@ -1,6 +1,7 @@
 // spacejunkCollectorModule.js
 
 import { getState, incrementState, setState } from '../app/gameState.js';
+import { updateSpacejunkDisplay } from '../managers/displayManager.js';
 import { updateSpacejunkInventory } from '../managers/updateInventory.js';
 import { possibleSpacejunk } from '../resources/spacejunkResourcesData.js';
 
@@ -13,25 +14,22 @@ export function loadSpacejunkCollector() {
 
 export function collectSpacejunk() {
     const rawJunkLimit =  getState('rawJunkLimit');
- 
     const collectButton = document.getElementById('collectSpacejunkBtn');
  
     collectButton.addEventListener('click', () => {
         let spacejunkItems = getState('spacejunkItems');
-        console.log('collectSpacejunk, spacejunkItems.length (before):', spacejunkItems.length);
-
+        
         if (spacejunkItems.length < rawJunkLimit) {
             const newItem = possibleSpacejunk();
             
-            console.log('collectSpacejunk, spacejunkItems.length (before, 2):',spacejunkItems.length);
             const updatedSpacejunkItems = [...spacejunkItems, newItem];
             setState('spacejunkItems', updatedSpacejunkItems);
 
             spacejunkItems = getState('spacejunkItems');
-            console.log('collectSpacejunk, spacejunkItems.length (after):',spacejunkItems.length);
             incrementState('money',newItem.value);
             
             updateSpacejunkInventory();
+            updateSpacejunkDisplay();
         };
         updateCollectButtonState();
     });
