@@ -1,82 +1,36 @@
+/* actions.css */
+
 #actions-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #chevron-flow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-  }
-  
-  #chevron-flow .icon {
-    font-size: 2rem; /* Adjust size if necessary */
-  }
-  
-  .action-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1em;
-    border: 0;
-    border-right: var(--border-thickness) solid var(--text-color);
-    padding: 1em;
-    margin: 0;
-    flex: 1;
-    transition: background-color 0.3s ease;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    cursor: pointer;
-  }
-  
-  .action-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
-  
-  .action-button:disabled:hover {
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
-  
-  .action-button:last-child {
-    border-right: 0;
-  }
-  
-  .action-button .lucide {
-    width: 2em;
-    height: 2em;
-  }
-  
-  .action-button span {
-    font-weight: 900;
-    text-transform: uppercase;
-  }
-  
-  .action-button:hover {
-    background-color: var(--text-color);
-    color: var(--background-color);
-  }
-  
-  @media (max-width: 100ch) {
-    #actions-module {
-      flex-direction: column;
-    }
-  
-    .action-buttons {
-      flex-direction: column;
-    }
-  
-    .action-button {
-      border-right: 0;
-      border-bottom: var(--border-thickness) solid var(--text-color);
-    }
-  
-    .action-button:last-child {
-      border-bottom: 0;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#collectSpacejunkBtn {
+  background-color: #005f99; /* Dark background for a space theme */
+  color: white; /* White text for contrast */
+  border: 2px solid #fff; /* White border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Spacing for a larger clickable area */
+  text-transform: uppercase;
+  font-weight: bold; /* Make the text bold */
+  cursor: pointer; /* Change cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+
+#collectSpacejunkBtn:hover {
+  background-color: #3a3a3a; /* Lighter background on hover */
+  transform: scale(1.05); /* Slight scale-up effect on hover */
+}
+
+#collectSpacejunkBtn:active {
+  background-color: #1a1a1a; /* Darker background on click */
+  transform: scale(0.98); /* Slight scale-down effect on click */
+}
+
+#collectSpacejunkBtn:disabled {
+  background-color: #555; /* Disabled state background */
+  color: #ccc; /* Gray text for disabled state */
+  cursor: not-allowed; /* Show not-allowed cursor */
+  opacity: 0.6; /* Slightly faded for disabled state */
+}

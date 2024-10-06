@@ -1,7 +1,9 @@
 // salvageManager.js
 
-import { getState, removeFromStateArray, setState } from "../app/gameState.js";
+import { getState, setState } from "../app/gameState.js";
+import { updateStationStorage } from "./displayManager.js";
 import { handleDroppable } from "./dragHandler.js";
+import { calculateMaterialsStorage, gatherMaterial } from "./materialsHandler.js";
 import { updateSalvageInventory, updateSpacejunkInventory, updateStationInventory } from "./updateInventory.js";
 
 export function handleSalvageArea() {
@@ -79,6 +81,8 @@ export function getAvailableSpace(part) {
     const currentItemCount = stationItems.reduce((count, item) => count + item.quantity, 0);  // Total items in station
     const availableSpace = maxStationCapacity - currentItemCount;
 
+    updateStationStorage();
+
     // Return the number of parts that can be moved, which is the minimum between available space and part quantity
     return Math.min(part.quantity, availableSpace);
 }
@@ -86,13 +90,13 @@ export function getAvailableSpace(part) {
 export function moveSalvagePartToStation(target, part) {
     let salvageItems = getState('salvageItems');
     let stationItems = getState('stationItems') || [];
+    let spacejunkItems = getState('spacejunkItems');
 
     // Get available space in the station inventory
     const availableSpace = getAvailableSpace(part);
 
     if (availableSpace > 0) {
         const moveQuantity = Math.min(part.quantity, availableSpace);
-        // If space is available, reduce the part quantity in salvage and add to station
 
         // Update the quantity in the salvage inventory
         salvageItems = salvageItems.map(salvagePart => {
@@ -114,13 +118,40 @@ export function moveSalvagePartToStation(target, part) {
             stationItems.push({ ...part, quantity: moveQuantity });
         }
 
-        // Update both salvage and station inventories in the state
+        gatherMaterial(part.material);
+
+        spacejunkItems = spacejunkItems.map(spacejunkItem => {
+            if (spacejunkItem.parts.some(p => p.id === part.id)) {
+                spacejunkItem.parts = spacejunkItem.parts.map(p => {
+                    if (p.id === part.id) {
+                        p.quantity -= moveQuantity;  // Reduce the part quantity
+                    }
+                    return p.quantity > 0 ? p : null;  // Keep the part only if it has a positive quantity
+                }).filter(p => p !== null);  // Remove parts with 0 quantity
+            }
+            return spacejunkItem;
+        });
+
+        // Update spacejunk, salvage, and station inventories in the state
+        setState('spacejunkItems', spacejunkItems);
         setState('salvageItems', salvageItems);
         setState('stationItems', stationItems);
+
+        if (salvageItems.length === 0) {
+            const salvageDropArea = document.getElementById('salvage-drop-area');
+            salvageDropArea.innerHTML = '';  // Clear the salvage drop area
+
+            // Remove the space junk item from the spacejunk inventory if it has no parts left
+            spacejunkItems = spacejunkItems.filter(spacejunkItem => spacejunkItem.parts.length > 0);
+            setState('spacejunkItems', spacejunkItems);
+
+            updateSpacejunkInventory();  // Re-render the space junk inventory
+        }
 
         // Re-render the inventory grids
         updateSalvageInventory();
         updateStationInventory();
+        calculateMaterialsStorage();
     } else {
         alert('Inventory full');
     }

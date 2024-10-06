@@ -1,15 +1,17 @@
 // randomGenerator.js
 // Math to determine item probabilities
 
+import { possibleSalvage } from "../resources/salvageResourcesData.js";
+
 export function getRandomSpacejunkItemType() {
-    const types = [
+    const names = [
       'Communication Satellite',
       'Defunct Satellite',
       'GPS Satellite',
       'Weather Satellite',
       'Research Satellite'
     ];
-    return types[Math.floor(Math.random() * types.length)];
+    return names[Math.floor(Math.random() * names.length)];
   }
   
   export function getRandomSpacejunkItemOwner() {
@@ -30,16 +32,7 @@ export function getRandomSpacejunkItemType() {
     return isGso ? gsoFee * 5 : ngsoFee * 5;
   }
   
-  export function getRandomSalvageParts() {
-    const possibleSalvage = [
-      { type: 'Kevlar Fiber', material: 'Kevlar', id: 1, iconType: 'layers-3', color: 'white' },
-      { type: 'Aluminum Parts', material: 'Aluminum', id: 2, iconType: 'atom', color: 'silver' },
-      { type: 'Silicon Processor', material: 'Silicon', id: 3, iconType: 'circuit-board', color: 'white' },
-      { type: 'Steel Parts', material: 'Steel', id: 4, iconType: 'atom', color: 'gray' },
-      { type: 'Copper Parts', material: 'Copper', id: 5, iconType: 'atom', color: 'copper' },
-      { type: 'Solar panels', id: 6, iconType: 'sun', color: 'white'}
-    ];
-  
+  export function getRandomSalvageParts() {  
     return possibleSalvage.filter(() => Math.random() < 0.5).map(part => ({
       ...part,
       quantity: Math.floor(Math.random() * 5) + 1

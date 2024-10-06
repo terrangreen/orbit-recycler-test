@@ -1,92 +1,42 @@
 /* inventory.css */
 
-#spacejunk-inventory-module, #salvage-module, #station-inventory-module {
-    padding: 1rem;
-}
-
-#spacejunk-inventory-module h3, #salvage-module h3, #station-inventory-module h3 {
+.content-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1.2em;
-    text-transform: uppercase;
-    font-weight: 900;
-    border-bottom: 1px solid var(--text-color);
-    padding-bottom: 0.5rem;
+    margin-bottom: 10px;
 }
 
-#spacejunk-inventory-module h3 i, #salvage-module h3 i, #station-inventory-module h3 i {
-    width: 1.5em;
-    height: 1.5em;
-    flex-shrink: 0;
+.content-header .icon {
+    margin-right: 0.5rem;
 }
 
-#spacejunk-inventory-module h3 .lucide, #salvage-module h3 .lucide, #station-inventory-module h3 .lucide {
-    width: 1.5em;
-    height: 1.5em;
-    flex-shrink: 0;
+.spanValueDisplay {
+    margin-left: auto;
 }
 
-.inventory, .header {
+/* Inventory grid layout */
+#spacejunk-inventory-grid,
+#station-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 60px);
+  gap: 0;
+}
+
+/* Inventory square formatting */
+.inventory-square {
+  width: 60px;
+  height: 60px;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.left-panel {
-  display: flex;
-  flex-direction: column;
-}
-
-.left-content {
-  display: flex;
+  justify-content: center;
   align-items: center;
-  text-align: left;
+  background-color: #2c2c2c;
+  border: 1px solid #fff;
 }
 
-.right-content {
-  text-align: right;
-  flex-grow: 1;
+.inventory-square i {
+  font-size: 24px;
 }
 
-#spacejunk-inventory-grid, #station-inventory-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 60px); /* Adjust based on the number of columns */
-    gap: 0;
-    margin: 0;
-    padding: 0;
-    justify-content: left;
+.on-hold {
+  opacity: 0.5;
 }
-
-  
-  .inventory-square {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #2c2c2c;
-    border: 1px solid #fff;
-    cursor: pointer;
-  }
-  
-  .inventory-square i {
-    font-size: 24px;
-  }
-  
-  #spacejunk-item-details, #station-item-details {
-    margin-top: 20px;
-  }
-  
-  .salvage-icons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .salvage-icons i {
-    font-size: 20px;
-  }  
-
-  .on-hold {
-    opacity: 0.5;
-  }

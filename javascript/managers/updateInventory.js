@@ -3,22 +3,21 @@
 import { getState } from "../app/gameState.js";
 import { loadStationResources } from "../modules/stationResourcesModule.js";
 import { updateSpacejunkDisplay, updateStationDisplay } from "./displayManager.js";
-// import { handleDragStart, handleDroppable } from "./dragHandler.js";
-import { updateStaticInventoryGrid, updateDynamicInventoryGrid, displayItemDetails } from "./inventoryManager.js";
+import { updateStaticInventoryGrid, updateDynamicInventoryGrid } from "./inventoryManager.js";
 import { handleSalveToStation, moveSalvagePartToStation } from "./salvageHandler.js";
 
 export function updateSpacejunkInventory() {
     const spacejunkInventoryGrid = document.getElementById('spacejunk-inventory-grid');
-    const spacejunkItemDetails = document.getElementById('spacejunk-item-details');
     const spacejunkItems =  getState('spacejunkItems');
     const rawJunkLimit =  getState('rawJunkLimit');
 
     updateSpacejunkDisplay();
 
-    // Updated to check if an item is in the holdItems array and apply the 'on-hold' class
-    updateStaticInventoryGrid(spacejunkInventoryGrid, spacejunkItems, (item) => {
-        displayItemDetails(spacejunkItemDetails, item, { 'Owner': item.owner });
-    }, rawJunkLimit, true);
+    const extraFields = spacejunkItems.map(item => ({
+        'Owner': item.owner
+    }));
+
+    updateStaticInventoryGrid(spacejunkInventoryGrid, spacejunkItems, extraFields, rawJunkLimit, true);
     loadStationResources();
 }
 
@@ -27,10 +26,14 @@ export function updateSalvageInventory() {
     const salvageItems = getState('salvageItems');
 
     const salvageInventoryGrid = document.getElementById('salvage-inventory-grid');
-    const salvageItemDetails = document.getElementById('salvage-item-details');
-    const stationInventoryGrid = document.getElementById('station-inventory-grid');
 
-    updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, (part) => displayItemDetails(salvageItemDetails, part, { 'Quantity': part.quantity }), true);
+    const extraFields = (part) => ({
+        'Quantity': part.quantity,
+        'Condition': part.condition || 'Unknown'  // Add more fields if needed
+    });
+    
+
+    updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, extraFields, true);
     
     handleSalveToStation();
 }
@@ -40,11 +43,15 @@ export function updateStationInventory() {
     const stationItems = getState('stationItems');
     
     const stationInventoryGrid = document.getElementById('station-inventory-grid');
-    const stationItemDetails = document.getElementById('station-item-details');
     const stationItemsLimit = getState('stationItemsLimit');
+
+    const extraFields = stationItems.map(item => ({
+        'Quantity': item.quantity,
+        'Condition': item.condition
+    }));
 
     updateStationDisplay();
 
-    updateStaticInventoryGrid(stationInventoryGrid, stationItems, (item) => displayItemDetails(stationItemDetails, item, { 'Quantity': item.quantity }), stationItemsLimit, true);
+    updateStaticInventoryGrid(stationInventoryGrid, stationItems, extraFields, stationItemsLimit, true);
     
 }

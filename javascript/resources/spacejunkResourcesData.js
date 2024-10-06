@@ -6,7 +6,7 @@ let currentId = 0;
 
 export function possibleSpacejunk() {
     return {
-        type: getRandomSpacejunkItemType(),
+        name: getRandomSpacejunkItemType(),
         iconType: 'satellite',
         owner: getRandomSpacejunkItemOwner(),
         value: getRandomSpacejunkItemValue(),

@@ -1,49 +1,4 @@
-/* #resources-module {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 2em;
-    padding: 10px;
-    font-size: 1.5em;
-    font-weight: 900;
-}
-
-#resources-content {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.resource-item {
-    display: flex;
-    align-items: center;
-    gap: 0.2em;
-    flex: 1;
-}
-
-.icon {
-    margin-right: 5px;
-}
-
-.resource:hover {
-    background-color: var(--text-color);
-    color: var(--background-color);
-}
-
- 
-  
-@media (max-width: 100ch) {
-    #resources-module {
-        flex-direction: column;
-    }
-
-    .resources {
-        width: 100%;
-        justify-content: space-evenly;
-        padding: 0.5em 0;
-        gap: 0;
-        border-bottom: var(--border-thickness) solid var(--text-color);
-    }
-} */
+/* resources.css */
 
 #resources-module, #life-support-module {
     display: flex;
@@ -55,7 +10,7 @@
     font-weight: 900;
 }
 
-#resources-content, #life-support-content {
+#station-resources-content-1, #station-resources-content-2, #life-support-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start; /* Aligns items at the start */

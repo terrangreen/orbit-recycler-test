@@ -8,17 +8,24 @@ export function handleDragStart(e, item) {
 }
   
 export function handleDroppable(target, nextFunction) {
-    target.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
-    target.addEventListener('drop', (e) => {
-        e.preventDefault();
+    if (!target.dragoverListenerAdded) {
+        target.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        target.dragoverListenerAdded = true;
+    }
 
-        const itemData = e.dataTransfer.getData('item');
-        const item = JSON.parse(itemData);
+    if (!target.dropListenerAdded) {
+        target.addEventListener('drop', (e) => {
+            e.preventDefault();
 
-        nextFunction(target, item);
-    })
+            const itemData = e.dataTransfer.getData('item');
+            const item = JSON.parse(itemData);
+
+            nextFunction(target, item);
+        });
+        target.dropListenerAdded = true;
+    }
 }
 
 

@@ -38,9 +38,18 @@ function replacePlaceholders(template, values) {
 }
 
 // This function dynamically adds or updates the resources in the UI
-export function loadStationResources() {
-  const moduleContainer = document.getElementById('resources-content');
 
+export function loadStationResources() {
+  const moduleContainerTopRow = document.getElementById('station-resources-content-1');
+  const moduleContainerBottomRow = document.getElementById('station-resources-content-2');
+  const knownMaterials = getState('knownMaterials');
+  // const materialsStorage = getState('materialsStorage');
+
+  // Clear the module container for re-render
+  moduleContainerTopRow.innerHTML = ''; 
+  moduleContainerBottomRow.innerHTML = '';
+
+  // First line: Load the existing resources from stationResourcesData
   stationResourcesData.forEach(resource => {
     const spanElement = document.getElementById(resource.valueId);
 
@@ -53,8 +62,8 @@ export function loadStationResources() {
     // If the resource hasn't been created yet, create it
     if (!spanElement) {
       const newResource = document.createElement('div');
-      newResource.classList.add('resource');
-      
+      newResource.classList.add('resource');  // Same class for both resources and materials
+
       const icon = document.createElement('i');
       icon.setAttribute('data-lucide', resource.iconType);
       icon.classList.add('icon', resource.color);
@@ -65,12 +74,39 @@ export function loadStationResources() {
 
       newResource.appendChild(icon);
       newResource.appendChild(span);
-      moduleContainer.appendChild(newResource);
+      moduleContainerTopRow.appendChild(newResource);
     } else {
       // If the element exists, just update the value
       spanElement.textContent = newValue;
     }
   });
+
+  // Second line: Load the discovered materials, applying the same formatting
+  if (knownMaterials.length > 0) {
+    knownMaterials.forEach(material => {
+      const spanElement = document.getElementById(material.valueId);
+
+      // const quantity = materialsStorage[material.quantity] || 0;
+
+      if (!spanElement) {
+        const materialElement = document.createElement('div');
+        materialElement.classList.add('resource');  // Same class as the resources
+
+        // Add material icon (optional, or customize if needed)
+        const icon = document.createElement('i');
+        icon.setAttribute('data-lucide', material.iconType);  // Use a generic icon, or customize as needed
+        icon.classList.add('icon', material.color);  // Customize color as needed
+
+        const span = document.createElement('span');
+        span.id = material.valueId;
+        span.textContent = `${material.quantity}`;
+
+        materialElement.appendChild(icon);
+        materialElement.appendChild(span);
+        moduleContainerBottomRow.appendChild(materialElement);
+      }
+    })
+  }
 
   lucide.createIcons();  // Initialize icons after content is inserted
 }

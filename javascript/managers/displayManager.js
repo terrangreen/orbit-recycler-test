@@ -2,8 +2,8 @@ import { collectSpacejunk } from '../modules/spacejunkCollectorModule.js';
 import { loadStationResources } from '../modules/stationResourcesModule.js';
 import { handleSalvageArea } from '../managers/salvageHandler.js';
 import { updateSpacejunkInventory, updateStationInventory } from './updateInventory.js';
-import { getState } from '../app/gameState.js';
-
+import { getState, setState } from '../app/gameState.js';
+import { loadCraftingSection } from '../modules/craftingModule.js';
 
 export function updateDisplays() {
     updateSpacejunkInventory();
@@ -11,9 +11,11 @@ export function updateDisplays() {
     collectSpacejunk();
     loadStationResources();
     handleSalvageArea();
+    loadCraftingSection();
 }
 
 export function updateSpacejunkDisplay() {
+    updateSpacejunkStorage();
     const spacejunkSpanValue = document.getElementById('rawSpaceJunkValue');
     const spacejunkInventoryDisplay = document.getElementById('spacejunkInventoryDisplay');
 
@@ -22,13 +24,23 @@ export function updateSpacejunkDisplay() {
     }
 }
 
-export function updateStationDisplay() {
-    const stationItems = getState('stationItems');
+export function updateStationDisplay() {    
+    updateStationStorage();
     const stationItemsLimit = getState('stationItemsLimit');
-
+    const stationStorage = getState('stationItemsStorage');
     const stationInventoryDisplay = document.getElementById('stationInventoryDisplay');
-    console.log('stationItems:', stationItems);
-    console.log('stationItems.length:', stationItems.length);
-    console.log('stationItemsLimit', stationItemsLimit)
-    stationInventoryDisplay.textContent = `${stationItems.length} / ${stationItemsLimit}`;
+
+    stationInventoryDisplay.textContent = `${stationStorage} / ${stationItemsLimit}`;
+}
+
+export function updateSpacejunkStorage() {
+    const spacejunkItems = getState('spacejunkItems');
+    const spacejunkItemsStorage = spacejunkItems.reduce((total, item) => total + (item.quantity || 1), 0);
+    setState('spacejunkItemsStorage', spacejunkItemsStorage);
+}
+
+export function updateStationStorage() {
+    const stationItems = getState('stationItems');
+    const stationItemsStorage = stationItems.reduce((total, item) => total + (item.quantity || 1), 0);
+    setState('stationItemsStorage', stationItemsStorage);  // Save the calculated value to the game state
 }
