@@ -43,7 +43,6 @@ export function loadStationResources() {
   const moduleContainerTopRow = document.getElementById('station-resources-content-1');
   const moduleContainerBottomRow = document.getElementById('station-resources-content-2');
   const knownMaterials = getState('knownMaterials');
-  // const materialsStorage = getState('materialsStorage');
 
   // Clear the module container for re-render
   moduleContainerTopRow.innerHTML = ''; 
@@ -81,9 +80,12 @@ export function loadStationResources() {
     }
   });
 
+  ('knownMaterials:', knownMaterials);
+
   // Second line: Load the discovered materials, applying the same formatting
   if (knownMaterials.length > 0) {
     knownMaterials.forEach(material => {
+      ('material:', material);
       const spanElement = document.getElementById(material.valueId);
 
       // const quantity = materialsStorage[material.quantity] || 0;

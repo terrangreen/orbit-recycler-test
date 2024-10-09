@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Orbit Recycler</title>
   <link rel="stylesheet" href="stylesheets/core.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
   <script type="module" src="javascript/script.js"></script>
 </head>
 <body>
@@ -14,113 +16,88 @@
     </div>
   </div>
 
-  <!-- Refer to frame.css-->
-  <!-- The flow is: collect space junk > process > separate > store > craft > attach modules to station or sell them -->
-  <!-- Buying/selling: buying can be purchasing deliveries from earth, selling would be only to other interested parties in space  -->
-  <!-- Hmmm or maybe add some feature to craft a station to sell it to someone else? Interesting. Think more on this -->
   <div id="game_screen">
-    <!-- <header> -->
-      <div id="fixed-header">
-        <div class="header-top">
-          <div class="logo">
-            <i data-lucide="orbit" class="icon white"></i>
-            <h1>Orbit Recycler</h1>
-          </div>
-          <div class="time-module">
-            <span id="time">Day 1, Hour 1</span>
-            <div class="time-button-container">
-              <button id="pause-game"><i data-lucide="pause" class="icon"></i></button>
-              <button id="reset-game"><i data-lucide="rotate-ccw" class="icon"></i></button>
-            </div>
-          </div>
+    <div id="notification-container"></div>
+    <div id="fixed-header">
+      <div class="header-top">
+        <div class="logo">
+          <i data-lucide="orbit" class="icon white"></i>
+          <h1>Orbit Recycler</h1>
         </div>
-      
-        <div id="station-resources-module">
-          <div id="station-resources-content-1">
-            <!-- Resources will appear here -->
-          </div> 
-          <div id="station-resources-content-2">
-            <!-- Resources will appear here -->
-          </div> 
+        <div class="time-module">
+          <span id="time">Day 1, Hour 1</span>
+          <div class="time-button-container">
+            <button id="pause-game"><i data-lucide="pause" class="icon"></i></button>
+            <button id="reset-game"><i data-lucide="rotate-ccw" class="icon"></i></button>
+          </div>
         </div>
       </div>
-    <!-- </header> -->
-
-    <!-- Will use actions.css to define how the action buttons will look -->
+    
+      <div id="station-resources-module">
+        <div id="station-resources-content-1">
+          <!-- Resources will appear here -->
+        </div> 
+        <div id="station-resources-content-2">
+          <!-- Resources will appear here -->
+        </div> 
+      </div>
+    </div>
 
     <div id="game-modules">
       <div id="secondary-modules" class="module-container">
         
-        <div id="actions-container">
-          <section id="spaceJunk-module">
-            <button id="collectSpacejunkBtn">Collect Space Junk</button>
-          </section>
+        <div id="collect-spacejunk-container">
+          <button id="collectSpacejunkBtn">Collect Space Junk</button>
         </div>
-
-        <!-- <section id="chevron-flow">
-          <i data-lucide="chevron-down" class="icon white"></i>
-        </section> -->
 
         <!-- Inventory Table -->
         <section id="spacejunk-inventory-module" class="module">
-          <h3 class="collapsible" data-expanded="true">
+          <h3 class="module-header collapsible" data-expanded="true">
             <i data-lucide="boxes" class="icon white"></i>
             Space Junk
             <i data-lucide="chevron-up" class="toggle-icon"></i>
           </h3>
-          <div id="spacejunk-inventory-content" class="module-content">
+          <div id="spacejunk-inventory-content">
             <!-- Spacejunk inventory will appear here -->
           </div>
         </section>
 
-        <!-- <section id="chevron-flow">
-          <i data-lucide="chevron-down" class="icon white"></i>
-        </section> -->
-
         <section id="salvage-module" class="module">
-          <h3 class="collapsible" data-expanded="true">
+          <h3 class="module-header collapsible" data-expanded="true">
             <i data-lucide="boxes" class="icon white"></i>
             Salvage Area
             <i data-lucide="chevron-up" class="toggle-icon"></i>
           </h3>
-          <div id="salvage-area-content" class="module-content">
+          <div id="salvage-area-content">
             <!-- Drag items into this area to salvage-->
           </div>
         </section>
 
-        <!-- <section id="chevron-flow">
-          <i data-lucide="chevron-down" class="icon white"></i>
-        </section> -->
-
         <section id="station-inventory-module" class="module">
-          <h3 class="collapsible" data-expanded="true">
+          <h3 class="module-header collapsible" data-expanded="true">
             <i data-lucide="boxes" class="icon white"></i>
             Station Inventory
             <i data-lucide="chevron-up" class="toggle-icon"></i>
           </h3>
-          <div id="station-inventory-content" class="module-content">
+          <div id="station-inventory-content">
             <!-- Staton inventory will appear here -->
           </div>
         </section>
 
-        <!-- <section id="chevron-flow">
-          <i data-lucide="chevron-down" class="icon white"></i>
-        </section> -->
-
         <section id="crafting-module" class="module">
-          <h3 class="collapsible" data-expanded="true">
+          <h3 class="module-header collapsible" data-expanded="true">
             <i data-lucide="pencil-ruler" class="icon white"></i>
             Crafting
             <i data-lucide="chevron-up" class="toggle-icon"></i>
           </h3>
-          <div id="crafting-content" class="module-content">
+          <div id="crafting-content">
             <!-- Crafting will appear here -->
           </div>
         </section>
       </div>
 
       <div id="main-modules" class="module-container">
-        <section id="station-module" class="module">
+        <section id="station-module">
           <img src="private-space-station-1.jpg">
         </section>
         <section id="life-support-module" class="module">
@@ -140,6 +117,9 @@
   </div>
   
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
   <script>
     lucide.createIcons();
   </script>

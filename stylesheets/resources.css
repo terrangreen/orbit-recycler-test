@@ -1,5 +1,23 @@
 /* resources.css */
 
+/* Station resources section */
+#station-resources-module {
+    flex-direction: column;
+    align-items: center;
+}
+
+#station-resources-content-2 {
+    margin-top: 10px;
+}
+
+#station-resources-content-1,
+#station-resources-content-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%; /* Each content div takes 50% width */
+}
+
 #resources-module, #life-support-module {
     display: flex;
     flex-wrap: wrap;
@@ -10,11 +28,28 @@
     font-weight: 900;
 }
 
-#station-resources-content-1, #station-resources-content-2, #life-support-content {
+#station-resources-content-1, #station-resources-content-2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start; /* Aligns items at the start */
     gap: 1em; /* Adjust gap between resource items */
+}
+
+
+
+/* Life support header styling */
+.life-support-header {
+    display: flex;
+    /* font-size: 1.5em; */
+    align-items: center;
+    padding: 0px 20px 0px 10px;
+    text-transform: uppercase;
+    background-color: white;
+    color: black;
+}
+
+.life-support-header .icon {
+    margin-right: 0.5rem;
 }
 
 .resource {
@@ -56,15 +91,17 @@
 
 
 @media (max-width: 100ch) {
-    #resources-module {
+    #station-resources-module {
         flex-direction: column;
+        align-items: center;
     }
 
-    .resources {
-        width: 100%;
-        justify-content: space-evenly;
-        padding: 0.5em 0;
-        gap: 0;
-        border-bottom: var(--border-thickness) solid var(--text-color);
+    #station-resources-content-1,
+    #station-resources-content-2 {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    #game-screen {
+        height: 100%;
     }
 }

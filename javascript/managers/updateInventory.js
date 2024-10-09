@@ -13,11 +13,13 @@ export function updateSpacejunkInventory() {
 
     updateSpacejunkDisplay();
 
-    const extraFields = spacejunkItems.map(item => ({
-        'Owner': item.owner
+    const selectFields = spacejunkItems.map(item => ({
+        'Item': item.name,
+        'Owner': item.owner,
+        'Value': item.value
     }));
 
-    updateStaticInventoryGrid(spacejunkInventoryGrid, spacejunkItems, extraFields, rawJunkLimit, true);
+    updateStaticInventoryGrid(spacejunkInventoryGrid, spacejunkItems, selectFields, rawJunkLimit, true);
     loadStationResources();
 }
 
@@ -27,13 +29,14 @@ export function updateSalvageInventory() {
 
     const salvageInventoryGrid = document.getElementById('salvage-inventory-grid');
 
-    const extraFields = (part) => ({
+    const selectFields = (part) => ({
+        'Item': part.name,
         'Quantity': part.quantity,
         'Condition': part.condition || 'Unknown'  // Add more fields if needed
     });
     
 
-    updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, extraFields, true);
+    updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, selectFields, true);
     
     handleSalveToStation();
 }
@@ -45,13 +48,14 @@ export function updateStationInventory() {
     const stationInventoryGrid = document.getElementById('station-inventory-grid');
     const stationItemsLimit = getState('stationItemsLimit');
 
-    const extraFields = stationItems.map(item => ({
+    const selectFields = stationItems.map(item => ({
+        'Item': item.name,
         'Quantity': item.quantity,
-        'Condition': item.condition
+        'Condition': item.condition || ''
     }));
 
     updateStationDisplay();
 
-    updateStaticInventoryGrid(stationInventoryGrid, stationItems, extraFields, stationItemsLimit, true);
+    updateStaticInventoryGrid(stationInventoryGrid, stationItems, selectFields, stationItemsLimit, true);
     
 }

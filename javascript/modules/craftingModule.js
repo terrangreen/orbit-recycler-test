@@ -1,49 +1,63 @@
+// craftingModule.js
+
 import { getState } from "../app/gameState.js";
 import { craftItem } from "../managers/craftingManager.js";
 
 export function loadCraftingSection() {
     const craftingContainer = document.getElementById('crafting-content');
-    craftingContainer.innerHTML = '';  // Clear previous content
+    craftingContainer.innerHTML = '';
 
-    const craftingRecipes = getState('craftingRecipes');
+    const knownRecipes = getState('knownRecipes') || [];
+    const knownMaterials = getState('knownMaterials') || [];
 
-    craftingRecipes.forEach(recipe => {
-        if (recipe.unlocked) {
-            const recipeElement = document.createElement('div');
-            recipeElement.classList.add('crafting-recipe');
+    // Iterate over knownRecipes directly
+    knownRecipes.forEach(recipe => {
+        const recipeElement = document.createElement('div');
+        recipeElement.classList.add('crafting-recipe');
 
-            // Add preview icon
-            const icon = document.createElement('i');
-            icon.setAttribute('data-lucide', recipe.icon);
-            recipeElement.appendChild(icon);
+        // Add preview icon
+        const icon = document.createElement('i');
+        icon.setAttribute('data-lucide', recipe.iconType);
+        icon.classList.add('icon');
+        recipeElement.appendChild(icon);
 
-            // Add recipe name
-            const name = document.createElement('span');
-            name.textContent = recipe.name;
-            recipeElement.appendChild(name);
+        // Add recipe name
+        const name = document.createElement('span');
+        name.textContent = recipe.name;
+        recipeElement.appendChild(name);
 
-            // Add material requirements
-            const materials = document.createElement('div');
-            materials.classList.add('materials');
-            for (const [material, required] of Object.entries(recipe.materials)) {
-                const materialElement = document.createElement('span');
-                const currentAmount = getState(material) || 0;  // Get current material count from game state
-                materialElement.textContent = `${material}: ${currentAmount} / ${required}`;
-                if (currentAmount < required) {
-                    materialElement.classList.add('insufficient');  // Grayed out if insufficient
-                }
-                materials.appendChild(materialElement);
+        // Prepare tooltip content based on materials requirements
+        let tooltipContent = '';
+        let canCraft = true;
+
+        Object.entries(recipe.materials).forEach(([material, required]) => {
+            const materialData = knownMaterials.find(m => m.material === material);
+            const materialName = materialData ? materialData.name : '';
+            const currentAmount = materialData ? materialData.quantity : 0;
+
+            tooltipContent += `<p><strong>${materialName}:</strong> ${currentAmount} / ${required}</p>`;
+
+            if (currentAmount < required) {
+                canCraft = false;
             }
-            recipeElement.appendChild(materials);
+        });
 
-            // Add craft button
-            const craftButton = document.createElement('button');
-            craftButton.textContent = 'Craft';
-            craftButton.addEventListener('click', () => craftItem(recipe));
-            recipeElement.appendChild(craftButton);
+        // Set tooltip content and initialize Tippy
+        recipeElement.setAttribute('data-tippy-content', tooltipContent);
+        tippy(recipeElement, {
+            allowHTML: true,
+            animation: 'scale',
+            placement: 'right',
+        });
 
-            craftingContainer.appendChild(recipeElement);
-        }
+        // Add craft button
+        const craftButton = document.createElement('button');
+        craftButton.textContent = 'Craft';
+        craftButton.disabled = !canCraft;
+        craftButton.addEventListener('click', () => craftItem(recipe));
+        recipeElement.appendChild(craftButton);
+
+        craftingContainer.appendChild(recipeElement);
     });
 
     lucide.createIcons();  // Initialize icons

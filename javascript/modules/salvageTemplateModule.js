@@ -2,9 +2,10 @@
 
 export function initializeSalvageAreaTemplate() {
     const inventoryContent = document.getElementById('salvage-area-content');
+
+    inventoryContent.classList.add('inventory-content');
   
     const inventoryHTML = `
-      <section class="salvageInventory">
         <div class="content-header">
             <i data-lucide="settings" class="icon white"></i>
             Process Salvage
@@ -21,7 +22,6 @@ export function initializeSalvageAreaTemplate() {
                 <!-- Salvage parts will be displayed here -->
             </div>
         </div>
-      </section>
     `;
   
     inventoryContent.innerHTML = inventoryHTML;

@@ -1,36 +1,41 @@
 /* actions.css */
 
-#actions-container {
+#collect-spacejunk-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 #collectSpacejunkBtn {
-  background-color: #005f99; /* Dark background for a space theme */
-  color: white; /* White text for contrast */
-  border: 2px solid #fff; /* White border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 20px; /* Spacing for a larger clickable area */
+  width: 100px;
+  height: 100px;
+  background-color: #005f99;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  padding: 0;
   text-transform: uppercase;
-  font-weight: bold; /* Make the text bold */
-  cursor: pointer; /* Change cursor on hover */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #collectSpacejunkBtn:hover {
-  background-color: #3a3a3a; /* Lighter background on hover */
-  transform: scale(1.05); /* Slight scale-up effect on hover */
+  background-color: #3a3a3a;
+  transform: scale(1.05);
 }
 
 #collectSpacejunkBtn:active {
-  background-color: #1a1a1a; /* Darker background on click */
-  transform: scale(0.98); /* Slight scale-down effect on click */
+  background-color: #1a1a1a;
+  transform: scale(0.98);
 }
 
 #collectSpacejunkBtn:disabled {
-  background-color: #555; /* Disabled state background */
-  color: #ccc; /* Gray text for disabled state */
-  cursor: not-allowed; /* Show not-allowed cursor */
-  opacity: 0.6; /* Slightly faded for disabled state */
+  background-color: #555;
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }

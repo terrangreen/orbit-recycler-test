@@ -1,7 +1,20 @@
 /* crafting.css */
 
-.crafting-recipes {
-    display: block;
-    margin: 10px 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
+#crafting-content {
+    padding: 5px;
+}
+
+.crafting-recipe {
+    display: flex;
+    align-items: center;
+    /* transition: background-color 0.3s ease, color 0.3s ease; */
+}
+
+.crafting-recipe.icon {
+    margin-right: 10px;
+}
+
+.crafting-recipe button {
+    margin-left: 10px;
+    padding: 5px 10px;
 }

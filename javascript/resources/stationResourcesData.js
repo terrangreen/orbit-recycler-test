@@ -2,14 +2,14 @@ export const stationResourcesData = [
     {
       type: 'spaceJunk',
       iconType: 'trash-2',
-      color: 'white',
+      iconColor: 'white',
       valueId: 'rawSpaceJunkValue',
       template: '${spacejunkItems.length} / ${rawJunkLimit}'
     },
     { 
       type: 'money', 
       iconType: 'banknote', 
-      color: 'green', 
+      iconColor: 'green', 
       valueId: 'moneyValue',
       template: '${money}'
     }

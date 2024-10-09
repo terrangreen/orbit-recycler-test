@@ -1,9 +1,12 @@
+// displayManager.js
+
 import { collectSpacejunk } from '../modules/spacejunkCollectorModule.js';
 import { loadStationResources } from '../modules/stationResourcesModule.js';
 import { handleSalvageArea } from '../managers/salvageHandler.js';
 import { updateSpacejunkInventory, updateStationInventory } from './updateInventory.js';
 import { getState, setState } from '../app/gameState.js';
 import { loadCraftingSection } from '../modules/craftingModule.js';
+// import { loadCraftingContent } from './craftingManager.js';
 
 export function updateDisplays() {
     updateSpacejunkInventory();
@@ -12,6 +15,7 @@ export function updateDisplays() {
     loadStationResources();
     handleSalvageArea();
     loadCraftingSection();
+    // loadCraftingContent();
 }
 
 export function updateSpacejunkDisplay() {

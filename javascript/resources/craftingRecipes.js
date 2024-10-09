@@ -1,20 +1,22 @@
 export const craftingRecipes = [
     {
         name: 'Storage Bag',
-        icon: 'box',  // The preview icon
-        category: 'Storage',
+        iconType: 'box',
+        iconColor: 'white',
+        category: 'storage',
         materials: {
-            Kevlar: 5,
-            Steel: 6
+            kevlar: 5,
+            steel: 6
         },
         unlocked: true  // This recipe is available at the start
     },
     {
         name: 'Steel Box',
-        icon: 'box',
-        category: 'Storage',
+        iconType: 'box',
+        iconColor: 'white',
+        category: 'storage',
         materials: {
-            Steel: 10,
+            steel: 10,
         },
         unlocked: false  // This recipe will be unlocked later
     }

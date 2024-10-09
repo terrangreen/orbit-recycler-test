@@ -1,0 +1,31 @@
+The flow is:
+collect space junk > process > separate > store 
+    > craft > attach modules to station or sell them
+
+
+
+C U R R E N T
+> Crafting works (only 1 recipe)    DONE
+> Fix Crafting formatting
+> Add crafting recipes
+
+N E X T
+Station management
+    > layout
+    > components
+
+N E W   I D E A S
+Buying/selling
+Will need a supply of food, O2, water. Expensive! $$$$$
+>> This should drive the player to think about growing food,
+    recycling
+>> improved with a docking module, robot arm
+
+? How to attach modules to station
+? Mechanism for installing components inside or outside
+
+
+B U G S
+? Bug: when the window is big enough for the station inventory
+    to appear on the first row, the first three inventory modules
+    have a gap at the bottom. No idea.

@@ -36,7 +36,7 @@ export function moveToSalvage(target, item) {
 
     // Update the salvage drop area with the dropped item's icon and details
     target.innerHTML = `
-        <i data-lucide="${item.iconType || defaultIcon}" class="icon white"></i>
+        <i data-lucide="${item.iconType || defaultIcon}" class="icon ${item.iconColor}"></i>
     `;
 
     returnBtn.disabled = false;

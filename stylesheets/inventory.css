@@ -14,6 +14,16 @@
     margin-left: auto;
 }
 
+.inventory-content {
+  padding: 5px;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center; /* Aligns button and content vertically */
+  gap: 10px; /* Space between button and inventory content */
+}
+
 /* Inventory grid layout */
 #spacejunk-inventory-grid,
 #station-inventory-grid {

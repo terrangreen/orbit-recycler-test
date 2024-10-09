@@ -2,41 +2,23 @@
 
 #game-modules {
     display: flex;
-    gap: 10px;
-    margin: 10px;
-    height: calc(100vh - 60px);
-}
-
-#chevron-flow {
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    min-width: max-content;
-    width: auto;
-    max-width: 100%;
-}
-
-#chevron-flow .icon {
-    font-size: 2rem;
-}
-
-#secondary-modules {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    flex-grow: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    min-width: 200px;
-    max-height: calc(100vh = 60px);
+    flex: 0 0 auto;
     overflow: scroll;
+    margin: 10px;
 }
 
 #main-modules {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+}
+
+#secondary-modules {
+    display: flex;
+    flex-direction: row;
     width: auto;
+    overflow: scroll;
+    max-height: calc(100vh - 60px);
 }
 
 /* Shared container styling for both main and secondary modules */
@@ -50,58 +32,62 @@
 
 /* Shared module styling for all individual modules */
 .module {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 45px auto auto;
     border: 1px solid #fff;
     border-radius: 5px;
     background-color: #2c2c2c;
-    padding: 10px;
-    min-width: max-content;
-    width: auto;
-    max-width: 100%;
+}
+
+.module-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-width: fit-content;
 }
 
 /* Header styling for all modules */
 .module h3 {
     display: flex;
-    align-items: center;
     justify-content: center;
-    position: relative;
     background-color: white;
     color: black;
     text-transform: uppercase;
     font-weight: 900;
-    padding: 0.5em;
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 10px;
     font-size: 1.2em;
-    border-bottom: 1px solid var(--text-color);
-    min-width: max-content;
-    width: auto;
-    max-width: 100%;
 }
 
-/* Icon and chevron positioning for headers */
-.module h3 .icon {
-    position: absolute;
-    left: 10px;
+.module h3.collapsible {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.module h3 .toggle-icon {
-    position: absolute;
-    right: 10px;
+.collapsible .toggle-icon {
     transition: transform 0.3s ease;
 }
 
 .module h3.collapsed .toggle-icon {
-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.module-content {
+    height: fit-content;
 }
 
 /* Module content styling */
-.module-content {
+/* .module-content {
     width: auto;
     max-width: 100%;
     overflow: hidden;
     max-height: 400px;
     transition: max-height 0.3s ease;
     min-width: max-content;
-}
+} */
 
 .module-content.collapsed {
     max-height: 0;
@@ -109,16 +95,25 @@ transform: rotate(180deg);
     display: none;
 }
 
-/* Life support header styling */
-.life-support-header {
-    display: flex;
-    align-items: center;
-    padding: 0px 20px 0px 10px;
-    text-transform: uppercase;
-    background-color: white;
-    color: black;
+@media (max-width: 768px) {
+    #game-modules {
+        flex-direction: column;
+        height: auto;
+    }
+
+    #secondary-modules, #main-modules {
+        width: 100%;
+        overflow: scroll;
+    }
 }
 
-.life-support-header .icon {
-    margin-right: 0.5rem;
+@media (min-width: 769px) {
+    #game-modules {
+        flex-direction: row;
+    }
+
+    #secondary-modules, #main-modules {
+        flex-basis: auto;
+        overflow: scroll;
+    }
 }

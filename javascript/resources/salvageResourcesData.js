@@ -9,7 +9,7 @@ export const possibleSalvage = [
       id: 1,
       valueId: 'kevlarValue', 
       iconType: 'layers-3', 
-      color: 'white'
+      iconColor: 'white'
     },
     { 
       name: 'Aluminum Parts', 
@@ -18,7 +18,7 @@ export const possibleSalvage = [
       id: 2, 
       valueId: 'aluminumValue', 
       iconType: 'atom', 
-      color: 'silver' 
+      iconColor: 'silver' 
     },
     { 
       name: 'Steel Parts', 
@@ -27,7 +27,7 @@ export const possibleSalvage = [
       id: 3, 
       valueId: 'steelValue', 
       iconType: 'atom', 
-      color: 'gray' 
+      iconColor: 'gray' 
     },
     { 
       name: 'Copper Parts', 
@@ -36,7 +36,7 @@ export const possibleSalvage = [
       id: 4, 
       valueId: 'copperValue', 
       iconType: 'atom', 
-      color: 'copper' 
+      iconColor: 'copper' 
     },
     // These are the possible whole components
     { 
@@ -46,7 +46,7 @@ export const possibleSalvage = [
       id: 10, 
       valueId: 'siliconValue', 
       iconType: 'circuit-board', 
-      color: 'white' 
+      iconColor: 'white' 
     },
     { 
       name: 'Solar panels', 
@@ -54,6 +54,6 @@ export const possibleSalvage = [
       material: 'solar-panel',
       id: 11, 
       iconType: 'sun', 
-      color: 'white'
+      iconColor: 'white'
     }
   ];

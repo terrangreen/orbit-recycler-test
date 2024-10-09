@@ -9,6 +9,18 @@
         color: var(--white);
     }
 
+    &.copper {
+      color: #B87333;
+    }
+
+    &.gray {
+      color: #A9A9A9;
+    }
+
+    &.green {
+      color: #50C878;
+    }
+
     &.red,
     &.dark-red {
       color: var(--dark-red);
