@@ -1,33 +1,45 @@
 /* modules.css */
 
+#game-screen {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
 #game-modules {
     display: flex;
-    flex: 0 0 auto;
-    overflow: scroll;
+    height: calc(100vh - var(--header-height, 0px));
+    overflow: hidden;
     margin: 10px;
 }
 
-#main-modules {
+.modules-left {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
-    flex-shrink: 0;
-}
-
-#secondary-modules {
-    display: flex;
-    flex-direction: row;
-    width: auto;
-    overflow: scroll;
-    max-height: calc(100vh - 60px);
-}
-
-/* Shared container styling for both main and secondary modules */
-.module-container {
-    display: flex;
-    flex-wrap: wrap;
+    overflow-y: auto;
+    flex-wrap: nowrap;
     gap: 10px;
     margin: 10px;
+    width: max-content;
+    margin-right: 0px;
+    padding-right: 20px;
+}
+
+.top-row-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.modules-main {
+    display: flex;
+    flex: 0 0 max-content;
+    flex-direction: column;
     overflow-y: auto;
+    gap: 10px;
+    margin: 10px;
+    margin-right: 0px;
+    padding-right: 20px;
 }
 
 /* Shared module styling for all individual modules */
@@ -75,19 +87,14 @@
     transform: rotate(180deg);
 }
 
-.module-content {
-    height: fit-content;
-}
-
 /* Module content styling */
-/* .module-content {
+.module-content {
     width: auto;
-    max-width: 100%;
     overflow: hidden;
     max-height: 400px;
     transition: max-height 0.3s ease;
     min-width: max-content;
-} */
+}
 
 .module-content.collapsed {
     max-height: 0;
@@ -95,13 +102,13 @@
     display: none;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     #game-modules {
         flex-direction: column;
         height: auto;
     }
 
-    #secondary-modules, #main-modules {
+    .modules-left, .modules-main {
         width: 100%;
         overflow: scroll;
     }
@@ -112,8 +119,8 @@
         flex-direction: row;
     }
 
-    #secondary-modules, #main-modules {
+    .modules-left, .modules-main {
         flex-basis: auto;
         overflow: scroll;
     }
-}
+} */

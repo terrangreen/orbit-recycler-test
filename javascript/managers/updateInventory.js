@@ -4,7 +4,8 @@ import { getState } from "../app/gameState.js";
 import { loadStationResources } from "../modules/stationResourcesModule.js";
 import { updateSpacejunkDisplay, updateStationDisplay } from "./displayManager.js";
 import { updateStaticInventoryGrid, updateDynamicInventoryGrid } from "./inventoryManager.js";
-import { handleSalveToStation, moveSalvagePartToStation } from "./salvageHandler.js";
+import { handleSalveToStation } from "./salvageHandler.js";
+import { createStationLayoutGrid, placeModulesInGrid } from "./stationManager.js";
 
 export function updateSpacejunkInventory() {
     const spacejunkInventoryGrid = document.getElementById('spacejunk-inventory-grid');
@@ -58,4 +59,22 @@ export function updateStationInventory() {
 
     updateStaticInventoryGrid(stationInventoryGrid, stationItems, selectFields, stationItemsLimit, true);
     
+}
+
+export function updateStationLayout() {
+    const stationModules = getState('stationModules') || [];
+
+    const stationLayoutGrid = document.getElementById('station-layout-grid');
+    const stationSize = Math.sqrt(getState('stationModulesLimit'));
+
+    const selectFields = stationModules.map(module => ({
+        'Module': module.name
+    }));
+
+    // updateStaticInventoryGrid(stationLayoutGrid, stationModules, selectFields, stationModulesLimit, true);
+
+    // Example call:
+    // updateStaticInventoryGrid(stationLayoutGrid, [], {}, stationModulesLimit, false);
+    createStationLayoutGrid(stationLayoutGrid, stationSize);
+    placeModulesInGrid(stationLayoutGrid, stationModules, selectFields);
 }

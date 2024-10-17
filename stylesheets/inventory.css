@@ -20,15 +20,20 @@
 
 .flex-container {
   display: flex;
-  align-items: center; /* Aligns button and content vertically */
-  gap: 10px; /* Space between button and inventory content */
+  align-items: center;
+  gap: 10px;
 }
 
 /* Inventory grid layout */
-#spacejunk-inventory-grid,
-#station-inventory-grid {
+#spacejunk-inventory-grid {
   display: grid;
   grid-template-columns: repeat(5, 60px);
+  gap: 0;
+}
+
+#station-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
   gap: 0;
 }
 

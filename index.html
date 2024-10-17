@@ -35,32 +35,37 @@
     
       <div id="station-resources-module">
         <div id="station-resources-content-1">
-          <!-- Resources will appear here -->
+          <!-- Storage and money will appear here -->
         </div> 
         <div id="station-resources-content-2">
-          <!-- Resources will appear here -->
+          <!-- Salvage will appear here -->
+        </div>
+        <div id="life-support-content">
+          <!-- Life Support will appear here -->
         </div> 
       </div>
     </div>
 
     <div id="game-modules">
-      <div id="secondary-modules" class="module-container">
+      <div class="modules-left">
         
-        <div id="collect-spacejunk-container">
-          <button id="collectSpacejunkBtn">Collect Space Junk</button>
-        </div>
-
-        <!-- Inventory Table -->
-        <section id="spacejunk-inventory-module" class="module">
-          <h3 class="module-header collapsible" data-expanded="true">
-            <i data-lucide="boxes" class="icon white"></i>
-            Space Junk
-            <i data-lucide="chevron-up" class="toggle-icon"></i>
-          </h3>
-          <div id="spacejunk-inventory-content">
-            <!-- Spacejunk inventory will appear here -->
+        <div class="top-row-container">
+          <div id="collect-spacejunk-container">
+            <button id="collectSpacejunkBtn">Collect Space Junk</button>
           </div>
-        </section>
+
+          <!-- Inventory Table -->
+          <section id="spacejunk-inventory-module" class="module">
+            <h3 class="module-header collapsible" data-expanded="true">
+              <i data-lucide="boxes" class="icon white"></i>
+              Space Junk
+              <i data-lucide="chevron-up" class="toggle-icon"></i>
+            </h3>
+            <div id="spacejunk-inventory-content">
+              <!-- Spacejunk inventory will appear here -->
+            </div>
+          </section>
+        </div>
 
         <section id="salvage-module" class="module">
           <h3 class="module-header collapsible" data-expanded="true">
@@ -96,19 +101,31 @@
         </section>
       </div>
 
-      <div id="main-modules" class="module-container">
+      <div class="modules-main">
         <section id="station-module">
-          <img src="private-space-station-1.jpg">
+          <img src="private-space-station-1.jpg" style="height: 290px; width: auto">
         </section>
-        <section id="life-support-module" class="module">
+        <div class="modules-left">
+          <div id="station-layout-module" class="module">
+            <h3 class="module-header collapsible" data-expanded="true">
+              <i data-lucide="boxes" class="icon white"></i>
+              Station Layout
+              <i data-lucide="chevron-up" class="toggle-icon"></i>
+            </h3>
+            <div id="station-layout-content">
+              <!-- Station layout will appear here -->
+            </div>
+          </dov>
+        </div>
+        <!-- <section id="life-support-module" class="module">
           <div class="life-support-header">
             <i data-lucide="life-buoy" class="icon white"></i>
             Life Support
-          </div>
-          <div id="life-support-content">
+          </div> -->
+          <!-- <div id="life-support-content"> -->
             <!-- Life Support Resources will appear here -->
-          </div>
-        </section>
+          <!-- </div> -->
+        <!-- </section> -->
       </div>
 
       <!-- <div id="tertiary-modules">

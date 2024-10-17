@@ -61,16 +61,16 @@ export function updateDynamicInventoryGrid(gridElement, items, selectFields = nu
         const fields = selectFields ? selectFields(part, index) : {};
 
         let tooltipContent = '';
-            for (const [key, value] of Object.entries(fields)) {
-                tooltipContent += `<p><strong>${key}:</strong> ${value}</p>`;
-            }
+        for (const [key, value] of Object.entries(fields)) {
+            tooltipContent += `<p><strong>${key}:</strong> ${value}</p>`;
+        }
 
-            square.setAttribute('data-tippy-content', tooltipContent);
-            tippy(square, {
-                allowHTML: true,
-                placement: 'top',
-                animation: 'scale'
-            });
+        square.setAttribute('data-tippy-content', tooltipContent);
+        tippy(square, {
+            allowHTML: true,
+            placement: 'top',
+            animation: 'scale'
+        });
 
         if (canDragAndDrop) {
             square.setAttribute('draggable', true);
@@ -104,7 +104,6 @@ export function addToStationInventory(item, quantity, itemType) {
 }
 
 export function addToStationInventoryNew(item, quantity, itemType) {
-    console.log('addToStationInventory called');
     const stationItems = getState('stationItems');
     const stationItemsLimit = getState('stationItemsLimit');
     const currentItemCount = stationItems.reduce((total, currentItem) => total + currentItem.quantity, 0);
@@ -116,7 +115,6 @@ export function addToStationInventoryNew(item, quantity, itemType) {
             existingItem.quantity += quantity;
         } else {
             stationItems.push({ name: item, quantity, type: itemType });
-            console.log('Pushing item:', item);
         }
         setState('stationItems', stationItems);
     } else {

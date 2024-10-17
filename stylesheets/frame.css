@@ -92,7 +92,7 @@ header {
     /* overflow-y: scroll; */
 }
   
-@media (max-width: 950px) {
+/* @media (max-width: 950px) {
     .header-top {
         flex-direction: column;
         justify-content: space-between;
@@ -100,15 +100,12 @@ header {
     }
 
     .logo {
-        /* width: 100%; */
         justify-content: center;
     }
 
     .time-module {
-        /* width: 100%; */
         justify-content: center;
         align-items: center;
-        /* margin-left: 0; */
     }
 
     #time {
@@ -118,4 +115,4 @@ header {
     .time-button-container {
         justify-content: center;
     }
-} 
+}  */

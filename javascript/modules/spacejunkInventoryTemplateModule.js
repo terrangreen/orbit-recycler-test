@@ -14,7 +14,7 @@ export function initializeSpacejunkInventoryTemplate() {
       <div id="spacejunk-inventory-grid">
         <!-- Inventory squares will be added dynamically -->
       </div>
-    `;
+     `;
   
     inventoryContent.innerHTML = inventoryHTML;
     lucide.createIcons();  // Initialize icons after content is inserted

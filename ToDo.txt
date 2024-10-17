@@ -6,11 +6,15 @@ collect space junk > process > separate > store
 
 C U R R E N T
 > Crafting works (only 1 recipe)    DONE
-> Fix Crafting formatting
+> Fix Crafting formatting           DONE
 > Add crafting recipes
 
 N E X T
-Station management
+> Fix life support resources        DONE
+> Make life support resources live with real rates
+> Make inventory stacks subjective with count values for
+    < differrent items
+> Station management
     > layout
     > components
 

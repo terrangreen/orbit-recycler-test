@@ -6,7 +6,8 @@ import { handleSalvageArea } from '../managers/salvageHandler.js';
 import { updateSpacejunkInventory, updateStationInventory } from './updateInventory.js';
 import { getState, setState } from '../app/gameState.js';
 import { loadCraftingSection } from '../modules/craftingModule.js';
-// import { loadCraftingContent } from './craftingManager.js';
+import { loadLifeSupportContent } from '../modules/lifeSupportTemplateModule.js';
+import { loadStationLayoutSection } from '../modules/stationLayout.js';
 
 export function updateDisplays() {
     updateSpacejunkInventory();
@@ -15,7 +16,9 @@ export function updateDisplays() {
     loadStationResources();
     handleSalvageArea();
     loadCraftingSection();
-    // loadCraftingContent();
+    loadStationLayoutSection();
+    loadLifeSupportContent();
+    updateStationModuleCount();
 }
 
 export function updateSpacejunkDisplay() {
@@ -47,4 +50,14 @@ export function updateStationStorage() {
     const stationItems = getState('stationItems');
     const stationItemsStorage = stationItems.reduce((total, item) => total + (item.quantity || 1), 0);
     setState('stationItemsStorage', stationItemsStorage);  // Save the calculated value to the game state
+}
+
+export function updateStationModuleCount() {
+    const stationModules = getState('stationModules');
+    const stationModulesInstalled = stationModules.length;
+    const stationModulesLimit = getState('stationModulesLimit');
+    const stationModulesDisplay = document.getElementById('stationModulesDisplay');
+
+    stationModulesDisplay.textContent = `${stationModulesInstalled} / ${stationModulesLimit}`;
+    
 }

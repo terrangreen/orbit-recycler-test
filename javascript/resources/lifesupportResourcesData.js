@@ -1,28 +1,32 @@
 export const lifeSupportData = [
     { 
       type: 'Power', 
-      icon: 'zap', 
+      iconType: 'zap', 
+      iconColor: 'white',
       current: 50, 
       limit: 100, 
       rate: 5 
     },
     { 
       type: 'Oxygen', 
-      icon: 'air-vent', 
+      iconType: 'air-vent', 
+      iconColor: 'white',
       current: 75, 
       limit: 100, 
       rate: -1 
     },
     { 
       type: 'Food', 
-      icon: 'utensils', 
+      iconType: 'utensils', 
+      iconColor: 'white',
       current: 30, 
       limit: 30, 
       rate: -1 
     },
     { 
       type: 'Water', 
-      icon: 'droplet', 
+      iconType: 'droplet', 
+      iconColor: 'blue',
       current: 25, 
       limit: 50, 
       rate: 0 
