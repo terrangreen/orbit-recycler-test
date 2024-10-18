@@ -1,4 +1,4 @@
-// stationinventory.js
+// stationInventoryModuleTemplate.js
 
 
 export function initializeStationInventoryTemplate() {

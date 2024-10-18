@@ -1,4 +1,4 @@
-// spacejunkInventoryTemplateModule.js
+// spacejunkInventoryModuleTemplate.js
 
 export function initializeSpacejunkInventoryTemplate() {
     const inventoryContent = document.getElementById('spacejunk-inventory-content');

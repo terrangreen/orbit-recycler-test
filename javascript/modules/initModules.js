@@ -1,9 +1,9 @@
 // initModules.js
 
-import { initializeSpacejunkInventoryTemplate } from './spacejunkInventoryTemplateModule.js';
-import { initializeSalvageAreaTemplate } from './salvageTemplateModule.js';
-import { initializeStationInventoryTemplate } from './stationInventoryTemplateModule.js';
-import { initializeStationLayoutTemplate } from './stationLayoutTemplateModule.js';
+import { initializeSpacejunkInventoryTemplate } from '././spacejunkInventoryModuleTemplate.js';
+import { initializeSalvageAreaTemplate } from '././salvageModuleTemplate.js';
+import { initializeStationInventoryTemplate } from './stationInventoryModuleTemplate.js';
+import { initializeStationLayoutTemplate } from './stationLayoutModuleTemplate.js';
 
 export function initializeModules() {
   initializeStationInventoryTemplate();

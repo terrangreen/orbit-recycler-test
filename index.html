@@ -47,7 +47,7 @@
     </div>
 
     <div id="game-modules">
-      <div class="modules-left">
+      <div class="modules-container">
         
         <div class="top-row-container">
           <div id="collect-spacejunk-container">
@@ -55,7 +55,7 @@
           </div>
 
           <!-- Inventory Table -->
-          <section id="spacejunk-inventory-module" class="module">
+          <div id="spacejunk-inventory-module" class="module">
             <h3 class="module-header collapsible" data-expanded="true">
               <i data-lucide="boxes" class="icon white"></i>
               Space Junk
@@ -64,10 +64,10 @@
             <div id="spacejunk-inventory-content">
               <!-- Spacejunk inventory will appear here -->
             </div>
-          </section>
+          </div>
         </div>
 
-        <section id="salvage-module" class="module">
+        <div id="salvage-module" class="module">
           <h3 class="module-header collapsible" data-expanded="true">
             <i data-lucide="boxes" class="icon white"></i>
             Salvage Area
@@ -76,9 +76,9 @@
           <div id="salvage-area-content">
             <!-- Drag items into this area to salvage-->
           </div>
-        </section>
+        </div>
 
-        <section id="station-inventory-module" class="module">
+        <div id="station-inventory-module" class="module">
           <h3 class="module-header collapsible" data-expanded="true">
             <i data-lucide="boxes" class="icon white"></i>
             Station Inventory
@@ -87,9 +87,9 @@
           <div id="station-inventory-content">
             <!-- Staton inventory will appear here -->
           </div>
-        </section>
+        </div>
 
-        <section id="crafting-module" class="module">
+        <div id="crafting-module" class="module">
           <h3 class="module-header collapsible" data-expanded="true">
             <i data-lucide="pencil-ruler" class="icon white"></i>
             Crafting
@@ -98,14 +98,14 @@
           <div id="crafting-content">
             <!-- Crafting will appear here -->
           </div>
-        </section>
+        </div>
       </div>
 
       <div class="modules-main">
-        <section id="station-module">
+        <div id="station-module">
           <img src="private-space-station-1.jpg" style="height: 290px; width: auto">
-        </section>
-        <div class="modules-left">
+        </div>
+        <div class="modules-container-2">
           <div id="station-layout-module" class="module">
             <h3 class="module-header collapsible" data-expanded="true">
               <i data-lucide="boxes" class="icon white"></i>
@@ -115,17 +115,32 @@
             <div id="station-layout-content">
               <!-- Station layout will appear here -->
             </div>
-          </dov>
+          </div>
+        
+          <div id="station-module-equipment" class="module">
+            <h3 class="module-header collapsible" data-expanded="true">
+              <i data-lucide="boxes" class="icon white"></i>
+              Equipment
+              <i data-lucide="chevron-up" class="toggle-icon"></i>
+            </h3>
+            <div id="module-equipment-content">
+              <div class="equipment-tab-buttons">
+                <button class="tab-button active" data-tab="interior">
+                  Interior
+                </button>
+                <button class="tab-button active" data-tab="exterior">
+                  Exterior
+                </button>
+              </div>
+              <div id="equipment-interior" class="equipment-tab-content active">
+                <!-- Interior equipment grid will appear here -->
+              </div>
+              <div id="equipment-exterior" class="equipment-tab-content">
+                <!-- Exterior equipment grid will appear here -->
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- <section id="life-support-module" class="module">
-          <div class="life-support-header">
-            <i data-lucide="life-buoy" class="icon white"></i>
-            Life Support
-          </div> -->
-          <!-- <div id="life-support-content"> -->
-            <!-- Life Support Resources will appear here -->
-          <!-- </div> -->
-        <!-- </section> -->
       </div>
 
       <!-- <div id="tertiary-modules">

@@ -12,11 +12,13 @@ C U R R E N T
 N E X T
 > Fix life support resources        DONE
 > Make life support resources live with real rates
+    > This will wait until I configure equipment inside and out
 > Make inventory stacks subjective with count values for
     < differrent items
 > Station management
-    > layout
-    > components
+    > layout                        DONE
+    > equipment
+    > Add mouse hover wherever it should be
 
 N E W   I D E A S
 Buying/selling
@@ -26,10 +28,7 @@ Will need a supply of food, O2, water. Expensive! $$$$$
 >> improved with a docking module, robot arm
 
 ? How to attach modules to station
-? Mechanism for installing components inside or outside
 
 
 B U G S
-? Bug: when the window is big enough for the station inventory
-    to appear on the first row, the first three inventory modules
-    have a gap at the bottom. No idea.
+>

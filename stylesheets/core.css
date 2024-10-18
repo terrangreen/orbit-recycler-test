@@ -1,24 +1,5 @@
 /* core.css */
 
-/* @import "settings.css";
-@import "reset.css";
-@import "utils.css";
-@import "typography.css";
-@import "buttons.css";
-@import "base.css";
-@import "start.css";
-@import "shell.css";
-@import "party.css";
-@import "log.css";
-@import "upgrades.css";
-@import "farming.css";
-@import "well.css";
-@import "hunting.css";
-@import "lumbermill.css";
-@import "achievements.css";
-@import "watchtower.css";
-@import "gameover.css"; */
-
 @import "styles.css";
 @import "frame.css";
 @import "modules.css";
@@ -28,4 +9,5 @@
 @import "crafting.css";
 @import "actions.css";
 @import "salvage.css";
-@import "stationlayout.css";
+@import "stationLayout.css";
+@import "equipment.css";

@@ -1,4 +1,4 @@
-// stationLayoutTemplateModule.js
+// stationLayoutModuleTemplate.js
 
 import { getState } from "../app/gameState.js";
 import { createStationLayoutGrid } from "../managers/stationManager.js";
@@ -27,5 +27,3 @@ export function initializeStationLayoutTemplate() {
     createStationLayoutGrid(stationLayoutGrid, stationGridSize);
     lucide.createIcons();
   }
-
-  // stationLayoutTemplateModule.js

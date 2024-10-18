@@ -13,14 +13,14 @@
     margin: 10px;
 }
 
-.modules-left {
+.modules-container {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
     overflow-y: auto;
     flex-wrap: nowrap;
     gap: 10px;
-    margin: 10px;
+    margin: 0px 0px 20px 0px;
     width: max-content;
     margin-right: 0px;
     padding-right: 20px;
@@ -37,7 +37,7 @@
     flex-direction: column;
     overflow-y: auto;
     gap: 10px;
-    margin: 10px;
+    margin: 0px;
     margin-right: 0px;
     padding-right: 20px;
 }
@@ -46,7 +46,8 @@
 .module {
     display: grid;
     grid-template-columns: 1;
-    grid-template-rows: 45px auto auto;
+    /* grid-template-rows: 45px auto auto; */
+    grid-template-rows: 45px auto;
     border: 1px solid #fff;
     border-radius: 5px;
     background-color: #2c2c2c;
@@ -57,6 +58,10 @@
     justify-content: space-between;
     width: 100%;
     min-width: fit-content;
+}
+
+.module-header .icon {
+    padding-right: 4px;
 }
 
 /* Header styling for all modules */
@@ -108,7 +113,7 @@
         height: auto;
     }
 
-    .modules-left, .modules-main {
+    .modules-contqiner, .modules-main {
         width: 100%;
         overflow: scroll;
     }
@@ -119,7 +124,7 @@
         flex-direction: row;
     }
 
-    .modules-left, .modules-main {
+    .modules-container, .modules-main {
         flex-basis: auto;
         overflow: scroll;
     }

@@ -6,7 +6,7 @@ import { handleSalvageArea } from '../managers/salvageHandler.js';
 import { updateSpacejunkInventory, updateStationInventory } from './updateInventory.js';
 import { getState, setState } from '../app/gameState.js';
 import { loadCraftingSection } from '../modules/craftingModule.js';
-import { loadLifeSupportContent } from '../modules/lifeSupportTemplateModule.js';
+import { loadLifeSupportContent } from '../modules/lifeSupportModuleTemplate.js';
 import { loadStationLayoutSection } from '../modules/stationLayout.js';
 
 export function updateDisplays() {

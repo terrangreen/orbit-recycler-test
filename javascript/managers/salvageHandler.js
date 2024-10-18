@@ -1,7 +1,7 @@
 // salvageManager.js
 
 import { getState, setState } from "../app/gameState.js";
-import { updateStationStorage } from "./displayManager.js";
+import { updateSpacejunkDisplay, updateStationStorage } from "./displayManager.js";
 import { handleDroppable } from "./dragHandler.js";
 import { calculateMaterialsStorage, gatherMaterial } from "./materialsHandler.js";
 import { updateSalvageInventory, updateSpacejunkInventory, updateStationInventory } from "./updateInventory.js";
@@ -145,7 +145,8 @@ export function moveSalvagePartToStation(target, part) {
             spacejunkItems = spacejunkItems.filter(spacejunkItem => spacejunkItem.parts.length > 0);
             setState('spacejunkItems', spacejunkItems);
 
-            updateSpacejunkInventory();  // Re-render the space junk inventory
+            updateSpacejunkInventory();
+            updateSpacejunkDisplay();
         }
 
         // Re-render the inventory grids
@@ -173,16 +174,3 @@ export function moveSalvagePartToStation(target, part) {
 
 //     // Remove the space junk item if all parts have been looted
 //     finalizeSalvageItem();
-//
-
-// export function finalizeSalvageItem() {
-//     const spacejunkItems = getState('spacejunkItems');
-
-//     spacejunkItems.forEach(item => {
-//         if (item.onHold) {
-//             removeFromStateArray('spacejunkItems', item);
-//         }
-//     });
-
-//     updateDisplays();
-// }

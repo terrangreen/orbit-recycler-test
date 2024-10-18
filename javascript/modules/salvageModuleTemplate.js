@@ -1,4 +1,4 @@
-// salvageTemplateModule.js
+// salvageModuleTemplate.js
 
 export function initializeSalvageAreaTemplate() {
     const inventoryContent = document.getElementById('salvage-area-content');
