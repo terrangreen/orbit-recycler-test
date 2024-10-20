@@ -11,13 +11,13 @@ C U R R E N T
 
 N E X T
 > Fix life support resources        DONE
-> Make life support resources live with real rates
+> Make life support resources live with real rates      DONE
     > This will wait until I configure equipment inside and out
 > Make inventory stacks subjective with count values for
     < differrent items
 > Station management
     > layout                        DONE
-    > equipment
+    > equipment                     DONE
     > Add mouse hover wherever it should be
 
 N E W   I D E A S
