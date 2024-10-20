@@ -1,7 +1,7 @@
 // inventoryManager.js
 
 import { getState, setState } from '../app/gameState.js';
-import { handleDragStart } from './dragHandler.js';
+import { handleDragStart } from './dragManager.js';
 
 export function updateStaticInventoryGrid(gridElement, items, selectFields = {}, limit, canDragAndDrop = false) {
     const defaultIcon = getState('defaultIcon');

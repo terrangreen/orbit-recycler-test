@@ -2,6 +2,7 @@
 
 import { getState, setState, saveStateToLocalStorage } from '../app/gameState.js';
 import { possibleModules } from '../resources/stationModulesData.js';
+import { activateEquipmentModule, resetEquipmentModule } from './equipmentManager.js';
 
 export function createStationLayoutGrid(gridElement, gridSize) {
     gridElement.innerHTML = '';
@@ -19,6 +20,8 @@ export function createStationLayoutGrid(gridElement, gridSize) {
 export function placeModulesInGrid(gridElement, modules, selectFields = {}) {
     const defaultIcon = getState('defaultIcon');
 
+    let selectedModule = null;
+
     modules.forEach((module, index) => {
         const { x, y } = module.location;
         const square = gridElement.querySelector(`#square-${x}-${y}`);
@@ -27,7 +30,6 @@ export function placeModulesInGrid(gridElement, modules, selectFields = {}) {
             square.innerHTML = `<i data-lucide="${module.iconType || defaultIcon}" class="icon ${module.iconColor}"></i>`;
         
             const fields = selectFields[index] || {};
-            // const fields = selectFields ? selectFields(module, index): {};
 
             let tooltipContent = '';
             for (const [key, value] of Object.entries(fields)) {
@@ -41,6 +43,23 @@ export function placeModulesInGrid(gridElement, modules, selectFields = {}) {
                 animation: 'scale'
             });
 
+            // Event listener to activate module
+            square.addEventListener('click', () => {
+                if (selectedModule === square) {
+                    selectedModule.classList.remove('selected-module');
+                    selectedModule = null;
+                    resetEquipmentModule();
+                } else {
+                    if (selectedModule) {
+                        selectedModule.classList.remove('selected-module');
+                    }
+                    square.classList.add('selected-module');
+                    selectedModule = square;
+                    
+                    activateEquipmentModule(module);
+                }
+            });
+
         } else {
             console.error(`Grid square with ID square-${x}-${y} not found within the specified gridElement.`);
         }
@@ -48,8 +67,6 @@ export function placeModulesInGrid(gridElement, modules, selectFields = {}) {
 
     lucide.createIcons();
 }
-
-  
 
 export function addNewModule(moduleName, location) {
   const stationModules = getState('stationModules');
@@ -83,4 +100,8 @@ export function renderModule(module) {
     if (gridSquare) {
       gridSquare.innerHTML = `<div class="module">${module.name}</div>`;
     }
+}
+
+export function calculateResourceTotals() {
+    
 }

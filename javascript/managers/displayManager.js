@@ -2,12 +2,13 @@
 
 import { collectSpacejunk } from '../modules/spacejunkCollectorModule.js';
 import { loadStationResources } from '../modules/stationResourcesModule.js';
-import { handleSalvageArea } from '../managers/salvageHandler.js';
+import { handleSalvageArea } from './salvageManager.js';
 import { updateSpacejunkInventory, updateStationInventory } from './updateInventory.js';
 import { getState, setState } from '../app/gameState.js';
 import { loadCraftingSection } from '../modules/craftingModule.js';
 import { loadLifeSupportContent } from '../modules/lifeSupportModuleTemplate.js';
 import { loadStationLayoutSection } from '../modules/stationLayout.js';
+import { updateLifeSupportResources } from './lifeSupportManager.js';
 
 export function updateDisplays() {
     updateSpacejunkInventory();
@@ -19,6 +20,7 @@ export function updateDisplays() {
     loadStationLayoutSection();
     loadLifeSupportContent();
     updateStationModuleCount();
+    updateLifeSupportResources();
 }
 
 export function updateSpacejunkDisplay() {
@@ -54,10 +56,20 @@ export function updateStationStorage() {
 
 export function updateStationModuleCount() {
     const stationModules = getState('stationModules');
-    const stationModulesInstalled = stationModules.length;
+    const stationModulesCount = stationModules.length;
     const stationModulesLimit = getState('stationModulesLimit');
     const stationModulesDisplay = document.getElementById('stationModulesDisplay');
 
-    stationModulesDisplay.textContent = `${stationModulesInstalled} / ${stationModulesLimit}`;
+    stationModulesDisplay.textContent = `${stationModulesCount} / ${stationModulesLimit}`;
+}
+
+export function updateLifeSupportResourcesDisplay() {
+    const lifeSupportResources = getState('lifeSupportResources');
     
+    Object.entries(lifeSupportResources).forEach(([key, resource]) => {
+        const resourceDisplayElement = document.getElementById(resource.valueId);
+        if (resourceDisplayElement) {
+            resourceDisplayElement.textContent = `${resource.current} / ${resource.storage}`;
+        }
+    });
 }

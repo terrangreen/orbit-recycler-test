@@ -4,7 +4,7 @@ import { getState, setState } from "../app/gameState.js";
 import { showToastMessage } from "../app/toast.js";
 import { loadCraftingSection } from "../modules/craftingModule.js";
 import { addToStationInventory } from "./inventoryManager.js";
-import { calculateMaterialsStorage } from "./materialsHandler.js";
+import { calculateMaterialsStorage } from "./materialsManager.js";
 import { updateStationInventory } from "./updateInventory.js";
 
 export function craftItem(recipe) {

@@ -1,10 +1,12 @@
+// lifeSupportResourceData.js
+
 export const lifeSupportData = [
     { 
       type: 'Power', 
       iconType: 'zap', 
       iconColor: 'white',
       current: 50, 
-      limit: 100, 
+      storage: 100, 
       rate: 5 
     },
     { 
@@ -12,7 +14,7 @@ export const lifeSupportData = [
       iconType: 'air-vent', 
       iconColor: 'white',
       current: 75, 
-      limit: 100, 
+      storage: 100, 
       rate: -1 
     },
     { 
@@ -20,7 +22,7 @@ export const lifeSupportData = [
       iconType: 'utensils', 
       iconColor: 'white',
       current: 30, 
-      limit: 30, 
+      storage: 30, 
       rate: -1 
     },
     { 
@@ -28,7 +30,7 @@ export const lifeSupportData = [
       iconType: 'droplet', 
       iconColor: 'blue',
       current: 25, 
-      limit: 50, 
+      storage: 50, 
       rate: 0 
     },
   ];

@@ -1,6 +1,8 @@
 // gameState.js
 
 import { craftingRecipes } from "../resources/craftingRecipes.js";
+import { possibleEquipment } from "../resources/equipmentData.js";
+import { lifeSupportData } from "../resources/lifeSupportResourcesData.js";
 import { possibleSalvage } from "../resources/salvageResourcesData.js";
 import { possibleModules } from "../resources/stationModulesData.js";
 
@@ -26,8 +28,8 @@ let initialState = {
   additionalRawJunkPerBag: 5,
   knownRecipes: initialRecipes(),
   stationModules: initialModules(),
-  stationModulesLimit: 9
-  // exteriorComponents: initialExteriorComponents()
+  stationModulesLimit: 9,
+  lifeSupportResources: initialLifeSupportResources()
 }
 
 let state = { ...initialState };
@@ -57,7 +59,6 @@ function initialRecipes() {
 
 function initialModules() {
   const gridSize = 3;
-  // const centerLocation = { row: Math.floor(gridSize / 2), col: Math.floor(gridSize / 2) };
   const centerLocation = { x: 0, y: 0, z: 0 };
   let initialModuleName = ['Used SpaceX Dragon Capsule'];
 
@@ -66,8 +67,47 @@ function initialModules() {
   .map((module, index) => ({
     ...module,
     id: 1,
-    location: centerLocation
+    location: centerLocation,
+    equipment: {
+      interior: initialEquipment('interior'),
+      exterior: initialEquipment('exterior')
+    }
   }));
+}
+
+function initialEquipment(type) {
+  const initialEquipmentNames = {
+    interior: ['Hammock', 'Basic Life Support System', 'Food Storage', 'Airlock'],
+    exterior: ['Solar Panels', 'Airlock']
+  };
+
+  // Specify the locations for the initial module in sequence
+  const interiorLocations = ['back', 'left', 'right', 'front'];
+  const exteriorLocations = ['left', 'front'];
+
+  const locations = type === 'interior' ? interiorLocations : exteriorLocations;
+
+  return possibleEquipment
+    .filter(equipment => initialEquipmentNames[type].includes(equipment.name) && equipment.type.includes(type))
+    .map((equipment, index) => ({
+       ...equipment,
+       location: locations[index % locations.length]
+  }));
+}
+
+function initialLifeSupportResources() {
+  // Create an object from lifeSupportData
+  return lifeSupportData.reduce((acc, resource) => {
+      acc[resource.type] = {
+          storage: resource.storage,
+          rate: resource.rate,
+          current: resource.storage,
+          iconType: resource.iconType,
+          iconColor: resource.iconColor,
+          valueId: `${resource.type.toLocaleLowerCase()}Value`
+      };
+      return acc;
+  }, {});
 }
 
 // Utility function to save the state to localStorage
@@ -84,9 +124,14 @@ export function loadStateFromLocalStorage() {
 }
 
 export function resetGameState() {
-  state = { ...initialState };
-  saveStateToLocalStorage();
-  location.reload();
+  const userConfirmed = confirm("Are you sure you want to reset the game? This will erase your progress.");
+
+  if (userConfirmed) {
+    localStorage.removeItem('gameState');
+    state = { ...initialState };
+    saveStateToLocalStorage();
+    location.reload();
+  }
 }
 
 // Getter and setter functions

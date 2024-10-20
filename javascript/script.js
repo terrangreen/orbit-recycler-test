@@ -4,8 +4,10 @@ import { enableCollapsibleSections } from './app/collapsible.js';
 import { initializeModules } from './modules/initModules.js';
 import { updateDisplays } from './managers/displayManager.js';
 import { loadStateFromLocalStorage, resetGameState } from './app/gameState.js';
-import { initializeEquipmentTabs } from './app/equipmentTabs.js';
 import { adjustGameScreenPadding } from './app/adjustPadding.js';
+// import { showToastMessage } from './app/toast.js';
+import { startGameLoop } from './managers/gameLoop.js';
+import { setupButtonHandlers } from './managers/timeManager.js';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -16,16 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load content
   enableCollapsibleSections();
   initializeModules();
-  initializeEquipmentTabs();
   updateDisplays();
 
-  // Handle reset button
-  const resetButton = document.getElementById('reset-game');
-  if (resetButton) {
-      resetButton.addEventListener('click', function() {
-          resetGameState();  // Call the resetGameState function
-      });
-  }
+  // Start the game loop tick
+  startGameLoop();
+  setupButtonHandlers();
+  
 
   adjustGameScreenPadding();
 

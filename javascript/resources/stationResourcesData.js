@@ -1,3 +1,5 @@
+// stationResourcesData.js
+
 export const stationResourcesData = [
     {
       type: 'spaceJunk',

@@ -88,7 +88,7 @@
     transition: transform 0.3s ease;
 }
 
-.module h3.collapsed .toggle-icon {
+.module h3.collapsible.collapsed .toggle-icon {
     transform: rotate(180deg);
 }
 

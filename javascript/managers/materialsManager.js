@@ -1,4 +1,4 @@
-// materialsHandler.js
+// materialsManager.js
 
 import { getState, setState } from "../app/gameState.js";
 import { loadCraftingSection } from "../modules/craftingModule.js";

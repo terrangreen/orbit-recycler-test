@@ -2,8 +2,8 @@
 
 import { getState, setState } from "../app/gameState.js";
 import { updateSpacejunkDisplay, updateStationStorage } from "./displayManager.js";
-import { handleDroppable } from "./dragHandler.js";
-import { calculateMaterialsStorage, gatherMaterial } from "./materialsHandler.js";
+import { handleDroppable } from "./dragManager.js";
+import { calculateMaterialsStorage, gatherMaterial } from "./materialsManager.js";
 import { updateSalvageInventory, updateSpacejunkInventory, updateStationInventory } from "./updateInventory.js";
 
 export function handleSalvageArea() {
@@ -53,7 +53,6 @@ export function moveToSalvage(target, item) {
 
 export function returnFromSalvageHold(item) {
     let spacejunkItems = getState('spacejunkItems');
-    // let salvageItems = getState('salvageItems');
     const salvageDropArea = document.getElementById('salvage-drop-area');
     const salvageInventoryGrid = document.getElementById('salvage-inventory-grid');
     

@@ -4,7 +4,8 @@ import { getState } from "../app/gameState.js";
 import { loadStationResources } from "../modules/stationResourcesModule.js";
 import { updateSpacejunkDisplay, updateStationDisplay } from "./displayManager.js";
 import { updateStaticInventoryGrid, updateDynamicInventoryGrid } from "./inventoryManager.js";
-import { handleSalveToStation } from "./salvageHandler.js";
+import { updateLifeSupportResources } from "./lifeSupportManager.js";
+import { handleSalveToStation } from "./salvageManager.js";
 import { createStationLayoutGrid, placeModulesInGrid } from "./stationManager.js";
 
 export function updateSpacejunkInventory() {
@@ -71,10 +72,7 @@ export function updateStationLayout() {
         'Module': module.name
     }));
 
-    // updateStaticInventoryGrid(stationLayoutGrid, stationModules, selectFields, stationModulesLimit, true);
-
-    // Example call:
-    // updateStaticInventoryGrid(stationLayoutGrid, [], {}, stationModulesLimit, false);
     createStationLayoutGrid(stationLayoutGrid, stationSize);
     placeModulesInGrid(stationLayoutGrid, stationModules, selectFields);
+    updateLifeSupportResources();
 }
