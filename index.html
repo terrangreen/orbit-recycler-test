@@ -53,7 +53,7 @@
           <div id="collect-spacejunk-container">
             <button id="collectSpacejunkBtn">Collect Space Junk</button>
           </div>
-
+          
           <!-- Inventory Table -->
           <div id="spacejunk-inventory-module" class="module">
             <h3 class="module-header collapsible" data-expanded="true">
@@ -65,38 +65,40 @@
               <!-- Spacejunk inventory will appear here -->
             </div>
           </div>
-        </div>
-
-        <div id="salvage-module" class="module">
-          <h3 class="module-header collapsible" data-expanded="true">
-            <i data-lucide="boxes" class="icon white"></i>
-            Salvage Area
-            <i data-lucide="chevron-up" class="toggle-icon"></i>
-          </h3>
-          <div id="salvage-area-content">
-            <!-- Drag items into this area to salvage-->
+          
+          <div id="salvage-module" class="module">
+            <h3 class="module-header collapsible" data-expanded="true">
+              <i data-lucide="boxes" class="icon white"></i>
+              Salvage Area
+              <i data-lucide="chevron-up" class="toggle-icon"></i>
+            </h3>
+            <div id="salvage-area-content">
+              <!-- Drag items into this area to salvage-->
+            </div>
           </div>
         </div>
 
-        <div id="station-inventory-module" class="module">
-          <h3 class="module-header collapsible" data-expanded="true">
-            <i data-lucide="boxes" class="icon white"></i>
-            Station Inventory
-            <i data-lucide="chevron-up" class="toggle-icon"></i>
-          </h3>
-          <div id="station-inventory-content">
-            <!-- Staton inventory will appear here -->
+        <div class="second-row-container">
+          <div id="station-inventory-module" class="module">
+            <h3 class="module-header collapsible" data-expanded="true">
+              <i data-lucide="boxes" class="icon white"></i>
+              Station Inventory
+              <i data-lucide="chevron-up" class="toggle-icon"></i>
+            </h3>
+            <div id="station-inventory-content">
+              <!-- Staton inventory will appear here -->
+            </div>
           </div>
-        </div>
 
-        <div id="crafting-module" class="module">
-          <h3 class="module-header collapsible" data-expanded="true">
-            <i data-lucide="pencil-ruler" class="icon white"></i>
-            Crafting
-            <i data-lucide="chevron-up" class="toggle-icon"></i>
-          </h3>
-          <div id="crafting-content">
-            <!-- Crafting will appear here -->
+          <div id="crafting-module" class="module">
+            <h3 class="module-header collapsible" data-expanded="true">
+              <i data-lucide="pencil-ruler" class="icon white"></i>
+              Crafting
+              <i data-lucide="chevron-up" class="toggle-icon"></i>
+            </h3>
+            <div id="crafting-content">
+              <!-- Crafting will appear here -->
+            </div>
           </div>
         </div>
       </div>
@@ -105,6 +107,7 @@
         <div id="station-module">
           <img src="private-space-station-1.jpg" style="height: 290px; width: auto">
         </div>
+
         <div class="modules-container-2">
           <div id="station-layout-module" class="module">
             <h3 class="module-header collapsible" data-expanded="true">
@@ -126,9 +129,11 @@
             <div id="equipment-content">
               <div class="equipment-tab-buttons">
                 <button id="interior-tab" class="equipment-tab-button">
+                  <i data-lucide="folder-open" class="icon white"></i>
                   Interior
                 </button>
                 <button id="exterior-tab" class="equipment-tab-button">
+                  <i data-lucide="folder-closed" class="icon white"></i>
                   Exterior
                 </button>
               </div>

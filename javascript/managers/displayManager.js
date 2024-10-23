@@ -9,6 +9,7 @@ import { loadCraftingSection } from '../modules/craftingModule.js';
 import { loadLifeSupportContent } from '../modules/lifeSupportModuleTemplate.js';
 import { loadStationLayoutSection } from '../modules/stationLayout.js';
 import { updateLifeSupportResources } from './lifeSupportManager.js';
+import { showTooltip } from '../app/tooltip.js';
 
 export function updateDisplays() {
     updateSpacejunkInventory();
@@ -67,9 +68,20 @@ export function updateLifeSupportResourcesDisplay() {
     const lifeSupportResources = getState('lifeSupportResources');
     
     Object.entries(lifeSupportResources).forEach(([key, resource]) => {
-        const resourceDisplayElement = document.getElementById(resource.valueId);
+        const resourceValueDisplayElement = document.getElementById(resource.valueId);
+        if (resourceValueDisplayElement) {
+            resourceValueDisplayElement.textContent = `${resource.current} / ${resource.storage}`;
+        }
+
+        const resourceDisplayElement = document.getElementById(`resource-${key.toLowerCase()}`);
         if (resourceDisplayElement) {
-            resourceDisplayElement.textContent = `${resource.current} / ${resource.storage}`;
+            const selectFields = {
+                "Resource": key,
+                "Current": resource.current,
+                "Storage": resource.storage
+            };
+
+            showTooltip(resourceDisplayElement, null, selectFields);
         }
     });
 }

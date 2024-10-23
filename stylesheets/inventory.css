@@ -24,6 +24,10 @@
   gap: 10px;
 }
 
+/* #station-inventory-module {
+  flex: 1;
+} */
+
 /* Inventory grid layout */
 #spacejunk-inventory-grid {
   display: grid;
@@ -33,9 +37,15 @@
 
 #station-inventory-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 60px);
+  grid-template-columns: repeat(5, 60px);
   gap: 0;
 }
+
+/* #station-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 60px);
+  gap: 0;
+} */
 
 /* Inventory square formatting */
 .inventory-square {

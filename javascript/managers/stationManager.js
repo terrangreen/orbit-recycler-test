@@ -1,6 +1,7 @@
 // stationManager.js
 
 import { getState, setState, saveStateToLocalStorage } from '../app/gameState.js';
+import { showTooltip } from '../app/tooltip.js';
 import { possibleModules } from '../resources/stationModulesData.js';
 import { activateEquipmentModule, resetEquipmentModule } from './equipmentManager.js';
 
@@ -31,17 +32,7 @@ export function placeModulesInGrid(gridElement, modules, selectFields = {}) {
         
             const fields = selectFields[index] || {};
 
-            let tooltipContent = '';
-            for (const [key, value] of Object.entries(fields)) {
-                tooltipContent += `<p><strong>${key}:</strong> ${value}</p>`;
-            }
-
-            square.setAttribute('data-tippy-content', tooltipContent);
-            tippy(square, {
-                allowHTML: true,
-                placement: 'top',
-                animation: 'scale'
-            });
+            showTooltip(square, module, fields);
 
             // Event listener to activate module
             square.addEventListener('click', () => {

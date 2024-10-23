@@ -12,23 +12,26 @@ C U R R E N T
 N E X T
 > Fix life support resources        DONE
 > Make life support resources live with real rates      DONE
-    > This will wait until I configure equipment inside and out
+    > This will wait until I configure equipment inside and out     DONE
 > Make inventory stacks subjective with count values for
     < differrent items
 > Station management
     > layout                        DONE
     > equipment                     DONE
-    > Add mouse hover wherever it should be
+    > Add mouse hover wherever it should be     DONE
+> Consider rearranging the left side into two columns so it
+    > all fits on one page          DONE
 
 N E W   I D E A S
 Buying/selling
 Will need a supply of food, O2, water. Expensive! $$$$$
 >> This should drive the player to think about growing food,
     recycling
+>> Resource usage should be negative to start, implying the 
+    need to import resources
 >> improved with a docking module, robot arm
 
 ? How to attach modules to station
 
 
 B U G S
->

@@ -1,6 +1,7 @@
 // craftingModule.js
 
 import { getState } from "../app/gameState.js";
+import { showTooltip } from '../app/tooltip.js';
 import { craftItem } from "../managers/craftingManager.js";
 
 export function loadCraftingSection() {
@@ -27,7 +28,7 @@ export function loadCraftingSection() {
         recipeElement.appendChild(name);
 
         // Prepare tooltip content based on materials requirements
-        let tooltipContent = '';
+        let selectFields = {};
         let canCraft = true;
 
         Object.entries(recipe.materials).forEach(([material, required]) => {
@@ -35,7 +36,7 @@ export function loadCraftingSection() {
             const materialName = materialData ? materialData.name : '';
             const currentAmount = materialData ? materialData.quantity : 0;
 
-            tooltipContent += `<p><strong>${materialName}:</strong> ${currentAmount} / ${required}</p>`;
+            selectFields[materialName] = `${currentAmount} / ${required}`;
 
             if (currentAmount < required) {
                 canCraft = false;
@@ -43,12 +44,7 @@ export function loadCraftingSection() {
         });
 
         // Set tooltip content and initialize Tippy
-        recipeElement.setAttribute('data-tippy-content', tooltipContent);
-        tippy(recipeElement, {
-            allowHTML: true,
-            animation: 'scale',
-            placement: 'right',
-        });
+        showTooltip(recipeElement, recipe, selectFields);
 
         // Add craft button
         const craftButton = document.createElement('button');
@@ -60,5 +56,5 @@ export function loadCraftingSection() {
         craftingContainer.appendChild(recipeElement);
     });
 
-    lucide.createIcons();  // Initialize icons
+    lucide.createIcons();
 }

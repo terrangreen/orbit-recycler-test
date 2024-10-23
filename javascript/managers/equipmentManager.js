@@ -1,7 +1,7 @@
 // equipmentManager.js
 
 import { getState } from '../app/gameState.js';
-// import { possibleEquipment } from '../resources/equipmentData.js';
+import { showTooltip } from '../app/tooltip.js';
 
 export function activateEquipmentModule(module) {
     const equipment = module.equipment;
@@ -66,8 +66,10 @@ function placeEquipmentInFaces(equipmentList, section) {
         if (square) {
             square.innerHTML = `<i data-lucide="${equipment.iconType || defaultIcon}" class="icon ${equipment.iconColor}"></i>`;
 
-            let tooltipContent = `<p><strong>Name:</strong> ${equipment.name}</p>
-                                      <p><strong>Description:</strong> ${equipment.description || 'No description available.'}</p>`;
+            const tooltipFields = {
+                Name: equipment.name,
+                Description: equipment.description || 'No description available.'
+            };
 
             // Add utility rates to tooltip
             if (equipment.utilityRate) {
@@ -75,21 +77,16 @@ function placeEquipmentInFaces(equipmentList, section) {
                     if (value != null) {
                         const rateClass = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
                         const formattedRate = value > 0 ? `+${value}` : `${value}`;
-                        tooltipContent += `<p><strong>${key.charAt(0).toUpperCase() + key.slice(1)}:</strong> <span class="rate ${rateClass}">${formattedRate}/s</span></p>`;
+                        tooltipFields[`${key.charAt(0).toUpperCase() + key.slice(1)} Rate`] = `<span class="rate ${rateClass}">${formattedRate}/s</span>`;
                     }
                 });
             }
 
-            square.setAttribute('data-tippy-content', tooltipContent);
-            tippy(square, {
-                allowHTML: true,
-                placement: 'top',
-                animation: 'scale'
-            });
+            showTooltip(square, equipment, tooltipFields);
         }
     })
 
-    lucide.createIcons(); // Ensure icons are rendered
+    lucide.createIcons();
 }
 
 // Main function to show equipment

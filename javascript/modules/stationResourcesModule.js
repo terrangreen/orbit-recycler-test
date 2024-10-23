@@ -2,6 +2,7 @@
 
 import { stationResourcesData } from '../resources/stationResourcesData.js';
 import { getState } from '../app/gameState.js';
+import { showTooltip } from '../app/tooltip.js';
 
 // Utility function to extract the dynamic keys from the template and fetch values from the game state
 function gatherTemplateValues(template) {
@@ -38,7 +39,6 @@ function replacePlaceholders(template, values) {
 }
 
 // This function dynamically adds or updates the resources in the UI
-
 export function loadStationResources() {
   const moduleContainerTopRow = document.getElementById('station-resources-content-1');
   const moduleContainerBottomRow = document.getElementById('station-resources-content-2');
@@ -51,17 +51,19 @@ export function loadStationResources() {
   // First line: Load the existing resources from stationResourcesData
   stationResourcesData.forEach(resource => {
     const spanElement = document.getElementById(resource.valueId);
-
-    // Gather the dynamic values required by this resource's template
     const values = gatherTemplateValues(resource.template);
-
-    // Replace the placeholders with actual values
     const newValue = replacePlaceholders(resource.template, values);
+
+    const selectFields = {
+      "Resource Type": resource.name || "Unknown Resource",
+      "Inventory": newValue,
+      "Storage": resource.storage || "N/A"
+    };
 
     // If the resource hasn't been created yet, create it
     if (!spanElement) {
       const newResource = document.createElement('div');
-      newResource.classList.add('resource');  // Same class for both resources and materials
+      newResource.classList.add('resource');
 
       const icon = document.createElement('i');
       icon.setAttribute('data-lucide', resource.iconType);
@@ -74,30 +76,33 @@ export function loadStationResources() {
       newResource.appendChild(icon);
       newResource.appendChild(span);
       moduleContainerTopRow.appendChild(newResource);
+
+      showTooltip(newResource, resource, selectFields);
     } else {
       // If the element exists, just update the value
       spanElement.textContent = newValue;
     }
   });
-
-  ('knownMaterials:', knownMaterials);
-
+  
   // Second line: Load the discovered materials, applying the same formatting
   if (knownMaterials.length > 0) {
     knownMaterials.forEach(material => {
       ('material:', material);
       const spanElement = document.getElementById(material.valueId);
 
-      // const quantity = materialsStorage[material.quantity] || 0;
+      const selectFields = {
+        "Material Type": material.name,
+        "Inventory": material.quantity
+      };
 
       if (!spanElement) {
         const materialElement = document.createElement('div');
-        materialElement.classList.add('resource');  // Same class as the resources
+        materialElement.classList.add('resource');
 
         // Add material icon (optional, or customize if needed)
         const icon = document.createElement('i');
-        icon.setAttribute('data-lucide', material.iconType);  // Use a generic icon, or customize as needed
-        icon.classList.add('icon', material.color);  // Customize color as needed
+        icon.setAttribute('data-lucide', material.iconType);
+        icon.classList.add('icon', material.color);
 
         const span = document.createElement('span');
         span.id = material.valueId;
@@ -106,9 +111,11 @@ export function loadStationResources() {
         materialElement.appendChild(icon);
         materialElement.appendChild(span);
         moduleContainerBottomRow.appendChild(materialElement);
+
+        showTooltip(materialElement, material, selectFields);
       }
     })
   }
 
-  lucide.createIcons();  // Initialize icons after content is inserted
+  lucide.createIcons();
 }

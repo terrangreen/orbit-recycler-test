@@ -87,9 +87,7 @@ header {
 }
 
 #game-screen {
-    /* height: 100vh; */
     padding-top: var(--header-height);
-    /* overflow-y: scroll; */
 }
   
 /* @media (max-width: 950px) {

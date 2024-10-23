@@ -1,5 +1,6 @@
 // equipmentModuleTemplate.js
 
+import { showTooltip } from "../app/tooltip.js";
 import { disableEquipmentTabs } from "../managers/equipmentManager.js";
 
 export function initializeEquipmentLayoutTemplate() {
@@ -57,6 +58,13 @@ function generateEquipmentGrid(containerId) {
         faceSquare.classList.add('inventory-square');
         faceSquare.id = face.id;
         faceSquare.textContent = face.name;
+
+        // Use the showTooltip function to add a basic tooltip for the position
+        const tooltipFields = {
+            Position: face.name,
+            Contents: "<i><Empty></i>"
+        };
+        showTooltip(faceSquare, null, tooltipFields);
         
         layout.appendChild(faceSquare);
     });

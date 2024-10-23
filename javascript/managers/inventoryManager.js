@@ -1,6 +1,7 @@
 // inventoryManager.js
 
 import { getState, setState } from '../app/gameState.js';
+import { showTooltip } from '../app/tooltip.js';
 import { handleDragStart } from './dragManager.js';
 
 export function updateStaticInventoryGrid(gridElement, items, selectFields = {}, limit, canDragAndDrop = false) {
@@ -19,17 +20,7 @@ export function updateStaticInventoryGrid(gridElement, items, selectFields = {},
             const fields = selectFields[i] || {};
             square.innerHTML = `<i data-lucide="${item.iconType || defaultIcon}" class="icon ${item.iconColor}"></i>`;
 
-            let tooltipContent = '';
-            for (const [key, value] of Object.entries(fields)) {
-                tooltipContent += `<p><strong>${key}:</strong> ${value}</p>`;
-            }
-
-            square.setAttribute('data-tippy-content', tooltipContent);
-            tippy(square, {
-                allowHTML: true,
-                placement: 'top',
-                animation: 'scale'
-            });
+            showTooltip(square, item, fields);
             
             if (canDragAndDrop && !square.dragListenerAdded) {
                 square.setAttribute('draggable', true);
@@ -60,17 +51,7 @@ export function updateDynamicInventoryGrid(gridElement, items, selectFields = nu
         
         const fields = selectFields ? selectFields(part, index) : {};
 
-        let tooltipContent = '';
-        for (const [key, value] of Object.entries(fields)) {
-            tooltipContent += `<p><strong>${key}:</strong> ${value}</p>`;
-        }
-
-        square.setAttribute('data-tippy-content', tooltipContent);
-        tippy(square, {
-            allowHTML: true,
-            placement: 'top',
-            animation: 'scale'
-        });
+        showTooltip(square, part, fields);
 
         if (canDragAndDrop) {
             square.setAttribute('draggable', true);

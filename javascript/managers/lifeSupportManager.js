@@ -11,7 +11,7 @@ export function updateLifeSupportResources() {
     Object.keys(lifeSupportResources).forEach(key => {
         lifeSupportResources[key].rate = 0;
         lifeSupportResources[key].storage = 0;
-        lifeSupportResources[key].current = lifeSupportResources[key].storage;
+        // lifeSupportResources[key].current = lifeSupportResources[key].storage;
     });
 
     stationModules.forEach(module => {

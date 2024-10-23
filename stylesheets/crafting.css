@@ -1,5 +1,9 @@
 /* crafting.css */
 
+#crafting-module {
+    flex: 1;
+}
+
 #crafting-content {
     padding: 5px;
 }

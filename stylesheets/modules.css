@@ -26,9 +26,10 @@
     padding-right: 20px;
 }
 
-.top-row-container {
+.top-row-container, .second-row-container {
     display: flex;
     flex-direction: row;
+    gap: 10px;
 }
 
 .modules-main {

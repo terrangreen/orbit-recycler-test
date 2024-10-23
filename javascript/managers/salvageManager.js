@@ -14,6 +14,10 @@ export function handleSalvageArea() {
 export function handleSalveToStation() {
     const stationInventoryGrid = document.getElementById('station-inventory-grid');
     handleDroppable(stationInventoryGrid, moveSalvagePartToStation);
+
+    const lootBtn = document.getElementById('salvageLootAllBtn');
+    lootBtn.addEventListener('click', lootAllSalvageParts);
+    lootBtn.disabled = "false";
 }
 
 export function moveToSalvage(target, item) {
@@ -21,6 +25,7 @@ export function moveToSalvage(target, item) {
     const spacejunkItems = getState('spacejunkItems');
     const salvageItems = getState('salvageItems');
     const returnBtn = document.getElementById('salvageUndoBtn');
+    const lootAllBtn = document.getElementById('salvageLootAllBtn');
  
     // Mark item as on hold
     item.onHold = true;
@@ -47,6 +52,7 @@ export function moveToSalvage(target, item) {
 
     updateSalvageInventory();
     updateSpacejunkInventory();
+    updateLootAllButtonState();
     
     lucide.createIcons();
 }
@@ -72,12 +78,13 @@ export function returnFromSalvageHold(item) {
 
     updateSpacejunkInventory();
     updateSalvageInventory();
+    updateLootAllButtonState();
 }
 
 export function getAvailableSpace(part) {
-    const maxStationCapacity = getState('stationItemsLimit');  // Maximum capacity of the station
+    const maxStationCapacity = getState('stationItemsLimit');
     const stationItems = getState('stationItems');
-    const currentItemCount = stationItems.reduce((count, item) => count + item.quantity, 0);  // Total items in station
+    const currentItemCount = stationItems.reduce((count, item) => count + item.quantity, 0);
     const availableSpace = maxStationCapacity - currentItemCount;
 
     updateStationStorage();
@@ -100,13 +107,13 @@ export function moveSalvagePartToStation(target, part) {
         // Update the quantity in the salvage inventory
         salvageItems = salvageItems.map(salvagePart => {
             if (salvagePart.id === part.id) {
-                salvagePart.quantity -= moveQuantity;  // Reduce the quantity
+                salvagePart.quantity -= moveQuantity;
                 if (salvagePart.quantity <= 0) {
-                    return null;  // Remove part if quantity is 0
+                    return null;
                 }
             }
             return salvagePart;
-        }).filter(salvagePart => salvagePart !== null);  // Remove parts with 0 quantity
+        }).filter(salvagePart => salvagePart !== null);
 
         // Add the part (or increase the quantity) in the station inventory
         const existingStationPart = stationItems.find(item => item.id === part.id);
@@ -123,10 +130,10 @@ export function moveSalvagePartToStation(target, part) {
             if (spacejunkItem.parts.some(p => p.id === part.id)) {
                 spacejunkItem.parts = spacejunkItem.parts.map(p => {
                     if (p.id === part.id) {
-                        p.quantity -= moveQuantity;  // Reduce the part quantity
+                        p.quantity -= moveQuantity;
                     }
-                    return p.quantity > 0 ? p : null;  // Keep the part only if it has a positive quantity
-                }).filter(p => p !== null);  // Remove parts with 0 quantity
+                    return p.quantity > 0 ? p : null;
+                }).filter(p => p !== null);
             }
             return spacejunkItem;
         });
@@ -157,19 +164,51 @@ export function moveSalvagePartToStation(target, part) {
     }
 }
 
+export function lootAllSalvageParts() {
+    const salvageItems = getState('salvageItems');
+    const salvageDropArea = document.getElementById('salvage-drop-area');
+    const stationInventoryGrid = document.getElementById('station-inventory-grid');
+    
 
-// export function lootAllSalvageParts() {
-//     const salvageItems = getState('salvageItems');
-//     const stationItems = getState('stationItems') || [];
+    salvageItems.forEach(part => {
+        let availableSpace = getAvailableSpace(part);
 
-//     // Move all salvage parts to station inventory
-//     salvageItems.forEach(part => { stationItems.push(part); });
+        if (availableSpace > 0) {
+            const partQuantity = Math.min(part.quantity, availableSpace);
 
-//     // Update the state and the UI
-//     setState('stationItems', stationItems);
-//     setState('salvageItems', []);
-//     // updateStationInventory();
-//     updateDisplays();
+            // Create a temporary part object with the adjusted quantity
+            const tempPart = { ...part, quantity: partQuantity };
 
-//     // Remove the space junk item if all parts have been looted
-//     finalizeSalvageItem();
+            // Move the part to the station
+            moveSalvagePartToStation(stationInventoryGrid, tempPart);
+
+            // Adjust the available space
+            availableSpace -= partQuantity;
+        }
+    });
+
+    // If all parts are moved, clear the salvage drop area and salvage items state
+    if (salvageItems.length === 0) {
+        salvageDropArea.innerHTML = '';
+        setState('salvageItems', []);
+    }
+
+    // Update the relevant displays after all parts are moved
+    updateStationInventory();
+    updateSalvageInventory();
+    updateSpacejunkInventory();
+    updateLootAllButtonState();
+}
+
+export function updateLootAllButtonState() {
+    const salvageItems = getState('salvageItems');
+    const lootAllBtn = document.getElementById('salvageLootAllBtn');
+
+    console.log('salvageItems:', salvageItems);
+
+    // Check if there are salvage items and if the station has available space
+    const hasAvailableSpace = salvageItems.some(part => getAvailableSpace(part) > 0);
+
+    // Enable or disable the button based on the conditions
+    lootAllBtn.disabled = !(hasAvailableSpace);
+}

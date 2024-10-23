@@ -1,13 +1,20 @@
 /* equipment.css */
+
+#equipment-content {
+    padding: 5px;
+}
   
   /* Tabs */
 .equipment-tab-buttons {
     display: flex;
     gap: 10px;
+    margin-bottom: 10px;
 }
   
 .equipment-tab-button {
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0;
     cursor: pointer;
     background: transparent;
     margin: 0;
@@ -16,6 +23,10 @@
 .equipment-tab-button.active {
     background-color: #4CAF50;
     color: white;
+}
+
+.equipment-tab-button .icon {
+    margin-right: 0.5rem;
 }
   
 /* Tab content */
@@ -30,10 +41,9 @@
 /* Grid layout for equipment */
 .equipment-layout {
     display: grid;
-    grid-template-columns: repeat(3, 60px) 30px 60px; /* 3 columns */
-    grid-template-rows: repeat(3, 60px);    /* 3 rows */
+    grid-template-columns: repeat(3, 60px) 30px 60px;
+    grid-template-rows: repeat(3, 60px);
     gap: 0;
-    padding: 10px;
     justify-content: center;
 }
 
@@ -74,5 +84,5 @@
 
 #square-back {
     grid-column: 5;
-    grid-row: 2; /* Place it horizontally aligned with the middle row */
+    grid-row: 2;
 }

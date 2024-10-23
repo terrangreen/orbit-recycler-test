@@ -19,7 +19,8 @@ button {
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
-  background-color: #5872c1;
+  /* background-color: #5872c1; */
+  background-color: #005f99;
   color: white;
   border: none;
   margin: 10px;

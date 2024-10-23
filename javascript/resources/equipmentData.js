@@ -44,7 +44,7 @@ export const possibleEquipment = [
       iconColor: 'white',
       type: [ 'interior', 'exterior' ],
       condition: 'used',
-      utilityRate: { power: 1 },
+      utilityRate: { power: -1 },
       description: 'Airlock'
     }
     // Add more equipment as needed
