@@ -75,7 +75,7 @@ function initialModules() {
   }));
 }
 
-function initialEquipment(type) {
+function initialEquipment(section) {
   const initialEquipmentNames = {
     interior: ['Hammock', 'Basic Life Support System', 'Food Storage', 'Airlock'],
     exterior: ['Solar Panels', 'Airlock']
@@ -85,10 +85,10 @@ function initialEquipment(type) {
   const interiorLocations = ['back', 'left', 'right', 'front'];
   const exteriorLocations = ['left', 'front'];
 
-  const locations = type === 'interior' ? interiorLocations : exteriorLocations;
+  const locations = section === 'interior' ? interiorLocations : exteriorLocations;
 
   return possibleEquipment
-    .filter(equipment => initialEquipmentNames[type].includes(equipment.name) && equipment.type.includes(type))
+    .filter(equipment => initialEquipmentNames[section].includes(equipment.name) && equipment.section.includes(section))
     .map((equipment, index) => ({
        ...equipment,
        location: locations[index % locations.length]

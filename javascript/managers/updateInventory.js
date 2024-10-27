@@ -5,7 +5,7 @@ import { loadStationResources } from "../modules/stationResourcesModule.js";
 import { updateSpacejunkDisplay, updateStationDisplay } from "./displayManager.js";
 import { updateStaticInventoryGrid, updateDynamicInventoryGrid } from "./inventoryManager.js";
 import { updateLifeSupportResources } from "./lifeSupportManager.js";
-import { handleSalveToStation } from "./salvageManager.js";
+import { handleSalvageToStation } from "./salvageManager.js";
 import { createStationLayoutGrid, placeModulesInGrid } from "./stationManager.js";
 
 export function updateSpacejunkInventory() {
@@ -40,7 +40,7 @@ export function updateSalvageInventory() {
 
     updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, selectFields, true);
     
-    handleSalveToStation();
+    handleSalvageToStation();
 }
 
 // Update Station Inventory Display
@@ -53,6 +53,7 @@ export function updateStationInventory() {
     const selectFields = stationItems.map(item => ({
         'Item': item.name,
         'Quantity': item.quantity,
+        ...(item.type === 'installable' ? { 'Equipment': item.section } : {}),
         'Condition': item.condition || ''
     }));
 

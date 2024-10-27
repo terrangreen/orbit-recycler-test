@@ -6,7 +6,7 @@ import { handleDragStart } from './dragManager.js';
 
 export function updateStaticInventoryGrid(gridElement, items, selectFields = {}, limit, canDragAndDrop = false) {
     const defaultIcon = getState('defaultIcon');
-    gridElement.innerHTML = ''; // Clear current grid
+    gridElement.innerHTML = '';
 
     for (let i = 0; i < limit; i++) {
         const square = document.createElement('div');
@@ -32,13 +32,13 @@ export function updateStaticInventoryGrid(gridElement, items, selectFields = {},
                 square.classList.add('on-hold');
             }
         } else {
-            square.innerHTML = ''; // Leave the square empty
+            square.innerHTML = '';
         }
 
         gridElement.appendChild(square);
     }
 
-    lucide.createIcons();  // Re-create icons after updating the grid
+    lucide.createIcons();
 }
 
 export function updateDynamicInventoryGrid(gridElement, items, selectFields = null, canDragAndDrop = false) {
@@ -64,19 +64,18 @@ export function updateDynamicInventoryGrid(gridElement, items, selectFields = nu
     lucide.createIcons();
 }
 
-// Add items to the station inventory
-export function addToStationInventory(item, quantity, itemType) {
+export function addToStationInventory(item, quantity) {
     const stationItems = getState('stationItems');
     const stationItemsLimit = getState('stationItemsLimit');
     const currentItemCount = stationItems.reduce((total, currentItem) => total + currentItem.quantity, 0);
 
     if (currentItemCount + quantity <= stationItemsLimit) {
-        const existingItem = stationItems.find(stationItem => stationItem.name === item && stationItem.type === itemType);
+        const existingItem = stationItems.find(stationItem => stationItem.name === item && stationItem.type === item.keyName);
         
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
-            stationItems.push({ name: item, quantity, type: itemType });
+            stationItems.push({ ...item, quantity });
         }
         setState('stationItems', stationItems);
     } else {
@@ -84,18 +83,19 @@ export function addToStationInventory(item, quantity, itemType) {
     }
 }
 
-export function addToStationInventoryNew(item, quantity, itemType) {
+// Add items to the station inventory
+export function addToStationInventory2(item, quantity, keyName) {
     const stationItems = getState('stationItems');
     const stationItemsLimit = getState('stationItemsLimit');
     const currentItemCount = stationItems.reduce((total, currentItem) => total + currentItem.quantity, 0);
 
     if (currentItemCount + quantity <= stationItemsLimit) {
-        const existingItem = stationItems.find(stationItem => stationItem.name === item && stationItem.type === itemType);
+        const existingItem = stationItems.find(stationItem => stationItem.name === item && stationItem.type === keyName);
         
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
-            stationItems.push({ name: item, quantity, type: itemType });
+            stationItems.push({ name: item, quantity, keyName: keyName });
         }
         setState('stationItems', stationItems);
     } else {
@@ -104,9 +104,9 @@ export function addToStationInventoryNew(item, quantity, itemType) {
 }
 
 // Remove items from the station inventory
-export function removeFromStationInventory(item, quantity, itemType) {
+export function removeFromStationInventory(item, quantity, keyName) {
     const stationItems = getState('stationItems');
-    const itemIndex = stationItems.findIndex(stationItem => stationItem.name === item && stationItem.type === itemType);
+    const itemIndex = stationItems.findIndex(stationItem => stationItem.name === item && stationItem.type === keyName);
 
     if (itemIndex > -1) {
         if (stationItems[itemIndex].quantity > quantity) {
@@ -116,7 +116,7 @@ export function removeFromStationInventory(item, quantity, itemType) {
         }
         setState('stationItems', stationItems);
     } else {
-        console.error(`${item} (${itemType}) not found in station inventory.`);
+        console.error(`${item} (${keyName}) not found in station inventory.`);
     }
 }
 

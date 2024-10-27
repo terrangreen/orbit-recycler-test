@@ -4,6 +4,7 @@ export const craftingRecipes = [
         iconType: 'box',
         iconColor: 'white',
         category: 'storage',
+        keyName: "storageBag",
         materials: {
             kevlar: 5,
             steel: 6
@@ -15,6 +16,7 @@ export const craftingRecipes = [
         iconType: 'box',
         iconColor: 'white',
         category: 'storage',
+        keyName: "steelBox",
         materials: {
             steel: 10,
         },

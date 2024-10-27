@@ -5,6 +5,7 @@ export const possibleSalvage = [
     { 
       name: 'Kevlar Fiber', 
       type: 'scrap',
+      keyName: 'scrap-kevlar',
       material: 'kevlar',
       id: 1,
       valueId: 'kevlarValue', 
@@ -14,6 +15,7 @@ export const possibleSalvage = [
     { 
       name: 'Aluminum Parts', 
       type: 'scrap',
+      keyName: 'scrap-aluminum',
       material: 'aluminum', 
       id: 2, 
       valueId: 'aluminumValue', 
@@ -23,6 +25,7 @@ export const possibleSalvage = [
     { 
       name: 'Steel Parts', 
       type: 'scrap',
+      keyName: 'scrap-steel',
       material: 'steel', 
       id: 3, 
       valueId: 'steelValue', 
@@ -32,6 +35,7 @@ export const possibleSalvage = [
     { 
       name: 'Copper Parts', 
       type: 'scrap',
+      keyName: 'scrap-copper',
       material: 'copper', 
       id: 4, 
       valueId: 'copperValue', 
@@ -42,6 +46,7 @@ export const possibleSalvage = [
     { 
       name: 'Silicon Processor', 
       type: 'component',
+      keyName: 'siliconProcessor',
       material: 'silicon-processor', 
       id: 10, 
       valueId: 'siliconValue', 
@@ -50,7 +55,10 @@ export const possibleSalvage = [
     },
     { 
       name: 'Solar panels', 
-      type: 'component',
+      type: 'installable',
+      keyName: 'solarPanel',
+      installable: 'true',
+      section: 'exterior',
       material: 'solar-panel',
       id: 11, 
       iconType: 'sun', 

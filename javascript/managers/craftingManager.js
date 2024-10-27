@@ -33,14 +33,22 @@ export function craftItem(recipe) {
         // Save the updated knownMaterials state
         setState('knownMaterials', knownMaterials);
 
+        // Calculate the new ID for the crafted item
+        const stationItems = getState('stationItems');
+        const currentTypeCount = stationItems.filter(
+            item => item.keyName === recipe.keyName
+        ).length;
+
+        recipe.id = `${recipe.keyName}-${currentTypeCount + 1}`;
+
         // Add the crafted item to the station inventory
-        addToStationInventory(recipe.name, 1, recipe.category);
+        addToStationInventory(recipe, 1);
 
         // Recalculate materials after crafting
         calculateMaterialsStorage();
         updateStationInventory();
 
-        showToastMessage(`${recipe.name} crafted successfully!`, "success");
+        showToastMessage(`${recipe.name} crafted successfully`, "success");
     } else {
         showToastMessage('Not enough materials.', "failure");
     }

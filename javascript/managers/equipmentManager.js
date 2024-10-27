@@ -1,7 +1,10 @@
 // equipmentManager.js
 
-import { getState } from '../app/gameState.js';
+import { getState, setState } from '../app/gameState.js';
+import { showToastMessage } from '../app/toast.js';
 import { showTooltip } from '../app/tooltip.js';
+import { handleDroppable } from './dragManager.js';
+import { updateStationInventory } from './updateInventory.js';
 
 export function activateEquipmentModule(module) {
     const equipment = module.equipment;
@@ -13,22 +16,22 @@ export function activateEquipmentModule(module) {
         const exteriorTab = document.getElementById('exterior-tab');
 
         // Activate the Interior tab by default
-        showEquipment(equipment.interior, 'interior');
+        showEquipment(module, equipment.interior, 'interior');
         interiorTab.classList.add('active');
         exteriorTab.classList.remove('active');
         document.getElementById('equipment-interior').classList.add('active');
         document.getElementById('equipment-exterior').classList.remove('active');
 
         interiorTab.addEventListener('click', () => {
-            showEquipment(equipment.interior, 'interior');
+            showEquipment(module, equipment.interior, 'interior');
         });
 
         exteriorTab.addEventListener('click', () => {
-            showEquipment(equipment.exterior, 'exterior');
+            showEquipment(module, equipment.exterior, 'exterior');
         });
 }
 
-function createFaceSquares(equipmentContent) {
+function createFaceSquares(module, section, equipmentContent) {
     // Clear existing content
     equipmentContent.innerHTML = '';
 
@@ -51,50 +54,63 @@ function createFaceSquares(equipmentContent) {
         square.classList.add('inventory-square');
         square.id = `square-${face.id}`;
         layout.appendChild(square);
+
+        let additionalData = { module, section };
+
+        handleDroppable(square, moveStationToEquipment, additionalData);
+
+        const tooltipFields = { "Position": face.name };
+        showTooltip(square, null, tooltipFields);
     });
 
     equipmentContent.appendChild(layout);
 }
 
 function placeEquipmentInFaces(equipmentList, section) {
-    const defaultIcon = getState('defaultIcon');
     const equipmentContent = document.getElementById(`equipment-${section}`);
 
     equipmentList.forEach((equipment, index) => {
-        const square = equipmentContent.querySelector(`#square-${equipment.location}`);
-        
-        if (square) {
-            square.innerHTML = `<i data-lucide="${equipment.iconType || defaultIcon}" class="icon ${equipment.iconColor}"></i>`;
-
-            const tooltipFields = {
-                Name: equipment.name,
-                Description: equipment.description || 'No description available.'
-            };
-
-            // Add utility rates to tooltip
-            if (equipment.utilityRate) {
-                Object.entries(equipment.utilityRate).forEach(([key, value]) => {
-                    if (value != null) {
-                        const rateClass = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
-                        const formattedRate = value > 0 ? `+${value}` : `${value}`;
-                        tooltipFields[`${key.charAt(0).toUpperCase() + key.slice(1)} Rate`] = `<span class="rate ${rateClass}">${formattedRate}/s</span>`;
-                    }
-                });
-            }
-
-            showTooltip(square, equipment, tooltipFields);
-        }
+        placeEquipmentItem(equipmentContent, equipment);
     })
 
     lucide.createIcons();
 }
 
+function placeEquipmentItem(equipmentContent, equipment) {
+    const defaultIcon = getState('defaultIcon');
+    const square = equipmentContent.querySelector(`#square-${equipment.location}`);
+    square.classList.add('occupied');
+
+    if (square) {
+        square.innerHTML = `<i data-lucide="${equipment.iconType || defaultIcon}" class="icon ${equipment.iconColor}"></i>`;
+
+        const tooltipFields = {
+            Position: equipment.location.charAt(0).toUpperCase() + equipment.location.slice(1),
+            Name: equipment.name,
+            Description: equipment.description || 'No description available.'
+        };
+
+        // Add utility rates to tooltip
+        if (equipment.utilityRate) {
+            Object.entries(equipment.utilityRate).forEach(([key, value]) => {
+                if (value != null) {
+                    const rateClass = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
+                    const formattedRate = value > 0 ? `+${value}` : `${value}`;
+                    tooltipFields[`${key.charAt(0).toUpperCase() + key.slice(1)} Rate`] = `<span class="rate ${rateClass}">${formattedRate}/s</span>`;
+                }
+            });
+        }
+
+        showTooltip(square, equipment, tooltipFields);
+    }
+}
+
 // Main function to show equipment
-function showEquipment(equipmentList, section) {
+function showEquipment(module, equipmentList, section) {
     const equipmentContent = document.getElementById(`equipment-${section}`);
 
-    createFaceSquares(equipmentContent); // Step 1: Create face squares
-    placeEquipmentInFaces(equipmentList, section); // Step 2: Place equipment in the squares
+    createFaceSquares(module, section, equipmentContent);
+    placeEquipmentInFaces(equipmentList, section);
 }
 
 function enableEquipmentTabs() {
@@ -107,22 +123,16 @@ function enableEquipmentTabs() {
 
     const interiorTab = document.getElementById('interior-tab');
     const exteriorTab = document.getElementById('exterior-tab');
-    const tabContents = document.querySelectorAll('.equipment-tab-contents');
   
-    interiorTab.addEventListener('click', () => {
-        interiorTab.classList.add('active');
-        exteriorTab.classList.remove('active');
-        document.getElementById('equipment-interior').classList.add('active');
-        document.getElementById('equipment-exterior').classList.remove('active');
-    });
+    interiorTab.addEventListener('click', () => activateTab('interior', interiorTab, exteriorTab));
+    exteriorTab.addEventListener('click', () => activateTab('exterior', exteriorTab, interiorTab));
+}
 
-    // Event listeners for Exterior tab
-    exteriorTab.addEventListener('click', () => {
-        exteriorTab.classList.add('active');
-        interiorTab.classList.remove('active');
-        document.getElementById('equipment-exterior').classList.add('active');
-        document.getElementById('equipment-interior').classList.remove('active');
-    });
+function activateTab(section, activeTab, inactiveTab) {
+    activeTab.classList.add('active');
+    inactiveTab.classList.remove('active');
+    document.getElementById(`equipment-${section}`).classList.add('active');
+    document.getElementById(`equipment-${inactiveTab.id.replace('-tab', '')}`).classList.remove('active');
 }
 
 // Function to disable tabs
@@ -149,4 +159,48 @@ export function resetEquipmentModule() {
     // Reset active classes
     tabButtons.forEach(button => button.classList.remove('active'));
     document.querySelectorAll('.equipment-tab-content').forEach(content => content.classList.remove('active'));
+}
+
+export function moveStationToEquipment(target, item, additionalData) {
+    // Rewrite this to pull out the module and section that need
+    // to be passed in additionalData
+    let stationModules = getState('stationModules');
+    let stationItems = getState('stationItems') || [];
+    const equipmentContent = document.getElementById(`equipment-${additionalData.section}`);
+
+    const moduleId = additionalData.module.id;
+    const module = stationModules.find(module => module.id === moduleId);
+
+    let equipmentItems = module.equipment[additionalData.section];
+
+    if (!target.classList.contains('occupied')) {
+        // Update the item in station items
+        stationItems = stationItems.map(i => {
+            if (i.id === item.id ) {
+                return null;
+            }
+            return i;
+        }).filter(i => i != null);
+        
+        // Add the item to the equipment items
+        const newItem = {
+            ...item,
+            location: target.id.replace('square-', '')
+        }
+        equipmentItems.push(newItem);
+
+        module.equipment[additionalData.section] = equipmentItems;
+
+        setState('stationModules', stationModules);
+        setState('stationItems', stationItems);
+        
+        placeEquipmentItem(equipmentContent, newItem);
+        updateStationInventory();
+
+        showToastMessage(`${newItem.name} installed successfully`, "success");
+
+        lucide.createIcons();
+    } else {
+        alert('This slot is already occupied.');
+    }
 }

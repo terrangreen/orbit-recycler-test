@@ -22,6 +22,7 @@ export function updateDisplays() {
     loadLifeSupportContent();
     updateStationModuleCount();
     updateLifeSupportResources();
+    // handleEquipmentArea();
 }
 
 export function updateSpacejunkDisplay() {

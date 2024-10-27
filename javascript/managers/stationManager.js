@@ -66,13 +66,13 @@ export function addNewModule(moduleName, location) {
   if (moduleTemplate) {
     const newModule = {
       ...moduleTemplate,
-      id: stationModules.length + 1, // ID based on the length of stationModules at this point
-      location: location || { row: 0, col: 0 } // Specify a location or use default (0, 0)
+      id: stationModules.length + 1,
+      location: location || { row: 0, col: 0 }
     };
 
     stationModules.push(newModule);
     setState('stationModules', stationModules);
-    saveStateToLocalStorage(); // Save the updated state with the new module
+    saveStateToLocalStorage();
   } else {
     console.error(`Module with name ${moduleName} not found in possibleModules.`);
   }
@@ -84,8 +84,8 @@ export function renderModule(module) {
     let gridSize = Math.sqrt(stationModulesLimit);
 
     // Assuming x, y maps directly to grid rows and columns:
-    const gridRow = Math.floor(gridSize / 2) + y; // Add offset to find center
-    const gridCol = Math.floor(gridSize / 2) + x; // Same here
+    const gridRow = Math.floor(gridSize / 2) + y;
+    const gridCol = Math.floor(gridSize / 2) + x;
     
     const gridSquare = document.querySelector(`.grid-square[data-row="${gridRow}"][data-col="${gridCol}"]`);
     if (gridSquare) {

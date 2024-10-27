@@ -3,7 +3,7 @@
 import { startGameLoop, stopGameLoop } from './gameLoop.js';
 import { resetGameState } from '../app/gameState.js';
 
-let isGamePaused = false; // Track game pause state
+let isGamePaused = false;
 
 export function setupButtonHandlers() {
     // Handle reset button
@@ -15,17 +15,17 @@ export function setupButtonHandlers() {
     }
 
     // Handle pause button
-    const pauseButton = document.getElementById('pause-game'); // Reference the pause button
+    const pauseButton = document.getElementById('pause-game');
     if (pauseButton) {
         pauseButton.addEventListener('click', function() {
             if (isGamePaused) {
-                startGameLoop(); // Restart the game loop
-                isGamePaused = false; // Update the state
-                pauseButton.textContent = 'Pause'; // Change button text to "Pause"
+                startGameLoop();
+                isGamePaused = false;
+                pauseButton.textContent = 'Pause';
             } else {
-                stopGameLoop(); // Stop the game loop
-                isGamePaused = true; // Update the state
-                pauseButton.textContent = 'Resume'; // Change button text to "Resume"
+                stopGameLoop();
+                isGamePaused = true;
+                pauseButton.textContent = 'Resume';
             }
         });
     }

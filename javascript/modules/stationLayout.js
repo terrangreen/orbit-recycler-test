@@ -52,7 +52,7 @@ function initializeGrid(gridConfig) {
 // Create dynamic grid squares
 function createGrid(rows, cols) {
     const gridContainer = document.getElementById('dynamic-grid');
-    gridContainer.innerHTML = ''; // Clear any existing content
+    gridContainer.innerHTML = '';
 
     for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {

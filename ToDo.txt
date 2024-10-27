@@ -31,7 +31,7 @@ Will need a supply of food, O2, water. Expensive! $$$$$
     need to import resources
 >> improved with a docking module, robot arm
 
-? How to attach modules to station
+? How to attach modules to station      DONE
 
 
 B U G S

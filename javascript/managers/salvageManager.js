@@ -11,7 +11,7 @@ export function handleSalvageArea() {
     handleDroppable(salvageDropArea, moveToSalvage);
 }
 
-export function handleSalveToStation() {
+export function handleSalvageToStation() {
     const stationInventoryGrid = document.getElementById('station-inventory-grid');
     handleDroppable(stationInventoryGrid, moveSalvagePartToStation);
 
@@ -70,7 +70,6 @@ export function returnFromSalvageHold(item) {
         spacejunkItem.id === item.id ? { ...spacejunkItem, onHold: false } : spacejunkItem
     );
     setState('spacejunkItems', spacejunkItems);
-
     setState('salvageItems', []);
 
     // Update the displays to reflect the change
@@ -203,8 +202,6 @@ export function lootAllSalvageParts() {
 export function updateLootAllButtonState() {
     const salvageItems = getState('salvageItems');
     const lootAllBtn = document.getElementById('salvageLootAllBtn');
-
-    console.log('salvageItems:', salvageItems);
 
     // Check if there are salvage items and if the station has available space
     const hasAvailableSpace = salvageItems.some(part => getAvailableSpace(part) > 0);
