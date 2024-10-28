@@ -34,8 +34,8 @@ export function craftItem(recipe) {
         setState('knownMaterials', knownMaterials);
 
         // Calculate the new ID for the crafted item
-        const stationItems = getState('stationItems');
-        const currentTypeCount = stationItems.filter(
+        const stationInventory = getState('stationInventory');
+        const currentTypeCount = stationInventory.filter(
             item => item.keyName === recipe.keyName
         ).length;
 

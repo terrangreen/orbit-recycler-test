@@ -1,6 +1,7 @@
 // inventoryManager.js
 
 import { getState, setState } from '../app/gameState.js';
+import { showToastMessage } from '../app/toast.js';
 import { showTooltip } from '../app/tooltip.js';
 import { handleDragStart } from './dragManager.js';
 
@@ -65,56 +66,36 @@ export function updateDynamicInventoryGrid(gridElement, items, selectFields = nu
 }
 
 export function addToStationInventory(item, quantity) {
-    const stationItems = getState('stationItems');
-    const stationItemsLimit = getState('stationItemsLimit');
-    const currentItemCount = stationItems.reduce((total, currentItem) => total + currentItem.quantity, 0);
+    const stationInventory = getState('stationInventory');
+    const stationInventoryLimit = getState('stationInventoryLimit');
+    const currentItemCount = stationInventory.reduce((total, currentItem) => total + currentItem.quantity, 0);
 
-    if (currentItemCount + quantity <= stationItemsLimit) {
-        const existingItem = stationItems.find(stationItem => stationItem.name === item && stationItem.type === item.keyName);
+    if (currentItemCount + quantity <= stationInventoryLimit) {
+        const existingItem = stationInventory.find(stationItem => stationItem.name === item && stationItem.type === item.keyName);
         
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
-            stationItems.push({ ...item, quantity });
+            stationInventory.push({ ...item, quantity });
         }
-        setState('stationItems', stationItems);
+        setState('stationInventory', stationInventory);
     } else {
-        console.error(`Not enough space in the station inventory to add ${quantity} of ${item}.`);
-    }
-}
-
-// Add items to the station inventory
-export function addToStationInventory2(item, quantity, keyName) {
-    const stationItems = getState('stationItems');
-    const stationItemsLimit = getState('stationItemsLimit');
-    const currentItemCount = stationItems.reduce((total, currentItem) => total + currentItem.quantity, 0);
-
-    if (currentItemCount + quantity <= stationItemsLimit) {
-        const existingItem = stationItems.find(stationItem => stationItem.name === item && stationItem.type === keyName);
-        
-        if (existingItem) {
-            existingItem.quantity += quantity;
-        } else {
-            stationItems.push({ name: item, quantity, keyName: keyName });
-        }
-        setState('stationItems', stationItems);
-    } else {
-        console.error(`Not enough space in the station inventory to add ${quantity} of ${item}.`);
+        showToastMessage(`Not enough space in the station inventory to add ${quantity} of ${item.name}.`);
     }
 }
 
 // Remove items from the station inventory
 export function removeFromStationInventory(item, quantity, keyName) {
-    const stationItems = getState('stationItems');
-    const itemIndex = stationItems.findIndex(stationItem => stationItem.name === item && stationItem.type === keyName);
+    const stationInventory = getState('stationInventory');
+    const itemIndex = stationInventory.findIndex(stationItem => stationItem.name === item && stationItem.type === keyName);
 
     if (itemIndex > -1) {
-        if (stationItems[itemIndex].quantity > quantity) {
-            stationItems[itemIndex].quantity -= quantity;
+        if (stationInventory[itemIndex].quantity > quantity) {
+            stationInventory[itemIndex].quantity -= quantity;
         } else {
-            stationItems.splice(itemIndex, 1);
+            stationInventory.splice(itemIndex, 1);
         }
-        setState('stationItems', stationItems);
+        setState('stationInventory', stationInventory);
     } else {
         console.error(`${item} (${keyName}) not found in station inventory.`);
     }
@@ -122,9 +103,9 @@ export function removeFromStationInventory(item, quantity, keyName) {
 
 // Check available space
 export function getAvailableStationSpace() {
-    const stationItems = getState('stationItems');
-    const stationItemsLimit = getState('stationItemsLimit');
-    const currentItemCount = stationItems.reduce((total, item) => total + item.quantity, 0);
+    const stationInventory = getState('stationInventory');
+    const stationInventoryLimit = getState('stationInventoryLimit');
+    const currentItemCount = stationInventory.reduce((total, item) => total + item.quantity, 0);
 
-    return stationItemsLimit - currentItemCount;
+    return stationInventoryLimit - currentItemCount;
 }

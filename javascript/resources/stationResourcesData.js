@@ -1,6 +1,13 @@
 // stationResourcesData.js
 
 export const stationResourcesData = [
+    { 
+      type: 'money', 
+      iconType: 'banknote', 
+      iconColor: 'green', 
+      valueId: 'moneyValue',
+      template: '${money}'
+    },
     {
       type: 'spaceJunk',
       iconType: 'trash-2',
@@ -8,11 +15,11 @@ export const stationResourcesData = [
       valueId: 'rawSpaceJunkValue',
       template: '${spacejunkItems.length} / ${rawJunkLimit}'
     },
-    { 
-      type: 'money', 
-      iconType: 'banknote', 
-      iconColor: 'green', 
-      valueId: 'moneyValue',
-      template: '${money}'
+    {
+      type: 'stationInventory',
+      iconType: 'boxes',
+      iconColor: 'white',
+      valueId: 'stationInventoryValue',
+      template: '${stationInventory.length} / ${stationInventoryLimit}'
     }
   ];

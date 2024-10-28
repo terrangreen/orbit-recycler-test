@@ -37,11 +37,11 @@ export function updateSpacejunkDisplay() {
 
 export function updateStationDisplay() {    
     updateStationStorage();
-    const stationItemsLimit = getState('stationItemsLimit');
-    const stationStorage = getState('stationItemsStorage');
+    const stationInventoryLimit = getState('stationInventoryLimit');
+    const stationStorage = getState('stationInventoryStorage');
     const stationInventoryDisplay = document.getElementById('stationInventoryDisplay');
 
-    stationInventoryDisplay.textContent = `${stationStorage} / ${stationItemsLimit}`;
+    stationInventoryDisplay.textContent = `${stationStorage} / ${stationInventoryLimit}`;
 }
 
 export function updateSpacejunkStorage() {
@@ -51,9 +51,9 @@ export function updateSpacejunkStorage() {
 }
 
 export function updateStationStorage() {
-    const stationItems = getState('stationItems');
-    const stationItemsStorage = stationItems.reduce((total, item) => total + (item.quantity || 1), 0);
-    setState('stationItemsStorage', stationItemsStorage);  // Save the calculated value to the game state
+    const stationInventory = getState('stationInventory');
+    const stationInventoryStorage = stationInventory.reduce((total, item) => total + (item.quantity || 1), 0);
+    setState('stationInventoryStorage', stationInventoryStorage);  // Save the calculated value to the game state
 }
 
 export function updateStationModuleCount() {

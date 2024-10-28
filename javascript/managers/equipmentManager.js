@@ -162,10 +162,8 @@ export function resetEquipmentModule() {
 }
 
 export function moveStationToEquipment(target, item, additionalData) {
-    // Rewrite this to pull out the module and section that need
-    // to be passed in additionalData
     let stationModules = getState('stationModules');
-    let stationItems = getState('stationItems') || [];
+    let stationInventory = getState('stationInventory') || [];
     const equipmentContent = document.getElementById(`equipment-${additionalData.section}`);
 
     const moduleId = additionalData.module.id;
@@ -175,7 +173,7 @@ export function moveStationToEquipment(target, item, additionalData) {
 
     if (!target.classList.contains('occupied')) {
         // Update the item in station items
-        stationItems = stationItems.map(i => {
+        stationInventory = stationInventory.map(i => {
             if (i.id === item.id ) {
                 return null;
             }
@@ -192,7 +190,7 @@ export function moveStationToEquipment(target, item, additionalData) {
         module.equipment[additionalData.section] = equipmentItems;
 
         setState('stationModules', stationModules);
-        setState('stationItems', stationItems);
+        setState('stationInventory', stationInventory);
         
         placeEquipmentItem(equipmentContent, newItem);
         updateStationInventory();
@@ -201,6 +199,6 @@ export function moveStationToEquipment(target, item, additionalData) {
 
         lucide.createIcons();
     } else {
-        alert('This slot is already occupied.');
+        showToastMessage('This slot is already occupied', "error");
     }
 }

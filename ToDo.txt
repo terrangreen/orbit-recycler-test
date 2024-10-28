@@ -35,3 +35,5 @@ Will need a supply of food, O2, water. Expensive! $$$$$
 
 
 B U G S
+> Salvage 'loot all' button isn't moving all scrap, but all of it
+    disappears.

@@ -45,12 +45,12 @@ export function updateSalvageInventory() {
 
 // Update Station Inventory Display
 export function updateStationInventory() {
-    const stationItems = getState('stationItems');
+    const stationInventory = getState('stationInventory');
     
     const stationInventoryGrid = document.getElementById('station-inventory-grid');
-    const stationItemsLimit = getState('stationItemsLimit');
+    const stationInventoryLimit = getState('stationInventoryLimit');
 
-    const selectFields = stationItems.map(item => ({
+    const selectFields = stationInventory.map(item => ({
         'Item': item.name,
         'Quantity': item.quantity,
         ...(item.type === 'installable' ? { 'Equipment': item.section } : {}),
@@ -59,7 +59,7 @@ export function updateStationInventory() {
 
     updateStationDisplay();
 
-    updateStaticInventoryGrid(stationInventoryGrid, stationItems, selectFields, stationItemsLimit, true);
+    updateStaticInventoryGrid(stationInventoryGrid, stationInventory, selectFields, stationInventoryLimit, true);
     
 }
 

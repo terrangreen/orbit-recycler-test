@@ -1,6 +1,7 @@
 // salvageManager.js
 
 import { getState, setState } from "../app/gameState.js";
+import { showToastMessage } from "../app/toast.js";
 import { updateSpacejunkDisplay, updateStationStorage } from "./displayManager.js";
 import { handleDroppable } from "./dragManager.js";
 import { calculateMaterialsStorage, gatherMaterial } from "./materialsManager.js";
@@ -27,6 +28,9 @@ export function moveToSalvage(target, item) {
     const returnBtn = document.getElementById('salvageUndoBtn');
     const lootAllBtn = document.getElementById('salvageLootAllBtn');
  
+    console.log('target:', target);
+    console.log('item:', item);
+
     // Mark item as on hold
     item.onHold = true;
  
@@ -81,24 +85,28 @@ export function returnFromSalvageHold(item) {
 }
 
 export function getAvailableSpace(part) {
-    const maxStationCapacity = getState('stationItemsLimit');
-    const stationItems = getState('stationItems');
-    const currentItemCount = stationItems.reduce((count, item) => count + item.quantity, 0);
+    const maxStationCapacity = getState('stationInventoryLimit');
+    const stationInventory = getState('stationInventory');
+    const currentItemCount = stationInventory.reduce((count, item) => count + item.quantity, 0);
     const availableSpace = maxStationCapacity - currentItemCount;
 
     updateStationStorage();
 
+    console.log('part:', part);
+    console.log('currentItemCount:', currentItemCount);
+    console.log('availableSpace:', availableSpace);
+    console.log('part.quantity:', part.quantity);
     // Return the number of parts that can be moved, which is the minimum between available space and part quantity
     return Math.min(part.quantity, availableSpace);
 }
 
 export function moveSalvagePartToStation(target, part) {
     let salvageItems = getState('salvageItems');
-    let stationItems = getState('stationItems') || [];
+    let stationInventory = getState('stationInventory') || [];
     let spacejunkItems = getState('spacejunkItems');
 
     // Get available space in the station inventory
-    const availableSpace = getAvailableSpace(part);
+    let availableSpace = getAvailableSpace(part);
 
     if (availableSpace > 0) {
         const moveQuantity = Math.min(part.quantity, availableSpace);
@@ -114,13 +122,15 @@ export function moveSalvagePartToStation(target, part) {
             return salvagePart;
         }).filter(salvagePart => salvagePart !== null);
 
+        console.log('stationInventory:', stationInventory);
+
         // Add the part (or increase the quantity) in the station inventory
-        const existingStationPart = stationItems.find(item => item.id === part.id);
+        const existingStationPart = stationInventory.find(item => item.id === part.id);
         if (existingStationPart) {
             existingStationPart.quantity += moveQuantity;
         } else {
             // If it's a new part for the station, add it
-            stationItems.push({ ...part, quantity: moveQuantity });
+            stationInventory.push({ ...part, quantity: moveQuantity });
         }
 
         gatherMaterial(part.material);
@@ -140,7 +150,7 @@ export function moveSalvagePartToStation(target, part) {
         // Update spacejunk, salvage, and station inventories in the state
         setState('spacejunkItems', spacejunkItems);
         setState('salvageItems', salvageItems);
-        setState('stationItems', stationItems);
+        setState('stationInventory', stationInventory);
 
         if (salvageItems.length === 0) {
             const salvageDropArea = document.getElementById('salvage-drop-area');
@@ -159,7 +169,7 @@ export function moveSalvagePartToStation(target, part) {
         updateStationInventory();
         calculateMaterialsStorage();
     } else {
-        alert('Inventory full');
+        showToastMessage('Inventory full', "warning");
     }
 }
 
@@ -168,21 +178,24 @@ export function lootAllSalvageParts() {
     const salvageDropArea = document.getElementById('salvage-drop-area');
     const stationInventoryGrid = document.getElementById('station-inventory-grid');
     
-
+    console.log('salvageItems:', salvageItems);
     salvageItems.forEach(part => {
+        console.log('part:', part);
         let availableSpace = getAvailableSpace(part);
+        console.log('availableSpace:', availableSpace);
 
         if (availableSpace > 0) {
-            const partQuantity = Math.min(part.quantity, availableSpace);
+            // const partQuantity = Math.min(part.quantity, availableSpace);
 
-            // Create a temporary part object with the adjusted quantity
-            const tempPart = { ...part, quantity: partQuantity };
+            // // Create a temporary part object with the adjusted quantity
+            // const tempPart = { ...part, quantity: partQuantity };
+            // console.log('tempPart:', tempPart);
 
             // Move the part to the station
-            moveSalvagePartToStation(stationInventoryGrid, tempPart);
+            moveSalvagePartToStation(stationInventoryGrid, part);
 
             // Adjust the available space
-            availableSpace -= partQuantity;
+            // availableSpace -= partQuantity;
         }
     });
 

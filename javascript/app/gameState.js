@@ -15,9 +15,9 @@ let initialState = {
   salvageLimit: 10,
   salvageItems: [],
   salvageContents: {},
-  stationItems: [],
-  stationItemsStorage: 0,
-  stationItemsLimit: 20,
+  stationInventory: [],
+  stationInventoryStorage: 0,
+  stationInventoryLimit: 20,
   knownMaterials: initialMaterials(),
   materialsStorage: {},
   defaultIcon: 'box',
@@ -66,7 +66,7 @@ function initialModules() {
   .filter(module => initialModuleName.includes(module.name))
   .map((module, index) => ({
     ...module,
-    id: 1,
+    id: generateUniqueId(module),
     location: centerLocation,
     equipment: {
       interior: initialEquipment('interior'),
@@ -91,6 +91,7 @@ function initialEquipment(section) {
     .filter(equipment => initialEquipmentNames[section].includes(equipment.name) && equipment.section.includes(section))
     .map((equipment, index) => ({
        ...equipment,
+       id: generateUniqueId(equipment),
        location: locations[index % locations.length]
   }));
 }
@@ -108,6 +109,15 @@ function initialLifeSupportResources() {
       };
       return acc;
   }, {});
+}
+
+function generateUniqueId(target, itemList = {}) {
+  const itemsArray = Object.values(itemList);
+  const currentTypeCount = itemsArray.filter(
+    item => item.keyName === target.keyName
+  ).length;
+
+  return `${target.keyName}-${currentTypeCount + 1}`;
 }
 
 // Utility function to save the state to localStorage

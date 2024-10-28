@@ -23,17 +23,17 @@ export function gatherMaterial(materialType) {
 
 export function calculateMaterialsStorage() {
     const knownMaterials = getState('knownMaterials') || [];
-    const stationItems = getState('stationItems');
+    const stationInventory = getState('stationInventory');
 
     knownMaterials.forEach(materialObj => {
         const material = materialObj.material;
-        const stationMaterial = stationItems.find(item => item.material === material);
+        const stationMaterial = stationInventory.find(item => item.material === material);
         if (stationMaterial) {
-            const totalMaterialCount = stationItems
+            const totalMaterialCount = stationInventory
                 .filter(item => item.material === material)
                 .reduce((total, item) => total + item.quantity, 0);
 
-            // Update the quantity only if material is present in stationItems
+            // Update the quantity only if material is present in stationInventory
             materialObj.quantity = totalMaterialCount;
         }
     });

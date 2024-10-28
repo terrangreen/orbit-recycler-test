@@ -1,9 +1,10 @@
 // gameLoop.js
 
-import { getState, setState } from '../app/gameState.js';
+import { saveStateToLocalStorage } from '../app/gameState.js';
+import { showToastMessage } from '../app/toast.js';
 import { updateLifeSupportResourcesDisplay } from './displayManager.js';
 import { updateSpacejunkStorage } from './displayManager.js';
-import { calculateCurrentLifeSupportResource, updateLifeSupportResources } from './lifeSupportManager.js';
+import { updateLifeSupportResources } from './lifeSupportManager.js';
 
 let tickInterval;
 
@@ -23,3 +24,11 @@ export function startGameLoop() {
 export function stopGameLoop() {
     clearInterval(tickInterval);
 }
+
+// Call this when the game starts or when you want to initiate auto-saving
+export function startAutoSave() {
+    setInterval(() => {
+      saveStateToLocalStorage();
+      showToastMessage('Game auto-saved', "success");
+    }, 300000); // 300,000 milliseconds = 5 minutes
+  }
