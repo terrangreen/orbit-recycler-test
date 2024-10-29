@@ -165,12 +165,14 @@ export function moveStationToEquipment(target, item, additionalData) {
     let stationModules = getState('stationModules');
     let stationInventory = getState('stationInventory') || [];
     const equipmentContent = document.getElementById(`equipment-${additionalData.section}`);
-
     const moduleId = additionalData.module.id;
     const module = stationModules.find(module => module.id === moduleId);
-
     let equipmentItems = module.equipment[additionalData.section];
 
+    if (target.id === 'station-inventory-grid') {
+        return;
+    }
+    
     if (!target.classList.contains('occupied')) {
         // Update the item in station items
         stationInventory = stationInventory.map(i => {

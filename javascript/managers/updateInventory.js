@@ -46,16 +46,39 @@ export function updateSalvageInventory() {
 // Update Station Inventory Display
 export function updateStationInventory() {
     const stationInventory = getState('stationInventory');
-    
     const stationInventoryGrid = document.getElementById('station-inventory-grid');
     const stationInventoryLimit = getState('stationInventoryLimit');
 
-    const selectFields = stationInventory.map(item => ({
-        'Item': item.name,
-        'Quantity': item.quantity,
-        ...(item.type === 'installable' ? { 'Equipment': item.section } : {}),
-        'Condition': item.condition || ''
-    }));
+    const selectFields = stationInventory.map(item => {
+        let additionalInfo = {};
+
+        switch(item.type) {
+            case 'scrap':
+                additionalInfo = {
+                    'Use': 'Used in crafting or can be recycled'
+                };
+                break;
+            case 'component':
+                additionalInfo = {
+                    'Use': 'Used in crafting'
+                };
+                break;
+            case 'equipment':
+                additionalInfo = {
+                    'Use': 'Installable in the station',
+                    'Equipment': item.section,
+                    'Condition': item.condition
+                };
+                break;
+        }
+
+        return {
+            'Item': item.name,
+            'Description': item.description,
+            'Quantity': item.quantity,
+            ...additionalInfo
+        }
+    });
 
     updateStationDisplay();
 

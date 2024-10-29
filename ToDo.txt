@@ -5,22 +5,25 @@ collect space junk > process > separate > store
 
 
 C U R R E N T
-> Crafting works (only 1 recipe)    DONE
-> Fix Crafting formatting           DONE
-> Add crafting recipes
+> Can add objects to empty equipment sqaures, however
+    they aren't updating station resources or altering
+    stats (like storage)
+> Make inventory stacks subjective with count values for
+    differrent items (in progress)
+
 
 N E X T
-> Fix life support resources        DONE
-> Make life support resources live with real rates      DONE
-    > This will wait until I configure equipment inside and out     DONE
-> Make inventory stacks subjective with count values for
-    < differrent items
-> Station management
-    > layout                        DONE
-    > equipment                     DONE
-    > Add mouse hover wherever it should be     DONE
-> Consider rearranging the left side into two columns so it
-    > all fits on one page          DONE
+> Make storage bag give a choice for which storage to
+    increase
+> Make equipment modules uninstallable - repackage?
+> Add station inventory to resource stuff at top
+> Add manual save button, import-export functionality?
+> Add import functionality using spacex transport costs
+    > More modules?
+    > More equipment?
+    > Food, water, air?
+> Fix temporality - seconds is tooooo short
+> Add crafting recipes
 
 N E W   I D E A S
 Buying/selling
@@ -30,10 +33,12 @@ Will need a supply of food, O2, water. Expensive! $$$$$
 >> Resource usage should be negative to start, implying the 
     need to import resources
 >> improved with a docking module, robot arm
-
-? How to attach modules to station      DONE
+>> Improve tooltip layouts
+> Can I highlight empty equipment squares that are
+    'droppable' when a piece of equipment is dragged out of
+    station inventory?
+> Should using food or other materials generate plastic trash?
 
 
 B U G S
-> Salvage 'loot all' button isn't moving all scrap, but all of it
-    disappears.
+> 

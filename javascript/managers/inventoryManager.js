@@ -71,8 +71,8 @@ export function addToStationInventory(item, quantity) {
     const currentItemCount = stationInventory.reduce((total, currentItem) => total + currentItem.quantity, 0);
 
     if (currentItemCount + quantity <= stationInventoryLimit) {
-        const existingItem = stationInventory.find(stationItem => stationItem.name === item && stationItem.type === item.keyName);
-        
+        const existingItem = stationInventory.find(stationItem => stationItem.name === item.name && stationItem.keyName === item.keyName);
+
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
@@ -85,21 +85,21 @@ export function addToStationInventory(item, quantity) {
 }
 
 // Remove items from the station inventory
-export function removeFromStationInventory(item, quantity, keyName) {
-    const stationInventory = getState('stationInventory');
-    const itemIndex = stationInventory.findIndex(stationItem => stationItem.name === item && stationItem.type === keyName);
+// export function removeFromStationInventory(item, quantity, keyName) {
+//     const stationInventory = getState('stationInventory');
+//     const itemIndex = stationInventory.findIndex(stationItem => stationItem.name === item.name && stationItem.keyName === keyName);
 
-    if (itemIndex > -1) {
-        if (stationInventory[itemIndex].quantity > quantity) {
-            stationInventory[itemIndex].quantity -= quantity;
-        } else {
-            stationInventory.splice(itemIndex, 1);
-        }
-        setState('stationInventory', stationInventory);
-    } else {
-        console.error(`${item} (${keyName}) not found in station inventory.`);
-    }
-}
+//     if (itemIndex > -1) {
+//         if (stationInventory[itemIndex].quantity > quantity) {
+//             stationInventory[itemIndex].quantity -= quantity;
+//         } else {
+//             stationInventory.splice(itemIndex, 1);
+//         }
+//         setState('stationInventory', stationInventory);
+//     } else {
+//         console.error(`${item} (${keyName}) not found in station inventory.`);
+//     }
+// }
 
 // Check available space
 export function getAvailableStationSpace() {

@@ -86,7 +86,7 @@ export const possibleSalvage = [
       keyName: 'circuit-board',
       material: 'circuit-board',
       valueId: 'circuitBoardValue', 
-      iconType: 'chip', 
+      iconType: 'circuit-board', 
       iconColor: 'green',
       id: 'scrap-circuit-board',
       stackSize: 25
@@ -97,32 +97,52 @@ export const possibleSalvage = [
       keyName: 'siliconProcessor',
       material: 'silicon-processor',
       valueId: 'siliconValue', 
-      iconType: 'circuit-board', 
+      iconType: 'cpu', 
       iconColor: 'white',
       id: 'siliconProcessor',
       stackSize: 20
     },
     { 
       name: 'Solar panels', 
-      type: 'installable',
+      type: 'equipment',
       keyName: 'solarPanel',
       material: 'solar-panel',
-      installable: 'true',
+      installable: true,
       section: 'exterior',
       iconType: 'sun', 
       iconColor: 'white',
+      condition: 'Operational',
+      utilityRate: { power: 2 },
+      description: 'Generates solar power for the station.',
       stackSize: 1
     },
     {
       name: 'Communication Antenna', 
-      type: 'installable',
+      type: 'equipment',
       keyName: 'communicationAntenna',
       material: 'communication-antenna',
-      installable: 'true',
-      valueId: 'antennaValue', 
+      installable: true,
+      section: 'exterior',
       iconType: 'radio', 
       iconColor: 'gray',
-      id: 'satelliteAntenna',
-      stackSize: 5
+      condition: '',
+      valueId: 'antennaValue',
+      description: '',
+      stackSize: 1
     }    
   ];
+
+// Template:
+// name: '',
+// type: 'equipment | component | parts',
+// keyName: '',
+// material: '',
+// installable: true, (only if relevant)
+// section: '',
+// iconType: '',
+// iconColor: 'white',
+// condition: '',
+// storage: { oxygen: 100, water: 100 , power: 100 }, (only if relevant)
+// utilityRate: { oxygen: 2, water: 2, power: -2 }, (only if relevant)
+// description: '',
+// stackSize: 1

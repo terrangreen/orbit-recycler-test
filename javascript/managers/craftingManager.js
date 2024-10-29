@@ -3,7 +3,7 @@
 import { getState, setState } from "../app/gameState.js";
 import { showToastMessage } from "../app/toast.js";
 import { loadCraftingSection } from "../modules/craftingModule.js";
-import { addToStationInventory } from "./inventoryManager.js";
+import { addToStationInventory, getAvailableStationSpace } from "./inventoryManager.js";
 import { calculateMaterialsStorage } from "./materialsManager.js";
 import { updateStationInventory } from "./updateInventory.js";
 
@@ -21,7 +21,9 @@ export function craftItem(recipe) {
         }
     });
 
-    if (materialsAvailable) {
+    let availableSpace = getAvailableStationSpace();
+
+    if (materialsAvailable && availableSpace > 0) {
         // Deduct the required materials
         Object.entries(recipe.materials).forEach(([material, required]) => {
             const materialIndex = knownMaterials.findIndex(m => m.material === material);
@@ -50,7 +52,7 @@ export function craftItem(recipe) {
 
         showToastMessage(`${recipe.name} crafted successfully`, "success");
     } else {
-        showToastMessage('Not enough materials.', "failure");
+        showToastMessage('Failure.', "failure");
     }
 
     loadCraftingSection();  // Refresh the crafting section

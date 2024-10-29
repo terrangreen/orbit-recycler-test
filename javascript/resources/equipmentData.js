@@ -2,55 +2,75 @@
 
 export const possibleEquipment = [
     {
-      name: 'Hammock',
+      name: 'Camping hammock',
+      type: 'equipment',
+      keyName: 'bed',
+      material: 'bed',
+      installable: true,
+      section: 'interior',
       iconType: 'bed',
       iconColor: 'white',
-      keyName: 'bed',
-      section: 'interior',
       condition: 'New',
-      description: 'Basic sleeping area.'
+      description: 'Basic sleeping area.',
+      stackSize: 1
     },
     {
       name: 'Basic Life Support System',
+      type: 'equipment',
+      keyName: 'basicLifeSupport',
+      material: 'basic-life-support',
+      installable: true,
+      section: 'interior',
       iconType: 'life-buoy',
       iconColor: 'white',
-      keyName: 'basicLifeSupport',
-      section: 'interior',
       condition: 'Operational',
       storage: { oxygen: 100, water: 100 , power: 100 },
       utilityRate: { oxygen: 2, water: 2, power: -2 },
-      description: 'Recycles air and water for basic life support.'
+      description: 'Recycles air and water for basic life support.',
+      stackSize: 1
     },
     {
       name: 'Solar Panels',
+      type: 'equipment',
+      keyName: 'solarPanel',
+      material: 'solar-panel',
+      installable: true,
+      section: 'exterior',
       iconType: 'sun',
       iconColor: 'white',
-      keyName: 'solarPanel',
-      section: 'exterior',
       condition: 'New',
       utilityRate: { power: 5 },
-      description: 'Generates solar power for the station.'
+      description: 'Generates solar power for the station.',
+      stackSize: 1
     },
     {
       name: 'Food Storage',
+      type: 'equipment',
+      keyName: 'foodStorage',
+      material: 'food-storage',
+      installable: true,
+      section: 'interior',
       iconType: 'utensils',
       iconColor: 'white',
-      keyName: 'foodStorage',
-      section: 'interior',
       condition: 'New',
       storage: { food: 50 },
       utilityRate: { power: -1 },
-      description: 'Stores food rations for crew members.'
+      description: 'Stores food rations for crew members.',
+      stackSize: 1
     },
     {
       name: 'Airlock',
+      type: 'equipment',
+      keyName: 'airlock',
+      material: 'airlock',
+      installable: true,
+      section: [ 'interior', 'exterior' ],
       iconType: 'door-closed',
       iconColor: 'white',
-      keyName: 'airlock',
-      section: [ 'interior', 'exterior' ],
       condition: 'used',
       utilityRate: { power: -1 },
-      description: 'Airlock'
+      description: 'Airlock',
+      stackSize: 1
     }
     // Add more equipment as needed
   ];  
