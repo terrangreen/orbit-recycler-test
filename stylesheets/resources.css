@@ -81,6 +81,7 @@
 
 .life-support-item .capacity {
     margin-left: 0;
+    min-width: 81px;
 }
 
 .life-support-item .rate {

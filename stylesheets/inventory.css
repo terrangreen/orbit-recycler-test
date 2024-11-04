@@ -49,6 +49,7 @@
 
 /* Inventory square formatting */
 .inventory-square {
+  position: relative;
   width: 60px;
   height: 60px;
   display: flex;
@@ -64,4 +65,13 @@
 
 .on-hold {
   opacity: 0.5;
+}
+
+.quantity-indicator {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 0.8rem;  /* Adjust font size as needed */
+  color: white;
+  padding: 2px 4px;
 }

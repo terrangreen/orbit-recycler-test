@@ -1,9 +1,11 @@
 // equipmentManager.js
 
-import { getState, setState } from '../app/gameState.js';
+import { getState, saveStateToLocalStorage, setState } from '../app/gameState.js';
 import { showToastMessage } from '../app/toast.js';
 import { showTooltip } from '../app/tooltip.js';
 import { handleDroppable } from './dragManager.js';
+import { autoSave } from './gameLoop.js';
+import { markRecalculationNeeded, updateLifeSupportResources } from './lifeSupportManager.js';
 import { updateStationInventory } from './updateInventory.js';
 
 export function activateEquipmentModule(module) {
@@ -57,7 +59,7 @@ function createFaceSquares(module, section, equipmentContent) {
 
         let additionalData = { module, section };
 
-        handleDroppable(square, moveStationToEquipment, additionalData);
+        handleDroppable(square, moveStationToEquipment, additionalData, );
 
         const tooltipFields = { "Position": face.name };
         showTooltip(square, null, tooltipFields);
@@ -164,6 +166,7 @@ export function resetEquipmentModule() {
 export function moveStationToEquipment(target, item, additionalData) {
     let stationModules = getState('stationModules');
     let stationInventory = getState('stationInventory') || [];
+
     const equipmentContent = document.getElementById(`equipment-${additionalData.section}`);
     const moduleId = additionalData.module.id;
     const module = stationModules.find(module => module.id === moduleId);
@@ -187,8 +190,9 @@ export function moveStationToEquipment(target, item, additionalData) {
             ...item,
             location: target.id.replace('square-', '')
         }
-        equipmentItems.push(newItem);
 
+        delete newItem.sourceInventoryId;
+        equipmentItems.push(newItem);
         module.equipment[additionalData.section] = equipmentItems;
 
         setState('stationModules', stationModules);
@@ -196,6 +200,9 @@ export function moveStationToEquipment(target, item, additionalData) {
         
         placeEquipmentItem(equipmentContent, newItem);
         updateStationInventory();
+        markRecalculationNeeded();
+
+        autoSave();
 
         showToastMessage(`${newItem.name} installed successfully`, "success");
 

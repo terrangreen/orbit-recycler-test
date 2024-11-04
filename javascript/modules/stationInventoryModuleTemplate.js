@@ -1,6 +1,5 @@
 // stationInventoryModuleTemplate.js
 
-
 export function initializeStationInventoryTemplate() {
     const inventoryContent = document.getElementById('station-inventory-content');
 

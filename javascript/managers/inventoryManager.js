@@ -5,7 +5,7 @@ import { showToastMessage } from '../app/toast.js';
 import { showTooltip } from '../app/tooltip.js';
 import { handleDragStart } from './dragManager.js';
 
-export function updateStaticInventoryGrid(gridElement, items, selectFields = {}, limit, canDragAndDrop = false) {
+export function updateStaticInventoryGrid(gridElement, items, selectFields = {}, limit, canDragAndDrop = false, hasQuantity = false) {
     const defaultIcon = getState('defaultIcon');
     gridElement.innerHTML = '';
 
@@ -18,14 +18,16 @@ export function updateStaticInventoryGrid(gridElement, items, selectFields = {},
         square.id = squareId;
     
         if (item) {
+            console.log('item:', item);
             const fields = selectFields[i] || {};
-            square.innerHTML = `<i data-lucide="${item.iconType || defaultIcon}" class="icon ${item.iconColor}"></i>`;
+            square.innerHTML = `<i data-lucide="${item.iconType || defaultIcon}" class="icon ${item.iconColor}"></i>` + 
+                               (hasQuantity ? `<span class="quantity-indicator">${item.quantity}</span>` : '');
 
             showTooltip(square, item, fields);
             
             if (canDragAndDrop && !square.dragListenerAdded) {
                 square.setAttribute('draggable', true);
-                square.addEventListener('dragstart', (e) => handleDragStart(e, item));
+                square.addEventListener('dragstart', (e) => handleDragStart(e, item, gridElement.id));
                 square.dragListenerAdded = true;
             }
 
@@ -42,13 +44,14 @@ export function updateStaticInventoryGrid(gridElement, items, selectFields = {},
     lucide.createIcons();
 }
 
-export function updateDynamicInventoryGrid(gridElement, items, selectFields = null, canDragAndDrop = false) {
+export function updateDynamicInventoryGrid(gridElement, items, selectFields = null, canDragAndDrop = false, hasQuantity = false) {
     gridElement.innerHTML = '';
 
     items.forEach((part, index) => {
         const square = document.createElement('div');
         square.classList.add('inventory-square');
-        square.innerHTML = `<i data-lucide="${part.iconType || defaultIcon}" class="icon ${part.iconColor}"></i>`;
+        square.innerHTML = `<i data-lucide="${part.iconType || defaultIcon}" class="icon ${part.iconColor}"></i>` + 
+                               (hasQuantity ? `<span class="quantity-indicator">${part.quantity}</span>` : '');
         
         const fields = selectFields ? selectFields(part, index) : {};
 
@@ -56,7 +59,7 @@ export function updateDynamicInventoryGrid(gridElement, items, selectFields = nu
 
         if (canDragAndDrop) {
             square.setAttribute('draggable', true);
-            square.addEventListener('dragstart', (e) => handleDragStart(e, part));
+            square.addEventListener('dragstart', (e) => handleDragStart(e, part, gridElement.id));
         }
 
         gridElement.appendChild(square);
@@ -83,23 +86,6 @@ export function addToStationInventory(item, quantity) {
         showToastMessage(`Not enough space in the station inventory to add ${quantity} of ${item.name}.`);
     }
 }
-
-// Remove items from the station inventory
-// export function removeFromStationInventory(item, quantity, keyName) {
-//     const stationInventory = getState('stationInventory');
-//     const itemIndex = stationInventory.findIndex(stationItem => stationItem.name === item.name && stationItem.keyName === keyName);
-
-//     if (itemIndex > -1) {
-//         if (stationInventory[itemIndex].quantity > quantity) {
-//             stationInventory[itemIndex].quantity -= quantity;
-//         } else {
-//             stationInventory.splice(itemIndex, 1);
-//         }
-//         setState('stationInventory', stationInventory);
-//     } else {
-//         console.error(`${item} (${keyName}) not found in station inventory.`);
-//     }
-// }
 
 // Check available space
 export function getAvailableStationSpace() {

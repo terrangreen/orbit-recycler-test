@@ -41,4 +41,6 @@ Will need a supply of food, O2, water. Expensive! $$$$$
 
 
 B U G S
-> 
+> Dragging a solar panel from station inventory to 
+    equipment removes all solar panels in station inventory
+    and doesn't cause a change in life support resources rate

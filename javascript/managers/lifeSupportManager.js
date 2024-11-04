@@ -3,15 +3,41 @@
 import { getState, setState } from "../app/gameState.js";
 import { updateLifeSupportResourcesDisplay } from "./displayManager.js";
 
+let needsRecalculation = true;
+
 export function updateLifeSupportResources() {
     const lifeSupportResources = getState('lifeSupportResources') || {};
-    const stationModules = getState('stationModules') || {};
 
-    // Reset rates for each resource before recalculating
+    // Only recalculate rates and storage if needed
+    if (needsRecalculation) {
+        recalculateRatesAndStorage(lifeSupportResources);
+        needsRecalculation = false;
+    }
+
+    // Update current values based on rate every tick
+    updateCurrentValues(lifeSupportResources);
+
+    setState('lifeSupportResources', lifeSupportResources);
+    updateLifeSupportResourcesDisplay();
+}
+
+export function markRecalculationNeeded() {
+    needsRecalculation = true;
+}
+
+function recalculateRatesAndStorage(lifeSupportResources) {
+    const stationModules = getState('stationModules') || {};
+    const crewMembers = getState('crewMembers');
+
+    // Reset rates and storage for recalculating
     Object.keys(lifeSupportResources).forEach(key => {
-        lifeSupportResources[key].rate = 0;
+        const lowKey = key.toLowerCase();
+        if (crewMembers.consumptionRates[lowKey]) {
+            lifeSupportResources[key].rate = crewMembers.count * crewMembers.consumptionRates[lowKey];
+        } else {
+            lifeSupportResources[key].rate = 0;
+        }
         lifeSupportResources[key].storage = 0;
-        // lifeSupportResources[key].current = lifeSupportResources[key].storage;
     });
 
     stationModules.forEach(module => {
@@ -27,7 +53,7 @@ export function updateLifeSupportResources() {
                         }
                     });
                 }
-    
+
                 if (item.storage) {
                     Object.keys(item.storage).forEach(storageKey => {
                         const resourceKey = storageKey.charAt(0).toUpperCase() + storageKey.slice(1);
@@ -37,22 +63,13 @@ export function updateLifeSupportResources() {
                     });
                 }
             });
-        })
+        });
     });
-
-    calculateCurrentLifeSupportResource();
-
-    setState('lifeSupportResources', lifeSupportResources);
-    updateLifeSupportResourcesDisplay();
 }
 
-export function calculateCurrentLifeSupportResource() {
-    const lifeSupportResources = getState('lifeSupportResources') || {};
-
-    // Update the current value based on the rates
+function updateCurrentValues(lifeSupportResources) {
     Object.keys(lifeSupportResources).forEach(key => {
         lifeSupportResources[key].current += lifeSupportResources[key].rate;
-        // Ensure current value does not exceed limits
         if (lifeSupportResources[key].current > lifeSupportResources[key].storage) {
             lifeSupportResources[key].current = lifeSupportResources[key].storage;
         } else if (lifeSupportResources[key].current < 0) {

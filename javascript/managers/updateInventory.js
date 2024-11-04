@@ -38,7 +38,7 @@ export function updateSalvageInventory() {
     });
     
 
-    updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, selectFields, true);
+    updateDynamicInventoryGrid(salvageInventoryGrid, salvageItems, selectFields, true, true);
     
     handleSalvageToStation();
 }
@@ -82,7 +82,7 @@ export function updateStationInventory() {
 
     updateStationDisplay();
 
-    updateStaticInventoryGrid(stationInventoryGrid, stationInventory, selectFields, stationInventoryLimit, true);
+    updateStaticInventoryGrid(stationInventoryGrid, stationInventory, selectFields, stationInventoryLimit, true, true);
     
 }
 

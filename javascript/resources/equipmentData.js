@@ -24,8 +24,8 @@ export const possibleEquipment = [
       iconType: 'life-buoy',
       iconColor: 'white',
       condition: 'Operational',
-      storage: { oxygen: 100, water: 100 , power: 100 },
-      utilityRate: { oxygen: 2, water: 2, power: -2 },
+      storage: { oxygen: 16200, water: 8100 , power: 100 },
+      utilityRate: { oxygen: 0.5, water: 0.25, power: -2 },
       description: 'Recycles air and water for basic life support.',
       stackSize: 1
     },
@@ -53,7 +53,7 @@ export const possibleEquipment = [
       iconType: 'utensils',
       iconColor: 'white',
       condition: 'New',
-      storage: { food: 50 },
+      storage: { food: 4050 },
       utilityRate: { power: -1 },
       description: 'Stores food rations for crew members.',
       stackSize: 1

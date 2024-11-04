@@ -2,11 +2,11 @@
 
 import { getState, setState } from "../app/gameState.js";
 
-export function handleDragStart(e, item) {
-    e.dataTransfer.setData('item', JSON.stringify(item));
+export function handleDragStart(e, item, sourceInventoryId) {
+    e.dataTransfer.setData('item', JSON.stringify({ ...item, sourceInventoryId }));
 }
   
-export function handleDroppable(target, nextFunction, additionalData = {}) {
+export function handleDroppable(target, nextFunction, additionalData = {}, allowedInventory = null) {
     if (!target.dragoverListenerAdded) {
         target.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -21,7 +21,12 @@ export function handleDroppable(target, nextFunction, additionalData = {}) {
             const itemData = e.dataTransfer.getData('item');
             const item = JSON.parse(itemData);
 
-            nextFunction(target, item, additionalData);
+            const sourceInventory = document.getElementById(item.sourceInventoryId);
+            const isValidDrop = !sourceInventory.contains(target);
+
+            if (target.id !== item.sourceInventory && isValidDrop) {
+                nextFunction(target, item, additionalData);
+            }
         });
         target.dropListenerAdded = true;
     }

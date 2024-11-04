@@ -61,7 +61,6 @@ export function moveToSalvage(target, item) {
 export function returnFromSalvageHold(item) {
     let spacejunkItems = getState('spacejunkItems');
     const salvageDropArea = document.getElementById('salvage-drop-area');
-    const salvageInventoryGrid = document.getElementById('salvage-inventory-grid');
     
     // Remove onHold status
     item.onHold = false;
@@ -96,6 +95,7 @@ export function moveSalvagePartToStation(target, part) {
     let salvageItems = getState('salvageItems');
     let stationInventory = getState('stationInventory') || [];
     let spacejunkItems = getState('spacejunkItems');
+    let existingEquipmentCounts = getState('existingEquipmentCounts');
 
     // Get available space in the station inventory
     let availableSpace = getAvailableSpace(part);
@@ -118,7 +118,15 @@ export function moveSalvagePartToStation(target, part) {
         // Create new stack with leftover quantity
         while (remainingQuantity > 0) {
             const quantityForNewStack = Math.min(remainingQuantity, part.stackSize);
-            stationInventory.push({ ...part, quantity: quantityForNewStack });
+            if (part.type === 'equipment') {
+                const currentCount = existingEquipmentCounts[part.keyName] || 0;
+                const uniqueId = `${part.keyName}-${currentCount + 1}`;
+                const newPart = { ...part, quantity: quantityForNewStack, id: uniqueId };
+                stationInventory.push(newPart);
+                existingEquipmentCounts[part.keyName]++;
+            } else {
+                stationInventory.push({ ...part, quantity: quantityForNewStack });
+            }
             remainingQuantity -= quantityForNewStack;
         }
 
@@ -170,77 +178,6 @@ export function moveSalvagePartToStation(target, part) {
         calculateMaterialsStorage();
     } else {
         showToastMessage('Stop that', "warning");
-    }
-}
-
-export function moveSalvagePartToStationOld(target, part) {
-    let salvageItems = getState('salvageItems');
-    let stationInventory = getState('stationInventory') || [];
-    let spacejunkItems = getState('spacejunkItems');
-
-    // Get available space in the station inventory
-    let availableSpace = getAvailableSpace(part);
-
-    if (availableSpace > 0) {
-        const moveQuantity = Math.min(part.quantity, availableSpace);
-
-        // Update the quantity in the salvage inventory
-        salvageItems = salvageItems.map(salvagePart => {
-            if (salvagePart.id === part.id) {
-                salvagePart.quantity -= moveQuantity;
-                if (salvagePart.quantity <= 0) {
-                    return null;
-                }
-            }
-            return salvagePart;
-        }).filter(salvagePart => salvagePart !== null);
-
-        // Add the part (or increase the quantity) in the station inventory
-        const existingStationPart = stationInventory.find(item => item.id === part.id);
-        if (existingStationPart) {
-            existingStationPart.quantity += moveQuantity;
-        } else {
-            // If it's a new part for the station, add it
-            stationInventory.push({ ...part, quantity: moveQuantity });
-        }
-
-        gatherMaterial(part.material);
-
-        spacejunkItems = spacejunkItems.map(spacejunkItem => {
-            if (spacejunkItem.parts.some(p => p.id === part.id)) {
-                spacejunkItem.parts = spacejunkItem.parts.map(p => {
-                    if (p.id === part.id) {
-                        p.quantity -= moveQuantity;
-                    }
-                    return p.quantity > 0 ? p : null;
-                }).filter(p => p !== null);
-            }
-            return spacejunkItem;
-        });
-
-        // Update spacejunk, salvage, and station inventories in the state
-        setState('spacejunkItems', spacejunkItems);
-        setState('salvageItems', salvageItems);
-        setState('stationInventory', stationInventory);
-
-        if (salvageItems.length === 0) {
-            const salvageDropArea = document.getElementById('salvage-drop-area');
-            salvageDropArea.innerHTML = '';  // Clear the salvage drop area
-
-            // Remove the space junk item from the spacejunk inventory if it has no parts left
-            spacejunkItems = spacejunkItems.filter(spacejunkItem => spacejunkItem.parts.length > 0);
-            setState('spacejunkItems', spacejunkItems);
-
-            updateSpacejunkInventory();
-            updateSpacejunkDisplay();
-        }
-
-        // Re-render the inventory grids
-        updateSalvageInventory();
-        updateStationInventory();
-        calculateMaterialsStorage();
-    } else {
-        showToastMessage('Inventory full', "warning");
     }
 }
 

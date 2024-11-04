@@ -74,12 +74,18 @@ export function updateLifeSupportResourcesDisplay() {
             resourceValueDisplayElement.textContent = `${resource.current} / ${resource.storage}`;
         }
 
+        const resourceRateDisplayElement = document.getElementById(resource.rateId);
+        if (resourceRateDisplayElement) {
+            resourceRateDisplayElement.textContent = `${resource.rate}`;
+        }
+
         const resourceDisplayElement = document.getElementById(`resource-${key.toLowerCase()}`);
         if (resourceDisplayElement) {
             const selectFields = {
                 "Resource": key,
                 "Current": resource.current,
-                "Storage": resource.storage
+                "Storage": resource.storage,
+                "Rate": resource.rate
             };
 
             showTooltip(resourceDisplayElement, null, selectFields);

@@ -10,7 +10,7 @@ export function loadLifeSupportContent() {
     Object.entries(lifeSupportResources).forEach(([key, item]) => {
         const rateClass = item.rate > 0 ? 'positive' : item.rate < 0 ? 'negative' : 'neutral';
         const formattedRate = item.rate > 0 ? `+${item.rate}` : `${item.rate}`;
-
+        
         // Create a unique id for each life-support-item
         const resourceId = `resource-${key.toLowerCase()}`;
         
@@ -19,7 +19,7 @@ export function loadLifeSupportContent() {
             <div class="life-support-item" id="${resourceId}">
                 <i data-lucide="${item.iconType}" class="icon ${item.iconColor}"></i>
                 <span class="capacity" id="${item.valueId}">${item.current} / ${item.storage}</span>
-                <span class="rate ${rateClass}">${formattedRate}/s</span>
+                <span class="rate ${rateClass}" id="${item.rateId}">${formattedRate}/s</span>
             </div>
         `;
     });

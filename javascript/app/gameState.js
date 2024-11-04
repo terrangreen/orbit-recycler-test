@@ -1,6 +1,7 @@
 // gameState.js
 
 import { craftingRecipes } from "../resources/craftingRecipes.js";
+import { initialCrewMembers } from "../resources/crewMembersData.js";
 import { possibleEquipment } from "../resources/equipmentData.js";
 import { lifeSupportData } from "../resources/lifeSupportResourcesData.js";
 import { possibleSalvage } from "../resources/salvageResourcesData.js";
@@ -28,8 +29,10 @@ let initialState = {
   additionalRawJunkPerBag: 5,
   knownRecipes: initialRecipes(),
   stationModules: initialModules(),
+  existingEquipmentCounts: {},
   stationModulesLimit: 9,
-  lifeSupportResources: initialLifeSupportResources()
+  lifeSupportResources: initialLifeSupportResources(),
+  crewMembers: initialCrewMembers,
 }
 
 let state = { ...initialState };
@@ -99,13 +102,15 @@ function initialEquipment(section) {
 function initialLifeSupportResources() {
   // Create an object from lifeSupportData
   return lifeSupportData.reduce((acc, resource) => {
-      acc[resource.type] = {
-          storage: resource.storage,
-          rate: resource.rate,
-          current: resource.storage,
-          iconType: resource.iconType,
-          iconColor: resource.iconColor,
-          valueId: `${resource.type.toLocaleLowerCase()}Value`
+      acc[resource.name] = {
+        type: resource.type,
+        storage: resource.storage,
+        rate: resource.rate,
+        current: resource.current,
+        iconType: resource.iconType,
+        iconColor: resource.iconColor,
+        valueId: `${resource.type}Value`,
+        rateId: `${resource.type}Rate`
       };
       return acc;
   }, {});
