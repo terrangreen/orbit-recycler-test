@@ -3,12 +3,14 @@ export const craftingRecipes = [
         name: 'Storage Bag',
         type: 'equipment',
         keyName: "storageBag",
-        material: 'storage-bag',
+        material: 'storage',
         installable: true,
+        detachable: true,
         section: 'exterior',
         iconType: 'box',
         iconColor: 'white',
         condition: 'McGuyvered',
+        storage: { inventory: 20 },
         materials: {
             kevlar: 5,
             steel: 6
@@ -21,8 +23,9 @@ export const craftingRecipes = [
         name: 'Steel Box',
         type: 'equipment',
         keyName: "steelBox",
-        material: 'steel-box',
+        material: 'storage',
         installable: true,
+        detachable: true,
         section: 'exterior',
         iconType: 'box',
         iconColor: 'white',
@@ -30,7 +33,7 @@ export const craftingRecipes = [
         materials: {
             steel: 10,
         },
-        storage: { inventory: 25 },
+        storage: { inventory: 20 },
         description: 'McGuyvered box from steel scrap',
         stackSize: 1,
         unlocked: false  // This recipe will be unlocked later

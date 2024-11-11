@@ -18,7 +18,6 @@ export function updateStaticInventoryGrid(gridElement, items, selectFields = {},
         square.id = squareId;
     
         if (item) {
-            console.log('item:', item);
             const fields = selectFields[i] || {};
             square.innerHTML = `<i data-lucide="${item.iconType || defaultIcon}" class="icon ${item.iconColor}"></i>` + 
                                (hasQuantity ? `<span class="quantity-indicator">${item.quantity}</span>` : '');

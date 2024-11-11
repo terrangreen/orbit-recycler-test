@@ -3,8 +3,10 @@
 export const initialCrewMembers = {
     count: 1,
     consumptionRates: {
-        oxygen: -1,
-        water: -0.5,
-        food: -0.25,
+        oxygen: -0.007,
+        water: -0.037,
+        food: -0.2,
     }
 }
+
+// kg per 12-minute tick

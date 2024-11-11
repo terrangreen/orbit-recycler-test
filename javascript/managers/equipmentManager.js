@@ -1,11 +1,11 @@
 // equipmentManager.js
 
-import { getState, saveStateToLocalStorage, setState } from '../app/gameState.js';
+import { getState, setState } from '../app/gameState.js';
 import { showToastMessage } from '../app/toast.js';
 import { showTooltip } from '../app/tooltip.js';
 import { handleDroppable } from './dragManager.js';
 import { autoSave } from './gameLoop.js';
-import { markRecalculationNeeded, updateLifeSupportResources } from './lifeSupportManager.js';
+import { markRecalculationNeeded } from './lifeSupportManager.js';
 import { updateStationInventory } from './updateInventory.js';
 
 export function activateEquipmentModule(module) {
@@ -83,11 +83,46 @@ function placeEquipmentItem(equipmentContent, equipment) {
     const square = equipmentContent.querySelector(`#square-${equipment.location}`);
     square.classList.add('occupied');
 
+    let selectedModule = null;
+
     if (square) {
         square.innerHTML = `<i data-lucide="${equipment.iconType || defaultIcon}" class="icon ${equipment.iconColor}"></i>`;
 
+        if (equipment.configurable) {
+            const configurableIcon = getState('configurableIcon')
+            const configIcon = `<i data-lucide="${configurableIcon}" class="configurable-icon"></i>`;
+            square.innerHTML += configIcon;
+
+            square.addEventListener('click', () => {
+                const equipmentLayout = document.querySelector('equipment-layout');
+
+                if (selectedModule === square) {
+                    selectedModule.classList.remove('selected-module');
+                    selectedModule = null;
+
+                    const existingConfigDiv = equipmentLayout.querySelector('.equipment-config-options');
+                    if (existingConfigDiv) {
+                        existingConfigDiv.remove();
+                    }
+                } else {
+                    if (selectedModule) {
+                        selectedModule.classList.remove('selected-module');
+
+                        const existingConfigDiv = equipmentLayout.querySelector('.equipment-config-options');
+                        if (existingConfigDiv) {
+                            existingConfigDiv.remove();
+                        }
+                    }
+                    square.classList.add('selected-module');
+                    selectedModule = square;
+
+                    showConfigOptions(equipment);
+                }
+            });
+        }
+
         const tooltipFields = {
-            Position: equipment.location.charAt(0).toUpperCase() + equipment.location.slice(1),
+            Position: `${equipment.location.charAt(0).toUpperCase() + equipment.location.slice(1)} (${equipment.detachable ? 'detachable' : 'fixed'})`,
             Name: equipment.name,
             Description: equipment.description || 'No description available.'
         };
@@ -115,6 +150,122 @@ function showEquipment(module, equipmentList, section) {
     placeEquipmentInFaces(equipmentList, section);
 }
 
+function showConfigOptions(equipment) {
+    const sharedStatus = getState('sharedStatus');
+    const activeTab = document.querySelector('.equipment-tab-content.active .equipment-layout');
+    if (!activeTab) return;
+    // const equipmentLayout = document.querySelector('.equipment-layout');
+
+    removeConfigOptions();
+
+    const configDiv = document.createElement('div');
+    configDiv.classList.add('equipment-config-options');
+
+    if (equipment.status !== undefined) {
+        const statusToggle = document.createElement('div')
+        statusToggle.className = "status-toggle";
+
+        const label = document.createElement("label");
+        label.className = "switch";
+
+        const input = document.createElement("input");
+        input.type = "checkbox";
+
+        console.log('equipment:', equipment);
+        console.log('equipment.sharedStatus:', equipment.sharedStatus);
+        console.log('sharedStatus:', sharedStatus);
+
+        if (equipment.sharedStatus !== undefined) {
+            equipment.status = sharedStatus[equipment.sharedStatus];
+        }
+        input.checked = equipment.status;
+
+        // Event listener to update equipment.status when the checkbox is toggled
+        input.addEventListener('change', () => {
+            equipment.status = input.checked;
+
+            if (equipment.sharedStatus !== undefined) {
+                sharedStatus[equipment.sharedStatus] = equipment.status;
+            }
+
+            // Optionally update class or styling based on the new status
+            label.classList.toggle('status-on', equipment.status);
+            label.classList.toggle('status-off', !equipment.status);
+        });
+        
+        if (equipment.statusLock) {
+            input.disabled = true;
+        }
+
+        const slider = document.createElement("span");
+        slider.className = "slider";
+
+        label.appendChild(input);
+        label.appendChild(slider);
+        label.classList.add(`status-${equipment.status ? 'on' : 'off'}`);
+
+        statusToggle.appendChild(label);
+        configDiv.appendChild(statusToggle);
+        
+        activeTab.appendChild(configDiv);
+    }
+
+    if (equipment.storage) {
+        const toggleDiv = document.createElement('div');
+        toggleDiv.id = 'toggle-container';
+
+        const storageLabel = document.createElement('label');
+        storageLabel.textContent = 'Storage:';
+
+        const dropdown = document.createElement('select');
+        const spacejunkOption = document.createElement('option');
+        spacejunkOption.value = 'spacejunk';
+        spacejunkOption.textContent = 'Spacejunk';
+
+        const stationOption = document.createElement('option');
+        stationOption.value = 'station';
+        stationOption.textContent = 'Station';
+
+        dropdown.appendChild(spacejunkOption);
+        dropdown.appendChild(stationOption);
+
+        // Set the dropdown default value based on the equipment storage type
+        dropdown.value = equipment.storageType || 'spacejunk'; // Defaults to 'spacejunk'
+
+        // Disable dropdown if storage limit condition is met
+        const stationInventoryLimit = getState('stationInventoryLimit');
+        const stationInventory = getState('stationInventory');
+        let canMove = (stationInventoryLimit - stationInventory.length) >= equipment.storage.inventory;
+        if (canMove) {
+            dropdown.disabled = true;
+        } else {
+            dropdown.disabled = false;
+        }
+
+        // Handle change in storage type
+        dropdown.addEventListener('change', function() {
+            equipment.storageType = dropdown.value; // Update the storage type
+        });
+
+        // Add the label and dropdown to the toggle container
+        toggleDiv.appendChild(storageLabel);
+        toggleDiv.appendChild(dropdown);
+
+        configDiv.appendChild(toggleDiv); // Add the storage options to the config div
+    }
+
+    // Append the entire config div to the equipment tab content or the desired container
+    activeTab.appendChild(configDiv);
+}
+
+// Utility function to remove existing config options
+function removeConfigOptions() {
+    const existingConfigDiv = document.querySelector('.equipment-config-options');
+    if (existingConfigDiv) {
+        existingConfigDiv.remove();
+    }
+}
+
 function enableEquipmentTabs() {
     const tabButtons = document.querySelectorAll('.equipment-tab-button');
 
@@ -135,6 +286,8 @@ function activateTab(section, activeTab, inactiveTab) {
     inactiveTab.classList.remove('active');
     document.getElementById(`equipment-${section}`).classList.add('active');
     document.getElementById(`equipment-${inactiveTab.id.replace('-tab', '')}`).classList.remove('active');
+
+    removeConfigOptions();
 }
 
 // Function to disable tabs

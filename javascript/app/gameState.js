@@ -4,10 +4,13 @@ import { craftingRecipes } from "../resources/craftingRecipes.js";
 import { initialCrewMembers } from "../resources/crewMembersData.js";
 import { possibleEquipment } from "../resources/equipmentData.js";
 import { lifeSupportData } from "../resources/lifeSupportResourcesData.js";
+import { purchasableItems } from "../resources/purchasableItems.js";
 import { possibleSalvage } from "../resources/salvageResourcesData.js";
 import { possibleModules } from "../resources/stationModulesData.js";
 
 let initialState = {
+  tickCount: 0,
+  gameTime: new Date(Date.UTC(2025, 10, 16, 12, 0)),
   money: 0,
   rawJunkLimit: 10,
   spacejunkItems: [],
@@ -17,11 +20,13 @@ let initialState = {
   salvageItems: [],
   salvageContents: {},
   stationInventory: [],
+  // stationInventory: initialInventory(),
   stationInventoryStorage: 0,
   stationInventoryLimit: 20,
   knownMaterials: initialMaterials(),
   materialsStorage: {},
   defaultIcon: 'box',
+  configurableIcon: 'cog',
   junkValuePerUnit: 100,
   privateSatelliteFee: 10000,
   governmentSatelliteFee: 15000,
@@ -33,9 +38,31 @@ let initialState = {
   stationModulesLimit: 9,
   lifeSupportResources: initialLifeSupportResources(),
   crewMembers: initialCrewMembers,
+  sharedStatus: {
+    airlock: true,
+    hatch: true,
+  }
 }
 
 let state = { ...initialState };
+
+// Set up knownMaterials with specified quantities
+function initialInventory() {
+  let initialInventoryItems = [ 
+    { name: 'Oxygen Canister', quantity: 3 },
+    { name: 'Food', quantity: 405 }
+  ];
+
+  return purchasableItems
+    .filter(item => initialInventoryItems.some(initial => initial.name === item.name)) // Match by name
+    .map(item => {
+      const initialItem = initialInventoryItems.find(initial => initial.name === item.name); // Find the matching item
+      return {
+        ...item,
+        quantity: initialItem ? initialItem.quantity : 0 // Set the quantity
+      };
+  });
+}
 
 function initialMaterials() {
   // Define initial quantities for testing purposes
@@ -79,25 +106,62 @@ function initialModules() {
 }
 
 function initialEquipment(section) {
-  const initialEquipmentNames = {
-    interior: ['Hammock', 'Basic Life Support System', 'Food Storage', 'Airlock'],
-    exterior: ['Solar Panels', 'Airlock']
+  const initialEquipmentItems = {
+    interior: [
+      { name: 'Hammock', location: 'back' },
+      { name: 'ECLSS', location: 'bottom' },
+      { name: 'Food Storage', location: 'right' },
+      { name: 'Airlock', location: 'top' },
+      { name: 'Hatch', location: 'front' }
+    ],
+    exterior: [
+      { name: 'Solar Panels', location: 'left' },
+      { name: 'Solar Panels', location: 'right' },
+      { name: 'Airlock', location: 'top' },
+      { name: 'Draco (RCS)', location: 'back' },
+      { name: 'Hatch', location: 'front' },
+      { name: 'Lithium-Ion Battery Pack', location: 'bottom' }
+    ]
   };
 
-  // Specify the locations for the initial module in sequence
-  const interiorLocations = ['back', 'left', 'right', 'front'];
-  const exteriorLocations = ['left', 'front'];
+  // Select the correct array based on the section
+  const itemsForSection = initialEquipmentItems[section];
 
-  const locations = section === 'interior' ? interiorLocations : exteriorLocations;
+  return itemsForSection.map(item => {
+    // Find the equipment data based on name and section
+    const equipment = possibleEquipment.find(e => e.name === item.name && e.section.includes(section));
 
-  return possibleEquipment
-    .filter(equipment => initialEquipmentNames[section].includes(equipment.name) && equipment.section.includes(section))
-    .map((equipment, index) => ({
-       ...equipment,
-       id: generateUniqueId(equipment),
-       location: locations[index % locations.length]
-  }));
+    if (!equipment) return null; // Skip if equipment not found in possibleEquipment
+
+    return {
+      ...equipment,
+      id: generateUniqueId(equipment),
+      location: item.location
+    };
+  }).filter(Boolean); // Filter out any null values
 }
+
+
+// function initialEquipment(section) {
+//   const initialEquipmentNames = {
+//     interior: ['Hammock', 'Basic Life Support System', 'Food Storage', 'Airlock'],
+//     exterior: ['Solar Panels', 'Solar Panels', 'Airlock', 'Reaction Control System (RCS)', 'Lithium-Ion Battery Pack']
+//   };
+
+//   // Specify the locations for the initial module in sequence
+//   const interiorLocations = ['back', 'bottom', 'right', 'top'];
+//   const exteriorLocations = ['left', 'right', 'top', 'front', 'bottom'];
+
+//   const locations = section === 'interior' ? interiorLocations : exteriorLocations;
+
+//   return possibleEquipment
+//     .filter(equipment => initialEquipmentNames[section].includes(equipment.name) && equipment.section.includes(section))
+//     .map((equipment, index) => ({
+//        ...equipment,
+//        id: generateUniqueId(equipment),
+//        location: locations[index % locations.length]
+//   }));
+// }
 
 function initialLifeSupportResources() {
   // Create an object from lifeSupportData

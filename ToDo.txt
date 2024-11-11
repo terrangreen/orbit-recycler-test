@@ -13,6 +13,9 @@ C U R R E N T
 
 
 N E X T
+> Figure out where my storage numbers came from and double check
+    that they're accurate enough
+
 > Make storage bag give a choice for which storage to
     increase
 > Make equipment modules uninstallable - repackage?
@@ -41,6 +44,11 @@ Will need a supply of food, O2, water. Expensive! $$$$$
 
 
 B U G S
-> Dragging a solar panel from station inventory to 
-    equipment removes all solar panels in station inventory
-    and doesn't cause a change in life support resources rate
+> Crafted bags can't be installed bc all the faces are full,
+    may need to add more faces for realism. And the trunk, somehow.
+> Before I can fix that I need to rearrange the equipment
+    bc right now, there isn't any room to attach anything else!
+
+
+Notes for game start dialogue
+> LEO graveyard

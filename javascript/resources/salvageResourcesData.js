@@ -103,7 +103,7 @@ export const possibleSalvage = [
       stackSize: 20
     },
     { 
-      name: 'Solar panels', 
+      name: 'Solar Panels', 
       type: 'equipment',
       keyName: 'solarPanel',
       material: 'solar-panel',
@@ -112,7 +112,7 @@ export const possibleSalvage = [
       iconType: 'sun', 
       iconColor: 'white',
       condition: 'Operational',
-      utilityRate: { power: 2 },
+      utilityRate: { power: 0.18 },
       description: 'Generates solar power for the station.',
       stackSize: 1
     },
@@ -126,6 +126,7 @@ export const possibleSalvage = [
       iconType: 'radio', 
       iconColor: 'gray',
       condition: '',
+      utilityRate: {power: -0.18},
       valueId: 'antennaValue',
       description: '',
       stackSize: 1

@@ -8,7 +8,7 @@ import { getState, setState } from '../app/gameState.js';
 import { loadCraftingSection } from '../modules/craftingModule.js';
 import { loadLifeSupportContent } from '../modules/lifeSupportModuleTemplate.js';
 import { loadStationLayoutSection } from '../modules/stationLayout.js';
-import { updateLifeSupportResources } from './lifeSupportManager.js';
+import { formatRate, updateLifeSupportResources } from './lifeSupportManager.js';
 import { showTooltip } from '../app/tooltip.js';
 
 export function updateDisplays() {
@@ -74,9 +74,14 @@ export function updateLifeSupportResourcesDisplay() {
             resourceValueDisplayElement.textContent = `${resource.current} / ${resource.storage}`;
         }
 
+        const { rateClass, formattedRate } = formatRate(resource.rate);
+        // const rateClass = item.rate > 0 ? 'positive' : item.rate < 0 ? 'negative' : 'neutral';
+        // const formattedRate = item.rate > 0 ? `+${item.rate}` : `${item.rate}`;
+
         const resourceRateDisplayElement = document.getElementById(resource.rateId);
         if (resourceRateDisplayElement) {
-            resourceRateDisplayElement.textContent = `${resource.rate}`;
+            resourceRateDisplayElement.textContent = `${formattedRate}`;
+            resourceRateDisplayElement.className = `rate ${rateClass}`;
         }
 
         const resourceDisplayElement = document.getElementById(`resource-${key.toLowerCase()}`);

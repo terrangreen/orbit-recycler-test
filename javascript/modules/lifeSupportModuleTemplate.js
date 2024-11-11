@@ -1,6 +1,7 @@
 // lifeSupportModuleTemplate.js
 
 import { getState } from '../app/gameState.js';
+import { formatRate } from '../managers/lifeSupportManager.js';
 
 export function loadLifeSupportContent() {
     const lifeSupportContent = document.getElementById('life-support-content');
@@ -8,8 +9,9 @@ export function loadLifeSupportContent() {
 
     lifeSupportContent.innerHTML = '';
     Object.entries(lifeSupportResources).forEach(([key, item]) => {
-        const rateClass = item.rate > 0 ? 'positive' : item.rate < 0 ? 'negative' : 'neutral';
-        const formattedRate = item.rate > 0 ? `+${item.rate}` : `${item.rate}`;
+        const { rateClass, formattedRate } = formatRate(item.rate);
+        // const rateClass = item.rate > 0 ? 'positive' : item.rate < 0 ? 'negative' : 'neutral';
+        // const formattedRate = item.rate > 0 ? `+${item.rate}` : `${item.rate}`;
         
         // Create a unique id for each life-support-item
         const resourceId = `resource-${key.toLowerCase()}`;

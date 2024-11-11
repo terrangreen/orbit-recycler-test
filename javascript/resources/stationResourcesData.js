@@ -2,6 +2,7 @@
 
 export const stationResourcesData = [
     { 
+      name: "USD",
       type: 'money', 
       iconType: 'banknote', 
       iconColor: 'green', 
@@ -9,6 +10,7 @@ export const stationResourcesData = [
       template: '${money}'
     },
     {
+      name: "Space junk inventory",
       type: 'spaceJunk',
       iconType: 'trash-2',
       iconColor: 'white',
@@ -16,6 +18,7 @@ export const stationResourcesData = [
       template: '${spacejunkItems.length} / ${rawJunkLimit}'
     },
     {
+      name: "Station Inventory",
       type: 'stationInventory',
       iconType: 'boxes',
       iconColor: 'white',

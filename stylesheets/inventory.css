@@ -59,8 +59,10 @@
   border: 1px solid #fff;
 }
 
-.inventory-square i {
-  font-size: 24px;
+.inventory-square .icon {
+  font-size: 48px;
+  width: 36px;
+  height: 36px;;
 }
 
 .on-hold {
@@ -71,7 +73,18 @@
   position: absolute;
   bottom: 0px;
   right: 0px;
-  font-size: 0.8rem;  /* Adjust font size as needed */
+  font-size: 0.8rem;
   color: white;
   padding: 2px 4px;
+}
+
+.configurable-icon {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 20px;
+  width: 20px;
+  color: white;
+  padding: 1px;
+  rotate: 90deg;
 }

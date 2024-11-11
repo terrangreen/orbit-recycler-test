@@ -1,52 +1,52 @@
 /* icons.css */
 
 .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    &.white {
-        color: var(--white);
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    &.copper {
-      color: #B87333;
-    }
-
-    &.gray {
-      color: #A9A9A9;
-    }
-
-    &.green {
-      color: #50C878;
-    }
-
-    &.red,
-    &.dark-red {
-      color: var(--dark-red);
-    }
-  
-    &.blue {
-      color: var(--blue);
-    }
-  
-    &.green {
-      color: var(--green);
-    }
-  
-    &.light-yellow {
-      color: var(--light-yellow);
-    }
-  
-    &.dark-yellow {
-      color: var(--dark-yellow);
-    }
-  
-    &.magenta {
-      color: var(--magenta);
-    }
-  
-    &.gutter-grey {
-      color: var(--gutter-grey);
-    }
+  &.white {
+    color: var(--white);
   }
+
+  &.copper {
+    color: #B87333;
+  }
+
+  &.gray {
+    color: #A9A9A9;
+  }
+
+  &.green {
+    color: #50C878;
+  }
+
+  &.red,
+  &.dark-red {
+    color: var(--dark-red);
+  }
+
+  &.blue {
+    color: var(--blue);
+  }
+
+  &.green {
+    color: var(--green);
+  }
+
+  &.light-yellow {
+    color: var(--light-yellow);
+  }
+
+  &.dark-yellow {
+    color: var(--dark-yellow);
+  }
+
+  &.magenta {
+    color: var(--magenta);
+  }
+
+  &.gutter-grey {
+    color: var(--gutter-grey);
+  }
+}

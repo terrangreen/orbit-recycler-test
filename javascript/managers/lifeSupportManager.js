@@ -62,6 +62,19 @@ function recalculateRatesAndStorage(lifeSupportResources) {
                         }
                     });
                 }
+
+                if (item.efficiencyRate) {
+                    Object.keys(item.efficiencyRate).forEach(efficiencyKey => {
+                        if (lifeSupportResources[efficiencyKey]) {
+                            const crewRate = crewMembers.consumptionRates[efficiencyKey.toLowerCase()] || 0;
+                            const regenerationRate = item.efficiencyRate[efficiencyKey] || 0;
+
+                            // Calculate the effective rate, which combines consumption and regeneration
+                            const effectiveRate = crewRate - regenerationRate;
+                            lifeSupportResources[efficiencyKey].rate += effectiveRate * crewMembers.count;
+                        }
+                    });
+                }
             });
         });
     });
@@ -69,11 +82,28 @@ function recalculateRatesAndStorage(lifeSupportResources) {
 
 function updateCurrentValues(lifeSupportResources) {
     Object.keys(lifeSupportResources).forEach(key => {
-        lifeSupportResources[key].current += lifeSupportResources[key].rate;
+        let current = lifeSupportResources[key].current + lifeSupportResources[key].rate;
+        lifeSupportResources[key].current = parseFloat(current.toFixed(1));
         if (lifeSupportResources[key].current > lifeSupportResources[key].storage) {
             lifeSupportResources[key].current = lifeSupportResources[key].storage;
         } else if (lifeSupportResources[key].current < 0) {
             lifeSupportResources[key].current = 0;
         }
     });
+}
+
+export function formatRate(rate) {
+    const rateClass = rate > 0 ? 'positive' : rate < 0 ? 'negative' : 'neutral';
+    const formattedRate = rate > 0 ? `+${formatNumber(rate)}` : `${formatNumber(rate)}`;
+    return { rateClass, formattedRate };
+}
+
+export function formatNumber(value) {
+    if (value >= 1) {
+        return value.toFixed(1);
+    } else if (value >= 0.1) {
+        return value.toFixed(2);
+    } else {
+        return value.toFixed(3);
+    }
 }

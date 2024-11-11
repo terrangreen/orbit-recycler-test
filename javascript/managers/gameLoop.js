@@ -4,6 +4,7 @@ import { saveStateToLocalStorage } from '../app/gameState.js';
 import { showToastMessage } from '../app/toast.js';
 import { updateLifeSupportResources } from './lifeSupportManager.js';
 import { updateSpacejunkStorage } from './displayManager.js';
+import { updateGameTime } from './timeManager.js';
 
 let tickInterval;
 
@@ -11,6 +12,7 @@ export function startGameLoop() {
     // Update life support resources
     tickInterval = setInterval(() => {
 
+        updateGameTime();
         updateLifeSupportResources();
         updateSpacejunkStorage();
     
