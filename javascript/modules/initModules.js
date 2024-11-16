@@ -5,7 +5,7 @@ import { initializeSalvageAreaTemplate } from '././salvageModuleTemplate.js';
 import { initializeStationInventoryTemplate } from './stationInventoryModuleTemplate.js';
 import { initializeStationLayoutTemplate } from './stationLayoutModuleTemplate.js';
 import { initializeEquipmentLayoutTemplate } from './equipmentModuleTemplate.js';
-// import { disableEquipmentTabs } from '../managers/equipmentManager.js';
+import { initializeSpaceXCapsule } from './initialSpaceXCapsule.js';
 
 export function initializeModules() {
   initializeStationInventoryTemplate();
@@ -13,5 +13,5 @@ export function initializeModules() {
   initializeSalvageAreaTemplate();
   initializeStationLayoutTemplate();
   initializeEquipmentLayoutTemplate();
-  // disableEquipmentTabs();
+  initializeSpaceXCapsule();
 }
