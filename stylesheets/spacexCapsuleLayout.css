@@ -1,0 +1,36 @@
+/* spacexCapsuleLayout.css */
+
+.text-point {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #000000;
+    padding: 5px;
+    border-radius: 3px;
+    transform: translate(-50%, -50%);
+}
+
+.line {
+    position: absolute;
+    /* top: 25%;
+    left: 50%; */
+    width: 1px;
+    height: 50px;
+    background-color: #fff;
+    transform: translateX(-50%);
+}
+
+#left-align-container {
+    display: grid;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+}
+
+.left-align-item {
+    display: inline-block;
+    font-size: 12px;
+    background-color: #fff;
+    color: #000;
+    margin-bottom: 5px;
+    text-align: left;
+}
