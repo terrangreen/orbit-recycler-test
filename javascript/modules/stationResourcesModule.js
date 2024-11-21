@@ -57,7 +57,7 @@ export function loadStationResources() {
     const selectFields = {
       "Resource Type": resource.name || "Unknown Resource",
       "Inventory": newValue,
-      "Storage": resource.storage || "N/A"
+      // "Storage": resource.storage || "N/A"
     };
 
     // If the resource hasn't been created yet, create it

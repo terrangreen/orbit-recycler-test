@@ -10,12 +10,12 @@
 #collectSpacejunkBtn {
   width: 100px;
   height: 100px;
-  background-color: #005f99;
-  color: white;
+  background-color: var(--secondary);
+  color: var(--primary);
   align-items: center;
   justify-content: center;
   text-align: center;
-  border: 2px solid #fff;
+  border: 2px solid var(--primary);
   border-radius: 5px;
   margin: 0px;
   padding: 0;
@@ -26,18 +26,17 @@
 }
 
 #collectSpacejunkBtn:hover {
-  background-color: #3a3a3a;
   transform: scale(1.05);
 }
 
 #collectSpacejunkBtn:active {
-  background-color: #1a1a1a;
+  /* background-color: #1a1a1a; */
   transform: scale(0.98);
 }
 
 #collectSpacejunkBtn:disabled {
-  background-color: #555;
-  color: #ccc;
+  background-color: var(--disabled);
+  color: var(--text);
   cursor: not-allowed;
   opacity: 0.6;
 }

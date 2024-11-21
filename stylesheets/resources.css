@@ -36,8 +36,8 @@
 #station-resources-content-1, #station-resources-content-2 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Aligns items at the start */
-    gap: 1em; /* Adjust gap between resource items */
+    justify-content: flex-start;
+    gap: 1em;
 }
 
 .resource {
@@ -46,20 +46,19 @@
     gap: 0.5em;
 }
 
-.resource:hover {
+/* .resource:hover {
     background-color: var(--text-color);
     color: var(--background-color);
-}
+} */
 
 /* Life support styling */
 .life-support-header {
     display: flex;
-    /* font-size: 1.5em; */
     align-items: center;
     padding: 0px 20px 0px 10px;
     text-transform: uppercase;
-    background-color: white;
-    color: black;
+    background-color: var(--primary);
+    color: var(--background);
 }
 
 .life-support-header .icon {
@@ -89,15 +88,15 @@
 }
 
 .rate.positive {
-    color: green;
+    color: var(--success);
 }
 
 .rate.negative {
-    color: red;
+    color: var(--failure);
 }
 
 .rate.neutral {
-    color: gray;
+    color: var(--header);
 }
 
 .capacity {

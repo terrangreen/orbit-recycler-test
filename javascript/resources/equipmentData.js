@@ -41,7 +41,7 @@ export const possibleEquipment = [
       name: 'Solar Panels',
       type: 'equipment',
       manufacturer: 'SpaceX',
-      keyName: 'solarPanel',
+      keyName: 'solarArray',
       material: 'solar-panel',
       installable: true,
       detachable: false,

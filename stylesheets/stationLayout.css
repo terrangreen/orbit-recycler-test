@@ -38,6 +38,6 @@
     /* box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); */
     /* background-color: rgba(76, 175, 80, 0.1); */
     /* border: #005f99; */
-    box-shadow: 0 0 10px #005f99;
-    background-color: #005f99;
+    box-shadow: 0 0 10px var(--secondary);
+    background-color: var(--secondary);
 } 

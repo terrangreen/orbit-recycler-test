@@ -49,9 +49,9 @@
     grid-template-columns: 1;
     /* grid-template-rows: 45px auto auto; */
     grid-template-rows: 45px auto;
-    border: 1px solid #fff;
+    border: 1px solid var(--primary);
     border-radius: 5px;
-    background-color: #2c2c2c;
+    background-color: var(--background);
 }
 
 .module-header {
@@ -69,8 +69,8 @@
 .module h3 {
     display: flex;
     justify-content: center;
-    background-color: white;
-    color: black;
+    background-color: var(--text);
+    color: var(--background);
     text-transform: uppercase;
     font-weight: 900;
     margin: 0;
@@ -105,6 +105,10 @@
 .module-content.collapsed {
     max-height: 0;
     overflow: hidden;
+    display: none;
+}
+
+.hidden {
     display: none;
 }
 

@@ -7,6 +7,7 @@ import { lifeSupportData } from "../resources/lifeSupportResourcesData.js";
 import { purchasableItems } from "../resources/purchasableItems.js";
 import { possibleSalvage } from "../resources/salvageResourcesData.js";
 import { possibleModules } from "../resources/stationModulesData.js";
+import { applyScheme, colorSchemes } from "./colorSchemes.js";
 
 let initialState = {
   tickCount: 0,
@@ -41,7 +42,8 @@ let initialState = {
   sharedStatus: {
     airlock: true,
     hatch: true,
-  }
+  },
+  colorScheme: initialColorScheme()
 }
 
 let state = { ...initialState };
@@ -141,28 +143,6 @@ function initialEquipment(section) {
   }).filter(Boolean); // Filter out any null values
 }
 
-
-// function initialEquipment(section) {
-//   const initialEquipmentNames = {
-//     interior: ['Hammock', 'Basic Life Support System', 'Food Storage', 'Airlock'],
-//     exterior: ['Solar Panels', 'Solar Panels', 'Airlock', 'Reaction Control System (RCS)', 'Lithium-Ion Battery Pack']
-//   };
-
-//   // Specify the locations for the initial module in sequence
-//   const interiorLocations = ['back', 'bottom', 'right', 'top'];
-//   const exteriorLocations = ['left', 'right', 'top', 'front', 'bottom'];
-
-//   const locations = section === 'interior' ? interiorLocations : exteriorLocations;
-
-//   return possibleEquipment
-//     .filter(equipment => initialEquipmentNames[section].includes(equipment.name) && equipment.section.includes(section))
-//     .map((equipment, index) => ({
-//        ...equipment,
-//        id: generateUniqueId(equipment),
-//        location: locations[index % locations.length]
-//   }));
-// }
-
 function initialLifeSupportResources() {
   // Create an object from lifeSupportData
   return lifeSupportData.reduce((acc, resource) => {
@@ -178,6 +158,10 @@ function initialLifeSupportResources() {
       };
       return acc;
   }, {});
+}
+
+export function initialColorScheme() {
+  applyScheme(colorSchemes.default);
 }
 
 function generateUniqueId(target, itemList = {}) {

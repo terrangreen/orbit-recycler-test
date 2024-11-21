@@ -75,8 +75,6 @@ export function updateLifeSupportResourcesDisplay() {
         }
 
         const { rateClass, formattedRate } = formatRate(resource.rate);
-        // const rateClass = item.rate > 0 ? 'positive' : item.rate < 0 ? 'negative' : 'neutral';
-        // const formattedRate = item.rate > 0 ? `+${item.rate}` : `${item.rate}`;
 
         const resourceRateDisplayElement = document.getElementById(resource.rateId);
         if (resourceRateDisplayElement) {
@@ -90,7 +88,7 @@ export function updateLifeSupportResourcesDisplay() {
                 "Resource": key,
                 "Current": resource.current,
                 "Storage": resource.storage,
-                "Rate": resource.rate
+                "Rate": `${resource.rate} / tick`
             };
 
             showTooltip(resourceDisplayElement, null, selectFields);

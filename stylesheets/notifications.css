@@ -9,12 +9,12 @@
 }
 
 .notification {
-    background-color: #4CAF50; /* Success color */
-    color: white;
+    background-color: var(--success); /* Success color */
+    color: var(--primary);
     padding: 15px;
     margin-top: 10px;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--shadow);
     opacity: 0;
     transition: opacity 0.3s ease;
 }

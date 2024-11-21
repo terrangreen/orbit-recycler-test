@@ -133,7 +133,7 @@ function placeEquipmentItem(equipmentContent, equipment) {
                 if (value != null) {
                     const rateClass = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
                     const formattedRate = value > 0 ? `+${value}` : `${value}`;
-                    tooltipFields[`${key.charAt(0).toUpperCase() + key.slice(1)} Rate`] = `<span class="rate ${rateClass}">${formattedRate}/s</span>`;
+                    tooltipFields[`${key.charAt(0).toUpperCase() + key.slice(1)} Rate`] = `<span class="rate ${rateClass}">${formattedRate} / tick</span>`;
                 }
             });
         }

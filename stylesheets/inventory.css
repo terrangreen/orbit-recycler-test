@@ -55,8 +55,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #2c2c2c;
-  border: 1px solid #fff;
+  background-color: var(--shadow);
+  border: 1px solid var(--primary);
 }
 
 .inventory-square .icon {
@@ -74,7 +74,7 @@
   bottom: 0px;
   right: 0px;
   font-size: 0.8rem;
-  color: white;
+  color: var(--primary);
   padding: 2px 4px;
 }
 
@@ -84,7 +84,7 @@
   left: 0px;
   height: 20px;
   width: 20px;
-  color: white;
+  color: var(--primary);
   padding: 1px;
   rotate: 90deg;
 }

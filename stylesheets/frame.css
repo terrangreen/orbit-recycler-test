@@ -7,31 +7,31 @@
 html, body {
     display: flex;
     height: 100%;
-    margin: 0;
     overflow: hidden;
-  }
+}
 
 header {
     display: flex;
-    flex-direction: column; /* Stacking content within header */
-    width: 100%; /* Ensure the header takes full width of the game-screen */
-    margin: 0 auto; /* Ensures the header is centered */
-    max-width: 100%; /* Prevents header from exceeding full width */
-  }
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 100%;
+}
 
 #fixed-header {
     display: flex;
-    flex-direction: column; /* Stacking content vertically */
+    flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
     z-index: 100;
-    background-color: #333;
-    color: white;
+    background-color: var(--shadow);
+    color: var(--primary);
     padding: 10px;
-    box-shadow: 0 4px 2px -2px gray;
+    box-shadow: 0 4px 2px -2px var(--shadow);
+    /* box-shadow: 0 4px 2px -2px #808080; */
     overflow-x: hidden;
 }
 

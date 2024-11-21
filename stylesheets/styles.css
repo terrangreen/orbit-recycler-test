@@ -3,16 +3,14 @@
 body {
   font-family: "Lucida Console", sans-serif;
   text-align: center;
-  color: white;
+  color: var(--primary);
   margin: 10px;
-  background-color: #262626;
-  width: 100%;
-  margin: 0;
+  background-color: var(--background);
   padding: 0;
 }
 
 h1 {
-  color: snow;
+  color: var(--text);
 }
 
 button {
@@ -20,23 +18,23 @@ button {
   font-size: 1rem;
   cursor: pointer;
   /* background-color: #5872c1; */
-  background-color: #005f99;
-  color: white;
+  background-color: var(--secondary);
+  color: var(--primary);
   border: none;
   margin: 10px;
 }
 
 button:disabled {
-  background-color: grey;
+  background-color: var(--disabled);
   cursor: not-allowed;
 }
 
 /* Tooltip styling */
 .tooltip {
   position: absolute;
-  background-color: #333;
-  color: white;
-  border: 1px solid white;
+  background-color: var(--secondary);
+  color: var(--primary);
+  border: 1px solid var(--primary);
   padding: 10px;
   border-radius: 5px;
   display: none; /* Initially hidden */
